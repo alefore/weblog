@@ -286,6 +286,6 @@ to receive a tree as an input and return a (possibly new) tree as their output.
 With other mutable data structures, those functions would instead have to
 operate in a structure in-place.
 
-This is good because it supports and encourages functions to be written with
-Referential Transparency.
+This is good because it supports and encourages referential
+transparency for functions that operate on these types.
 

@@ -162,6 +162,7 @@ logn runtime complexity (all receiving either a key or an index):
 * Insert a value
 * Delete a value
 * Return a value
+* Append two trees (where keys in one tree are smaller than keys in the other).
 
 #### logn Complexity is Fine
 

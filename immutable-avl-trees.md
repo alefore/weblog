@@ -5,21 +5,21 @@ lookup tables.
 
 ## What are Immutable AVL Trees
 
-[Immutable AVL Trees](0mp.md) are a balanced binary tree structure where each
+Immutable AVL Trees are a balanced binary tree structure where each
 non-empty tree holds:
 
 * An immutable "head" value.
 * Two immutable AVL "left" and "right" subtrees. Since this is an AVL tree,
   the depth of these subtrees must differ by at most 1.
 * As an optimization, to permit quick implementation of insertion operations as
-  well as [position-based indexing](0ms.md), the head also stores the depth of
+  well as position-based indexing, the head also stores the depth of
   the tree explicitly.
 
 I call each non-empty tree a "tree node".
 
 ### Index-based Access
 
-An [Immutable AVL Trees](0mp.md) can enable index-based access, with operations
+An Immutable AVL Tree can enable index-based access, with operations
 such as:
 
 * Return the value at index i (where 0 ≤ i < n, where n is the number of
@@ -40,25 +40,25 @@ arbitrary key type, each node can store the ID corresponding to its head.
 Alternatively, the tree could let the keys be stored implicity in the values,
 using a deterministic accessor function to retrieve them dynamically.
 
-Key-based access can be offered instead of or in addition to [Index-based
-Access](0ms.md). If no keys are provided, only [index-based access](0ms.md) will
+Key-based access can be offered instead of or in addition to Index-based
+Access. If no keys are provided, only index-based access will
 be supported.
 
 #### Keys: Full Order
 
-To support [key-based indexing](0mr.md), a full order must be defined on the
+To support key-based indexing, a full order must be defined on the
 keys' type. The tree will hold the elements in the order given by the keys, in
 order to be able to quickly establish which subtree holds a given key (whether
 it's smaller or greater than the node's key).
 
 #### Keys: Uniqueness
 
-The insert operation of an [Immutable AVL Tree](0mp.md) that supports [Key-based
-Indexing](0mr.md) will typically ensure uniqueness of the keys: that a key will
+The insert operation of an Immutable AVL Tree that supports Key-based
+Indexing will typically ensure uniqueness of the keys: that a key will
 be associated to at most one value in the tree.
 
-However, an Immutable AVL Tree could relax this requirement and [support
-multivalue lookups](0mv.md).
+However, an Immutable AVL Tree could relax this requirement and support
+multivalue lookups.
 
 ##### Support multivalue lookups
 
@@ -86,7 +86,7 @@ memory, unmodified lines are stored contiguously as a char array).
 
 #### Micha
 
-An implementation of [Immutable AVL Trees](0mp.md) for Java can be found in
+An implementation of Immutable AVL Trees for Java can be found in
 Micha Riser's [Java Collection
 Library](https://github.com/iquadrat/collection/blob/master/README.md) in the
 [PersistentTreeMap
@@ -120,14 +120,14 @@ element in the middle. `Lines::PushBack` doesn't mutate the tree pointed to by
 
 In C++, `std::shared_ptr<const TreeNode>` (where `TreeNode` is the structure
 containing the fields of a non-empty tree) is a great fit for a node in an
-[Immutable AVL Tree](0mp.md) to hold pointers to the subtrrees.
+Immutable AVL Tree to hold pointers to the subtrrees.
 
 This allows new trees to share most of the memory of their parent trees,
 allowing older nodes to be reclaimed automatically as they are abandoned.
 
 #### Shared Pointers: No cycles
 
-Thanks to the immutability of [Immutable AVL Trees](0mp.md) (of the tree
+Thanks to the immutability of Immutable AVL Trees (of the tree
 structure as well as of the values), we know that cycles are impossible, thus
 alleviating the main problem of shared pointers.
 
@@ -147,12 +147,12 @@ partially). Because of this, implementors have two choices:
 
 ## Advantages
 
-[Immutable AVL Trees](0mp.md) are good because they are:
+Immutable AVL Trees are good because they are:
 
-* [efficient](0mx.md),
-* [flexible](0n0.md),
-* [simple](0n1.md), and
-* [immutable](0n2.md).
+* efficient,
+* flexible,
+* simple, and
+* immutable.
 
 ### Efficient
 
@@ -165,8 +165,8 @@ logn runtime complexity (all receiving either a key or an index):
 
 #### logn Complexity is Fine
 
-For most algorithms that we encounter in practice, logn [runtime
-complexity](0ho.md) tends to be perfectly acceptable.
+For most algorithms that we encounter in practice, logn runtime
+complexity tends to be perfectly acceptable.
 
 ##### Why logn Algorithmic Complexity is Fine
 
@@ -185,8 +185,8 @@ will suffice. If we go up to 50 operations, we'll already able to handle over
 The following are a few graphs of the performance of a few operations of my
 Const Tree implementation:
 
-* [Const Tree: Performance: Get and Insert](0pr.md)
-* [Const Tree: Performance: Append Trees Graph](0pq.md)
+* Const Tree: Performance: Get and Insert
+* Const Tree: Performance: Append Trees Graph
 
 ##### Get and Insert
 
@@ -205,7 +205,7 @@ how it scales as the size of the resulting tree grows:
 
 ### Flexible
 
-[Immutable AVL Trees](0mp.md) are very flexible. Since they're fast, they can
+Immutable AVL Trees are very flexible. Since they're fast, they can
 directly replace all of the following structures:
 
 * Hash tables, as long as a full order can be defined on the keys. We trade the
@@ -216,10 +216,10 @@ directly replace all of the following structures:
 * Multi-value hash tables, by using an immutable container as the internal
   value.
 
-* Vectors, based on [index-based access](0ms.md), with significantly faster
+* Vectors, based on index-based access, with significantly faster
   insertion (logarithmic vs linear).
 
-* Lists, based on [Index-based Access](0ms.md), with significantly faster
+* Lists, based on Index-based Access, with significantly faster
   lookup. One advantage of lists, though, is support for iterators that
   automatically follow a value across insertions and deletions. This becomes
   trickier with Immutable AVL Trees (unless they only support key-based
@@ -232,17 +232,17 @@ complexity required around the rotations, but it's not too bad.
 
 I'll offer, again, the example from Edge's [ConstTree
 class](https://github.com/alefore/edge/blob/master/src/const_tree.h). It uses
-only 169 lines of code, a big part of which is just to implement "optional"
+only 184 lines of code, a big part of which is just to implement "optional"
 operations such as `Every`, `Prefix`, `Suffix`, and `UpperBound`. I invite you
 to read it and see for yourself how simple this really is.
 
 ### Immutable
 
-The immutable aspect is a big advantage of [Immutable AVL Trees](0mp.md) because
+The immutable aspect is a big advantage of Immutable AVL Trees because
 of two reasons:
 
-* [Retaining Snapshots](0n3.md)
-* [Immutable state](0n7.md)
+* Retaining Snapshots
+* Immutable state
 
 #### Snapshotting
 
@@ -264,8 +264,8 @@ complex than it is in Immutable AVL Trees.
 
 ##### Example in Edge
 
-As an example to illustrate the value of [Snapshotting](0n3.md) in [Immutable
-AVL Trees](0mp.md), in Edge I use this to feed work to background threads,
+As an example to illustrate the value of Snapshotting in Immutable
+AVL Trees, in Edge I use this to feed work to background threads,
 without having to synchronize state (since the threads don't share any mutable
 state). This allows the user to continue modifying the buffer while these
 operations run asynchronously, on a snapshot. I use this to:
@@ -280,12 +280,12 @@ callback to consume the results, to be executed in the main thread.
 
 #### Readable Code
 
-[Immutable AVL Trees](0mp.md) support the efficient construction of new trees
+Immutable AVL Trees support the efficient construction of new trees
 derived of original trees. This allows customer functions that operate on them
 to receive a tree as an input and return a (possibly new) tree as their output.
 With other mutable data structures, those functions would instead have to
 operate in a structure in-place.
 
 This is good because it supports and encourages functions to be written with
-[Referential Transparency](0h8.md).
+Referential Transparency.
 

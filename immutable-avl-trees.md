@@ -233,9 +233,9 @@ trees and A a copy of the first tree with x removed. We can compute x and
 generate A in logarithmic runtime. Our new task is to append two trees A and B
 with x in-between, as in:
 
-    x
-   / \
-  A   B
+      x
+     / \
+    A   B
 
 Obviously, we can't just return such a tree, since A and B may have vastly
 different depths. Instead, we pick the deepest of the two trees and descend in
@@ -248,25 +248,25 @@ of the trees grows logarithmically).
 Suppose that A is equal to the following tree (where C, E, F, and G are subtrees
 that I didn't fully expand) and that its G subtree has the same depth as B:
 
-     o
-    / \
-   C   p
-      / \
-     E   q
-        / \
-       F   G
+      o
+     / \
+    C   p
+       / \
+      E   q
+         / \
+        F   G
 
 Once we find G, we simply replace it with a new AVL tree with head x:
 
-     o
-    / \
-   C   p
-      / \
-     E   q
-        / \
-       F   x
-          / \
-         G   B
+      o
+     / \
+    C   p
+       / \
+      E   q
+         / \
+        F   x
+           / \
+          G   B
 
 At this point, the tree at x is an AVL tree (by construction) but the tree at q
 may not be: the difference between the depth(F) and the depth of the tree at x

@@ -240,9 +240,9 @@ two trees `A` and `B` with `x` in-between, as in:
 Obviously, we can't just return such a tree, since `A` and `B` may have vastly
 different depths. Instead, we pick the deepest of the two trees and descend in
 it always taking the branch (left or right) that moves us towards the center,
-until we find a subtree that is equal in depth to the smallest subtree (of A and
-`B`). For example, if `A` is taller than `B`, we descend on `A` always picking
-the right branch (i.e., the elements at the end of `A`). This is also a
+until we find a subtree that is equal in depth to the smallest subtree (of `A`
+and `B`). For example, if `A` is taller than `B`, we descend on `A` always
+picking the right branch (i.e., the elements at the end of `A`). This is also a
 logarithmic operation (since the depth of the trees grows logarithmically).
 
 Suppose that `A` is equal to the following tree (where `C`, `E`, `F`, and `G`

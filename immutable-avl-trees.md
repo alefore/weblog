@@ -274,8 +274,8 @@ At this point, the tree at `x` is an AVL tree (by construction) but the tree at
 `x` may be 2 (but, since the original tree at `q` was AVL, this difference will
 never be larger than 2). However, in this case, we simply do a rotation (to turn
 the tree with head `q` into an AVL tree), and recurse upwards, applying the same
-operation until we reach the head, effectively applied a logarithmic number of
-rotations in the worst case.
+operation until we reach the head. In the worst case, we'll have effectively
+applied a logarithmic number of constant-time rotations.
 
 #### logn Complexity is Fine
 

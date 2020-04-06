@@ -228,25 +228,26 @@ one tree are larger than the keys in the other. For index-based AVL trees this
 is true by definition of the "append" operation (all elements in the second
 tree come immediately after those in the first).
 
-To append two non-empty trees, let x be the last element in the first of the
-trees and A a copy of the first tree with x removed. We can compute x and
-generate A in logarithmic runtime. Our new task is to append two trees A and B
-with x in-between, as in:
+To append two non-empty trees, let `x` be the last element in the first of the
+trees and `A` an AVL tree equivalent to the first tree with `x` removed. We can
+compute `x` and generate `A` in logarithmic runtime. Our new task is to append
+two trees `A` and `B` with `x` in-between, as in:
 
       x
      / \
     A   B
 
-Obviously, we can't just return such a tree, since A and B may have vastly
+Obviously, we can't just return such a tree, since `A` and `B` may have vastly
 different depths. Instead, we pick the deepest of the two trees and descend in
-it always taking the same branch (left or right), until we find a subtree that
-is equal in depth to the smallest subtree (of A and B). For example, if A is
-taller than B, we descend on A always picking the right branch (i.e., the
-elements at the end of A). This is also a logarithmic operation (since the depth
-of the trees grows logarithmically).
+it always taking the branch (left or right) that moves us towards the center,
+until we find a subtree that is equal in depth to the smallest subtree (of A and
+`B`). For example, if `A` is taller than `B`, we descend on `A` always picking
+the right branch (i.e., the elements at the end of `A`). This is also a
+logarithmic operation (since the depth of the trees grows logarithmically).
 
-Suppose that A is equal to the following tree (where C, E, F, and G are subtrees
-that I didn't fully expand) and that its G subtree has the same depth as B:
+Suppose that `A` is equal to the following tree (where `C`, `E`, `F`, and `G`
+are subtrees that I didn't fully expand) and that its `G` subtree has the same
+depth as `B`:
 
       o
      / \
@@ -256,7 +257,7 @@ that I didn't fully expand) and that its G subtree has the same depth as B:
          / \
         F   G
 
-Once we find G, we simply replace it with a new AVL tree with head x:
+Once we find `G`, we simply replace it with a new AVL tree with head `x`:
 
       o
      / \
@@ -268,13 +269,13 @@ Once we find G, we simply replace it with a new AVL tree with head x:
            / \
           G   B
 
-At this point, the tree at x is an AVL tree (by construction) but the tree at q
-may not be: the difference between the depth(F) and the depth of the tree at x
-may be 2 (but, since the original tree at q was AVL, this difference will never
-be larger than 2). However, in this case, we simply need to do a rotation (to
-turn the tree with head 2 into an AVL tree), and recurse upwards, applying the
-same operation until we reach the head, effectively applied a logarithmic number
-of rotations in the worst case.
+At this point, the tree at `x` is an AVL tree (by construction) but the tree at
+`q` may not be: the difference between `depth(F)` and the depth of the tree at
+`x` may be 2 (but, since the original tree at `q` was AVL, this difference will
+never be larger than 2). However, in this case, we simply do a rotation (to turn
+the tree with head `q` into an AVL tree), and recurse upwards, applying the same
+operation until we reach the head, effectively applied a logarithmic number of
+rotations in the worst case.
 
 #### logn Complexity is Fine
 

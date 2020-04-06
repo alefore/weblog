@@ -159,10 +159,122 @@ Immutable AVL Trees are good because they are:
 Immutable AVL Trees are fast: they can perform the following operations in
 logn runtime complexity (all receiving either a key or an index):
 
+* Return a value
 * Insert a value
 * Delete a value
-* Return a value
 * Append two trees (where keys in one tree are smaller than keys in the other).
+
+#### AVL Trees: Depth Complexity is Logarithmic
+
+The depth of an AVL tree grows logarithmically to the number of elements it
+contains.
+
+To see this, let Nᵢ be minimal number of nodes that are
+required to form a tree of depth i.
+
+If a tree has depth i, at least one of its subtrees must have depth i - 1.
+Because this is the mimimal number of nodes, the other subtree must have the
+smallest possible depth allowed by the AVL constraint, i - 2. This gives:
+
+    Nᵢ = Nᵢ₋₁ + Nᵢ₋₂ + 1
+
+Applying the same formula recursively (to i - 1), we have:
+
+    Nᵢ₋₁ = Nᵢ₋₂ + Nᵢ₋₃ + 1
+
+Replacing Nᵢ₋₁ in the first formula, we get:
+
+    Nᵢ = (Nᵢ₋₂ + Nᵢ₋₃ + 1) + Nᵢ₋₂ + 1
+       = 2Nᵢ₋₂ + Nᵢ₋₃ + 2
+
+This implies:
+
+    Nᵢ > 2Nᵢ₋₂
+
+In other words, going up two levels (from depth i - 2 to i) means we'll need
+at least twice as many nodes.
+
+Applying this recursively yields:
+
+    N₂ᵢ > 2ⁱ
+
+This implies that the number of nodes required to reach a given depth grows
+exponentially; in other words, given N nodes, the maximum depth that you can
+reach will grow proportionally to log₂N.
+
+#### AVL Trees: Rotations
+
+The rotation operations are at the heart of the AVL trees. They take a binary
+"almost AVL" tree that contains two AVL subtrees where the depth of the subtrees
+differs by at most 2 and, in constant time, modify the tree to turn it into an
+AVL tree.
+
+#### AVL Trees: Insertion is Logarithmic
+
+To insert a new element into an AVL tree, we simply go down the tree to one of
+the nearest leafs (either the element immediately before or immediately after);
+once we're there, we replace the leaf with a new tree that contains the two
+elements. At this point, we move upwards doing rotations in order to preserve
+the AVL invariant.
+
+Each rotation executes in constant time and we have to do at most as many
+rotations as the depth of the tree (which is logarithmic to the number of
+elements in the tree), so the insertion into an AVL tree is logarithmic.
+
+#### AVL Trees: Append is Logarithmic
+
+Two AVL trees can be appended in logarithmic time, as long as all the keys in
+one tree are larger than the keys in the other. For index-based AVL trees this
+is true by definition of the "append" operation (all elements in the second
+tree come immediately after those in the first).
+
+To append two non-empty trees, let x be the last element in the first of the
+trees and A a copy of the first tree with x removed. We can compute x and
+generate A in logarithmic runtime. Our new task is to append two trees A and B
+with x in-between, as in:
+
+    x
+   / \
+  A   B
+
+Obviously, we can't just return such a tree, since A and B may have vastly
+different depths. Instead, we pick the deepest of the two trees and descend in
+it always taking the same branch (left or right), until we find a subtree that
+is equal in depth to the smallest subtree (of A and B). For example, if A is
+taller than B, we descend on A always picking the right branch (i.e., the
+elements at the end of A). This is also a logarithmic operation (since the depth
+of the trees grows logarithmically).
+
+Suppose that A is equal to the following tree (where C, E, F, and G are subtrees
+that I didn't fully expand) and that its G subtree has the same depth as B:
+
+     o
+    / \
+   C   p
+      / \
+     E   q
+        / \
+       F   G
+
+Once we find G, we simply replace it with a new AVL tree with head x:
+
+     o
+    / \
+   C   p
+      / \
+     E   q
+        / \
+       F   x
+          / \
+         G   B
+
+At this point, the tree at x is an AVL tree (by construction) but the tree at q
+may not be: the difference between the depth(F) and the depth of the tree at x
+may be 2 (but, since the original tree at q was AVL, this difference will never
+be larger than 2). However, in this case, we simply need to do a rotation (to
+turn the tree with head 2 into an AVL tree), and recurse upwards, applying the
+same operation until we reach the head, effectively applied a logarithmic number
+of rotations in the worst case.
 
 #### logn Complexity is Fine
 

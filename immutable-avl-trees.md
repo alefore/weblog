@@ -204,10 +204,16 @@ reach will grow proportionally to log₂N.
 
 #### AVL Trees: Rotations
 
-The rotation operations are at the heart of the AVL trees. They take a binary
-"almost AVL" tree that contains two AVL subtrees where the depth of the subtrees
-differs by at most 2 and, in constant time, modify the tree to turn it into an
-AVL tree.
+We call a binary search tree an "almost AVL" tree if its subtrees are AVL
+trees and their depth differs by at most 2.
+
+The rotation operations are at the heart of the AVL trees. They take an almost
+AVL tree and, in constant time, produce an equivalent AVL tree.
+
+If the input tree was already an AVL tree, no rotation is needed: the tree is
+returned as is. Otherwise, if the difference in the subtrees' depth was actually
+2, the rotations will produce a tree with depth equal to the depth of the input
+minus 1.
 
 #### AVL Trees: Insertion is Logarithmic
 
@@ -220,6 +226,23 @@ the AVL invariant.
 Each rotation executes in constant time and we have to do at most as many
 rotations as the depth of the tree (which is logarithmic to the number of
 elements in the tree), so the insertion into an AVL tree is logarithmic.
+
+#### AVL Trees: Deletion is Logarithmic
+
+It is also easy to see that deletion is logarithmic.
+
+Start by recursing down the tree until you find the node `N` corresponding to
+the element you want to delete. We will replace `N` with a new tree `N'` where
+the difference in their depth will be at most 1, so `N`'s parent will be an
+almost AVL tree. We can then apply a rotation, to turn the almost AVL tree into
+an equivalent AVL tree; its parent will now be an almost AVL tree, and so we
+recurse upwards. The two operations are just traversing the tree downwards and
+upwards, applying constant-time operations at each step, so they have
+logarithmic runtime.
+
+To produce `N'` we simply "borrow" the head from one of the subtrees and recurse
+downwards into that subtree to delete its head. If at least one subtree is
+empty, we can simply use the other subtree.
 
 #### AVL Trees: Append is Logarithmic
 
@@ -299,13 +322,13 @@ will suffice. If we go up to 50 operations, we'll already able to handle over
 The following are a few graphs of the performance of a few operations of my
 Const Tree implementation:
 
-* Const Tree: Performance: Get and Insert
+* Const Tree: Performance: Get, Insert, Delete
 * Const Tree: Performance: Append Trees Graph
 
-##### Get and Insert
+##### Get, Insert, Delete
 
-The following graph depicts the performance of Get and Insert operations in my
-ConstTree implementation as the container grows:
+The following graph depicts the performance of Get, Insert, and Delete
+operations in my ConstTree implementation as the container grows:
 
 ![002.svg](images/002.svg)
 

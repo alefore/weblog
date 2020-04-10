@@ -379,3 +379,8 @@ The following are ideas for my Zettelkasten that deserve further exploration:
 
 * Giving presentations out of my Zettelkasten.
 
+* Using a Zettelkasten for fiction. I've been working on a novel and I'm curious
+  as to whether a Zettelkasten, perhaps with significant metadata, may be a good
+  medium to structure it and produce the final manuscript (similar to how I
+  produce articles).
+

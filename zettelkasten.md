@@ -338,6 +338,40 @@ However, much to my surprise, concatenation of notes seem to have worked fairly
 well. The resulting articles feel perhaps a little bit "dense" (which I suppose
 is good). I haven't had to edit any of these dumps just yet.
 
+### Example
+
+As an example of how I extract articles from my Zettelkasten, I use
+the following code to generate my article about Zettelkästen:
+
+    zke("../weblog/zettelkasten", "0bh",
+        "01m"         // Voicing Conflicting Thoughts
+            + " 01k"  // Dualism
+            + " 0jp"  // Long Names: Code Smell
+            + " 023"  // Function Names: Mention Side-Effects
+            + " 01a"  // Choose Variable Semantics Carefully
+            + " 07d"  // Tools for Thinking
+            + " 0a7"  // Brains: Small Stack
+            + " 06j"  // Non-linear Impact of Changes
+            + " 0f2"  // Software Notifications
+            + " 09z"  // Reduce Friction
+            + " 01u"  // Be Present
+            + " 003"  // To-Do Lists
+            + " 01v"  // Ideal Environment
+            + " 0fn"  // Only Functional Objects, Objets d'art & Plants
+            + " 0pw"  // Spaced Repetition: Topics
+            + " 0px"  // Spaced Repetition: Effective Practices
+    );
+
+The arguments are:
+
+* The path on which the article (output) should be saved.
+* The ID of the starting Zettel.
+* The space-separated list of blacklisted articles.
+
+This is executed by [Edge](http://github.com/alefore/edge)'s VM language (the
+implementation is itself [defined as an Edge
+extension](https://github.com/alefore/edge/blob/master/rc/editor_commands/lib/zk.cc)).
+
 ## Ideas to Explore
 
 The following are ideas for my Zettelkasten that deserve further exploration:

@@ -30,11 +30,11 @@ consisting of 25.000 notes.
 
 ## Digital Zettelkasten
 
-I decided to create my Zettelkasten as a set of files, rather than the tried and
-true approach of using physical notes. This mostly reflects the fact that I'm
-very comfortable viewing and editing text files (mostly because I created my own
-text editor) and prefer the mobility, durability and efficiency (of searching,
-navigating, etc.) aspects of the digital medium.
+I decided to create my Zettelkasten as a set of files, rather than following the
+time-tested approach of writing physical notes. This mostly reflects the fact
+that I'm very comfortable viewing and editing text files and prefer the
+mobility, durability and efficiency (of searching, navigating, etc.) aspects of
+the digital medium.
 
 I'm somewhat curious as to what advantages a physical Zettelkasten would have
 that I'm missing out on. I suppose I'll never know.

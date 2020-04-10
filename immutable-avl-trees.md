@@ -24,8 +24,7 @@ such as:
 
 * Return the value at index i (where 0 ≤ i < n, where n is the number of
   elements in the tree).
-* Insert a value at index i, displacing all elements from subsequent
-  positions.
+* Insert a value at index i, displacing elements in subsequent positions.
 
 To support this, nodes should store explicitly a counter of the number of values
 they contain (the sum of values in its subtrees, plus 1). This allows them to
@@ -98,8 +97,8 @@ The "immutable" characteristic of the tree means that a tree is fundamentally
 immutable. This requires, naturally, that the values contained are also deeply
 immutable.
 
-That means that operation such as insertion or deletion just return a copy of
-a tree with the modification applied to it.
+That means that operations such as insertion or deletion just return a copy of a
+tree with the modification applied to it.
 
 #### Example Immutable Operations in Edge
 
@@ -120,16 +119,17 @@ element in the middle. `Lines::PushBack` doesn't mutate the tree pointed to by
 
 In C++, `std::shared_ptr<const TreeNode>` (where `TreeNode` is the structure
 containing the fields of a non-empty tree) is a great fit for a node in an
-Immutable AVL Tree to hold pointers to the subtrrees.
+Immutable AVL Tree to hold pointers to the subtrees.
 
 This allows new trees to share most of the memory of their parent trees,
 allowing older nodes to be reclaimed automatically as they are abandoned.
 
 #### Shared Pointers: No cycles
 
-Thanks to the immutability of Immutable AVL Trees (of the tree
-structure as well as of the values), we know that cycles are impossible, thus
-alleviating the main problem of shared pointers.
+The immutability of the structure and values in Immutable AVL Trees
+makes cycles impossible: a node can only refer to elements that existed before
+its construction. This alleviating the main problem of shared pointers:
+memory leaks due to unreachable cycles.
 
 ### Values: Requirements
 
@@ -217,15 +217,30 @@ minus 1.
 
 #### AVL Trees: Insertion is Logarithmic
 
-To insert a new element into an AVL tree, we simply go down the tree to one of
-the nearest leafs (either the element immediately before or immediately after);
-once we're there, we replace the leaf with a new tree that contains the two
-elements. At this point, we move upwards doing rotations in order to preserve
-the AVL invariant.
+To insert a new element into an AVL tree, we simply go down the tree selecting
+the branch that leaves us closest to the insertion point until we arrive to an
+empty tree and replace that empty tree with a new leaf tree containing the new
+element.
 
-Each rotation executes in constant time and we have to do at most as many
-rotations as the depth of the tree (which is logarithmic to the number of
-elements in the tree), so the insertion into an AVL tree is logarithmic.
+For example, suppose we have the following AVL tree (A is an unexpanded
+subtree):
+
+        p
+       / \
+      A   s
+         / \
+        r   t
+       /
+      q
+
+If we wanted to insert an element immediately after `p`, we would use the new
+leaf as `q`'s left child. If we wanted to insert it after `q`, it would be its
+right child.
+
+The new tree won't necessarily be an AVL tree, but working our way upwards,
+starting at the insertion point and applying rotations as necessary, we can turn
+it into an AVL tree by applying at most a logarithmic number of constant-time
+rotations.
 
 #### AVL Trees: Deletion is Logarithmic
 
@@ -248,8 +263,8 @@ empty, we can simply use the other subtree.
 
 Two AVL trees can be appended in logarithmic time, as long as all the keys in
 one tree are larger than the keys in the other. For index-based AVL trees this
-is true by definition of the "append" operation (all elements in the second
-tree come immediately after those in the first).
+is true by definition of the "append" operation (elements in the second tree
+come immediately after those in the first).
 
 To append two non-empty trees, let `x` be the last element in the first of the
 trees and `A` an AVL tree equivalent to the first tree with `x` removed. We can
@@ -261,26 +276,19 @@ two trees `A` and `B` with `x` in-between, as in:
     A   B
 
 Obviously, we can't just return such a tree, since `A` and `B` may have vastly
-different depths. Instead, we pick the deepest of the two trees and descend in
-it always taking the branch (left or right) that moves us towards the center,
-until we find a subtree that is equal in depth to the smallest subtree (of `A`
-and `B`). For example, if `A` is taller than `B`, we descend on `A` always
-picking the right branch (i.e., the elements at the end of `A`). This is also a
-logarithmic operation (since the depth of the trees grows logarithmically).
+different depths. Instead, we construct an equivalent tree that meets the AVL
+invariant.
 
-Suppose that `A` is equal to the following tree (where `C`, `E`, `F`, and `G`
-are subtrees that I didn't fully expand) and that its `G` subtree has the same
-depth as `B`:
+For simplicity, let's assume that `A` is the deepest of the two trees (the other
+case is symmetric). We're going to insert the elements in `B` inside of `A`
+(producing a new AVL tree that contains the desired output), and we're going to
+do this in logarithmic time.
 
-      o
-     / \
-    C   p
-       / \
-      E   q
-         / \
-        F   G
-
-Once we find `G`, we simply replace it with a new AVL tree with head `x`:
+We descend in `A` always following the right subtree (the elements that will be
+adjacent to `B`) until we find a right subtree that is equal in depth to `B`.
+Suppose that `A` is equal to the following tree (where `C`, `E`, `F`, `G`, and
+`H` are subtrees that I didn't fully expand) and that `H` has the same depth as
+`B`:
 
       o
      / \
@@ -288,16 +296,31 @@ Once we find `G`, we simply replace it with a new AVL tree with head `x`:
        / \
       E   q
          / \
-        F   x
+        F   r
            / \
-          G   B
+          G   H
 
-At this point, the tree at `x` is an AVL tree (by construction) but the tree at
-`q` may not be: the difference between `depth(F)` and the depth of the tree at
-`x` may be 2 (but, since the original tree at `q` was AVL, this difference will
-never be larger than 2). However, in this case, we simply do a rotation (to turn
-the tree with head `q` into an AVL tree), and recurse upwards, applying the same
-operation until we reach the head. In the worst case, we'll have effectively
+We now replace `H` with a new AVL tree with head `x`:
+
+      o
+     / \
+    C   p
+       / \
+      E   q
+         / \
+        F   r
+           / \
+          G   x
+             / \
+            H   B
+
+At this point, the tree at `x` is an AVL tree (by construction: `H` and `B` have the same depth) but the ancestors (the trees at `r`, `q`, `p`, and `o`)
+may not be: the depths of `r`'s subtrees, `G` and the tree at
+`x`, may be 2 (this happens when `depth(G) + 1` equals `depth(H)`).
+
+However, in this case, we simply do a rotation (to turn the tree with head `r`
+into an AVL tree), and follow the ancestors upwards, applying rotations (if
+necessary) until we reach the head. In the worst case, we'll have effectively
 applied a logarithmic number of constant-time rotations.
 
 #### logn Complexity is Fine
@@ -312,18 +335,12 @@ logn complexity will require so few operations that practical considerations
 will matter significantly more. That means they're largely undistinguishable
 from constant runtime complexity.
 
-For example, consider a container with 10 million items, larger than the
-majority of containers we find in practice. For these container, 24 operations
-will suffice. If we go up to 50 operations, we'll already able to handle over
-1125 trillion items.
+For example, consider a logn operation on a container holding 10 million items,
+more than most containers we find in practice. Such an operation will require
+only 24 operations! If we constrain ourselves to 50 operations, we'll already
+able to handle over 1125 trillion items.
 
 #### Const Tree: Performance
-
-The following are a few graphs of the performance of a few operations of my
-Const Tree implementation:
-
-* Const Tree: Performance: Get, Insert, Delete
-* Const Tree: Performance: Append Trees Graph
 
 ##### Get, Insert, Delete
 
@@ -343,7 +360,7 @@ how it scales as the size of the resulting tree grows:
 ### Flexible
 
 Immutable AVL Trees are very flexible. Since they're fast, they can
-directly replace all of the following structures:
+directly replace all of the following structures in many situations:
 
 * Hash tables, as long as a full order can be defined on the keys. We trade the
   amortized constant-time lookup for logarithmic lookup, but we avoid the
@@ -353,14 +370,17 @@ directly replace all of the following structures:
 * Multi-value hash tables, by using an immutable container as the internal
   value.
 
-* Vectors, based on index-based access, with significantly faster
-  insertion (logarithmic vs linear).
+* Vectors, based on index-based access. AVL trees have significantly
+  faster insertion (logarithmic vs linear) and acceptable lookup. Vectors are a
+  better choice in situations that only require insertion or deletion at the
+  end, where their constant-time lookup will beat AVL tree's logarithmic lookup.
 
-* Lists, based on Index-based Access, with significantly faster
-  lookup. One advantage of lists, though, is support for iterators that
-  automatically follow a value across insertions and deletions. This becomes
-  trickier with Immutable AVL Trees (unless they only support key-based
-  access, of course).
+* Lists, based on index-based access, with significantly faster
+  lookup. One advantage of lists, though, is when index-based access is used and
+  iterators that follow a value  across insertions and deletions are useful. In
+  this case, for lists, we simply take a pointer to the node; this becomes
+  trickier with Immutable AVL Trees, where the index of existing elements shifts
+  as insertions or deletions execute.
 
 ### Simple
 

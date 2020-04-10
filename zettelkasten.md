@@ -367,7 +367,10 @@ The arguments to the `zke` function are:
 * The path on which the article (output) should be saved
   (`../weblog/zettelkasten`; the function will append the `md` extension).
 * The ID of the starting Zettel (`0bh`).
-* The space-separated list of blacklisted Zettel.
+* The space-separated list of blacklisted Zettel. These are Zettel that are
+  transitively reachable from the starting Zettel, but that I don't want to
+  include in the article (because they are a bit too far away from the main
+  topic).
 
 This is executed by [Edge](http://github.com/alefore/edge)'s VM language (the
 implementation is itself [defined as an Edge

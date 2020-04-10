@@ -39,6 +39,16 @@ navigating, etc.) aspects of the digital medium.
 I'm somewhat curious as to what advantages a physical Zettelkasten would have
 that I'm missing out on. I suppose I'll never know.
 
+### Git
+
+I store my Zettelkasten in a git source code repository.
+
+I considered using a private repository in GitHub but, for the time being, I'm
+using Google Cloud Source Repositories to back up my repository. This has worked
+well so far. I even get a repository viewer that renders Markdown files well
+enough, though I use it very rarely; I'm much more likely to peruse my notes
+through my text editor, since that allows me to modify them directly.
+
 ## Directory Structure
 
 My Zettelkasten is a single directory containing one Markdown file for
@@ -50,16 +60,6 @@ As of 2020-04-10, the last note I've created is `0qs.md` (the 964th note).
 I have a symbolic link `index.md` which points to my main entry point note (note
 `0a9.md`). This is used by my `:zki` (Zettelkasten Index) command to take me to
 the "index" into my notes.
-
-### Git
-
-I store my Zettelkasten in a git source code repository.
-
-I considered using a private repository in github but, for the time being, I'm
-using Google Cloud Source Repositories, which seems to work well: it even gives
-me a Markdown viewer which works well enough (though I use it very rarely; I'm
-much more likely to peruse my notes through my text editor, since that allows me
-to trivially modify them).
 
 ### Why Not Readable Names
 

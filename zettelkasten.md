@@ -362,11 +362,12 @@ the following code to generate my article about Zettelkästen:
             + " 0px"  // Spaced Repetition: Effective Practices
     );
 
-The arguments are:
+The arguments to the `zke` function are:
 
-* The path on which the article (output) should be saved.
-* The ID of the starting Zettel.
-* The space-separated list of blacklisted articles.
+* The path on which the article (output) should be saved
+  (`../weblog/zettelkasten`; the function will append the `md` extension).
+* The ID of the starting Zettel (`0bh`).
+* The space-separated list of blacklisted Zettel.
 
 This is executed by [Edge](http://github.com/alefore/edge)'s VM language (the
 implementation is itself [defined as an Edge

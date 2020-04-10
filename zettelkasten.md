@@ -328,6 +328,16 @@ I have some automation that:
 TODO: The automation should be improved to cap the amount of nesting for the
 subtitles.
 
+### Results
+
+I imagined that the results of concatenating Zettel would be incredibly choppy
+and I would have to significantly rework the output of this technique. I was
+ready to maintain a set of patches and rebase them on top of new dumps.
+
+However, much to my surprise, concatenation of notes seem to have worked fairly
+well. The resulting articles feel perhaps a little bit "dense" (which I suppose
+is good). I haven't had to edit any of these dumps just yet.
+
 ## Ideas to Explore
 
 The following are ideas for my Zettelkasten that deserve further exploration:

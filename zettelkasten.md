@@ -193,7 +193,10 @@ to enrich our understanding.
 ## Low Friction
 
 I am proactive about lowering the friction for common
-operations in my Zettelkasten.
+operations in my Zettelkasten. I do this by defining
+operations in the [zettelkasten
+extension](https://github.com/alefore/edge/blob/master/rc/editor_commands/lib/zk.cc)
+of [my text editor](https://github.com/alefore/edge).
 
 ### Common Operations
 
@@ -244,7 +247,7 @@ phone.
 
 To register a new note, I typically use the following process:
 
-* Go to an existing node in which it should be inserted.
+* Go to an existing node from which the new note should be referenced.
 * Enter the title of the new node between braces.
 * Execute Edge command `:zkln` (Zettelkasten Link New). This (1) creates a new
   note with this title and a "Related" back-link to the original note, (2)
@@ -291,8 +294,11 @@ very clear to me how well this will work.
 
 Spaced repetition is a very good way to learn. It requires consistency.
 
-I use Mnemosyne and have a database of 8.1k cards, mostly about German, Italian,
-and Swiss facts.
+I use [Mnemosyne](https://en.wikipedia.org/wiki/Mnemosyne_(software)) and have a
+database of 8.1k cards (as of 2020-04-10), mostly about Swiss facts (e.g., how
+the parlament works), German and Italian vocabulary and grammar, and a few other
+random topics. I've been using this database since around 2014 (possibly
+earlier).
 
 ## Extracting articles
 

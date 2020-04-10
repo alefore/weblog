@@ -3,6 +3,42 @@
 I'm using several Zettelkasten principles as a way to organize and develop my
 thinking.
 
+## What are Zettelkästen?
+
+A Zettelkasten (German for "notes box" or "notes cabinet") is a method to take
+and organize notes about multiple topics. This has been used by many writers for
+centuries and is being "rediscovered" recently by many bloggers and rationalists
+(myself included).
+
+### Plurals
+
+In German, the word Zettel is both the singular and plural form for "a note"
+("notes"). Kasten means "box" or "cabinet", so the compound noun Zettelkasten
+means "box of notes". The plural, "boxes of notes", would be Zettelkästen.
+
+### Notorious Users
+
+Many articles online associate the Zettelkasten system with the German
+sociologist Niklas Luhmann, who left behind a very large (90.000) collection of
+notes and who described a few techniques for organizing paper Zettel ("notes").
+
+However, many other notorious writers have used Zettelkästen. For example, an
+[article in Der Spiegel from
+1966](https://www.spiegel.de/spiegel/print/d-46407320.html) mentions how Jules
+Verne, who died two decades before Luhmman's birth, used a Zettelkasten
+consisting of 25.000 notes.
+
+## Digital Zettelkasten
+
+I decided to create my Zettelkasten as a set of files, rather than the tried and
+true approach of using physical notes. This mostly reflects the fact that I'm
+very comfortable viewing and editing text files (mostly because I created my own
+text editor) and prefer the mobility, durability and efficiency (of searching,
+navigating, etc.) aspects of the digital medium.
+
+I'm somewhat curious as to what advantages a physical Zettelkasten would have
+that I'm missing out on. I suppose I'll never know.
+
 ## Directory Structure
 
 My Zettelkasten is a single directory containing one Markdown file for
@@ -27,9 +63,9 @@ to trivially modify them).
 
 ### Why Not Readable Names
 
-I considered using "human readable" names instead of my "unique ID" approach
-for the files in my Zettelkasten. Perhaps I could have taken just the
-titles of notes.
+I considered using "human readable" names instead of my "unique ID" approach for
+the file names (paths) in my Zettelkasten. Perhaps I could have taken
+just the titles of notes.
 
 I'm not sure this would have been better; it might have saved me from
 implementing some automation in Edge (e.g., I would be able to load a file just
@@ -63,10 +99,10 @@ I keep metadata about my notes in the following ways:
 * Embedded directly in the notes contents. The obvious example of this are the
   links.
 
-* In the history in my git repository. This will let me see not only when the
-  note was created, but its entire history, down to the granularity with which
-  I commit to the repository (which isn't every single time I add a note, but
-  roughly, around once per day).
+* In the history in my git repository. This lets me see not only when the note
+  was created, but its entire history, down to the granularity with which I
+  commit to the repository (which isn't every single time I add a note, but
+  around once per day).
 
 * In my text editor's log. This is (as of 2020-04-10) work in progress. I keep a
   log for each file of every time I've opened it and every single transformation
@@ -74,7 +110,8 @@ I keep metadata about my notes in the following ways:
   trimming down the logs soon. And I haven't yet generated many visualizations
   for this data. However, I expect that, in the future, I will be querying these
   logs for information such as total time I've spent looking at a given note,
-  frequency of access to notes by different criteria, etc..
+  frequency of access to notes by different criteria (e.g., day of the week,
+  time of the day), etc..
 
 ## Note Structure
 
@@ -88,9 +125,9 @@ structure:
 * Set of related links.
 
 * Set of tags (optional). I haven't yet derived any actual value from the tags.
-  Perhaps this means that I have fairly good structure Zettel; perhaps that
-  my search functionality works very well; perhaps that my Zettelkasten hasn't
-  grown enough to the point where this will become useful.
+  Perhaps this means that I have fairly good structure Zettel; perhaps that my
+  search functionality works very well; perhaps that my Kasten hasn't grown
+  enough to the point where this will become useful.
 
 ### Good Names
 
@@ -209,7 +246,7 @@ To register a new note, I typically use the following process:
 
 * Go to an existing node in which it should be inserted.
 * Enter the title of the new node between braces.
-* Execute Edge command ":zkln" (Zettelkasten Link New). This (1) creates a new
+* Execute Edge command `:zkln` (Zettelkasten Link New). This (1) creates a new
   note with this title and a "Related" back-link to the original note, (2)
   leaves the cursor right after the title (where the contents of the note will
   begin), and (3) turns the text in the original note into a link to the new
@@ -220,11 +257,11 @@ I do this less frequently, but sometimes it helps me when the title of the new
 note isn't obvious before I've written it down. To do this, I follow these
 steps:
 
-* Execute Edge command ":zkn" (Zettelkasten New). This will create a new empty
+* Execute Edge command `:zkn` (Zettelkasten New). This will create a new empty
   note.
 * Write down and save the note.
 * Optionally, I'll navigate to existing notes, insert the ID (path) of the new
-  note, and use ":zkl" (Zettelkasten Link) to turn the ID into a link to the
+  note, and use `:zkl` (Zettelkasten Link) to turn the ID into a link to the
   note (which reads the title).
 
 #### Examples

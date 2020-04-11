@@ -390,8 +390,17 @@ and I would have to significantly rework the output of this technique. I was
 ready to maintain a set of patches and rebase them on top of new dumps.
 
 However, much to my surprise, concatenation of notes seem to have worked fairly
-well. The resulting articles feel perhaps a little bit "dense" (which I suppose
-is good). I haven't had to edit any of these dumps just yet.
+well, much better than I anticipated:
+
+* The resulting articles feel perhaps a little bit "dense" (which I suppose
+  is good).
+
+* Unfortunately, inconsistencies occur in terms of the "voice" used and other
+  assumptions about the reader. For example, the text switches back and forth
+  between forms like "You should do X", "One should do X", "Do X", etc.. I don't
+  yet have a good idea for improving this.
+
+I haven't had to edit any of these dumps just yet.
 
 ### Example
 

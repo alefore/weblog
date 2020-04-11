@@ -52,10 +52,18 @@ through my text editor, since that allows me to modify them directly.
 ## Directory Structure
 
 My Zettelkasten is a single directory containing one Markdown file for
-each note. The names of the files are simply an increasing three-characters ID,
-starting from `000` and using both numbers as well as lowercase characters.
+each note.
 
-As of 2020-04-10, the last note I've created is `0qs.md` (the 964th note).
+The names of the files are simply three-character IDs starting from `000` and
+including numbers as well as lowercase characters (e.g., `0b9.md` is my note
+about the city of Macau). This seems to work well for me.
+
+With this schema I can create a total of (10 + 26)³ = 45e3 notes, which sounds
+adequate. If I ever reach that limit, that probably means I've been very
+successful with my Zettelkasten; I can, at that point, adopt uppercase
+characters, which would increase the namespace to 238e3 notes. As of 2020-04-11
+I'm still far from that, though: the last note I've created is `0r1.md` (the
+974th note).
 
 I have a symbolic link `index.md` which points to my main entry point note (note
 `0a9.md`). This is used by my `:zki` (Zettelkasten Index) command to take me to
@@ -97,12 +105,12 @@ superfluous.
 I keep metadata about my notes in the following ways:
 
 * Embedded directly in the notes contents. The obvious example of this are the
-  links.
+  links that occur in a note's text.
 
 * In the history in my git repository. This lets me see not only when the note
   was created, but its entire history, down to the granularity with which I
-  commit to the repository (which isn't every single time I add a note, but
-  around once per day).
+  commit to the repository (which isn't every single time I add or edit a note,
+  but around once per day).
 
 * In my text editor's log. This is (as of 2020-04-10) work in progress. I keep a
   log for each file of every time I've opened it and every single transformation
@@ -214,20 +222,35 @@ The following are common operations for my Zettelkasten:
 #### Follow links
 
 A common operation in my Zettelkasten is to follow a link,
-which I do just by scrolling to the file portion (the part between parentheses)
-and pressing return.
+which I do just by scrolling to the target path (the part between parentheses)
+and pressing `↵ Enter`.
 
-This has acceptable friction. It could be lower if I could also make the text
-of the link (the part between the braces react).
+Before I press `↵ Enter`, just scrolling to the path in a link is enough to make
+Edge detect that a file exists at that path and display a portion of its
+contents (i.e., of the target of the link) at the bottom of the screen, in the
+context buffer. This allows me to visualize the contents of the link target
+before I follow the link; sometimes I decide not to follow the link but to stay
+in the current file.
+
+This has acceptable friction. I could lower it by making the text of the link
+(the part between the braces) react (rather than just the target path part of
+the link).
 
 #### Collect Ideas
 
 I separate the process of collecting new ideas that I want to insert into my
 Zettelkasten from the process of actually registering them as notes. I
 do this because the friction of entering notes into my Zettelkasten is high
-enough (due mainly to the expectations of quality that I maintain for notes)
-that it would become too distracting and slow to do this as I'm engaging in
-other activities where ideas occur.
+enough (mainly due to the standards of quality that I try to uphold for my
+notes) that it would become too distracting and slow to do this as I'm engaging
+in activities where ideas occur (e.g., brushing my teeth, reading an article,
+listening to a presentation, in a meeting with a coworker).
+
+Lowering the bar for collecting ideas has the advantage of enabling a form of
+"brainstorming", where I can quickly capture a large number of ideas, focusing
+more on the creativity aspects of the process, with complete disregard to the
+quality of their formulation (and even of the ideas themselves). I can postpone
+the process of culling and refinement to a later stage.
 
 ##### Collecting Ideas: External Files
 
@@ -249,11 +272,16 @@ To register a new note, I typically use the following process:
 
 * Go to an existing node from which the new note should be referenced.
 * Enter the title of the new node between braces.
-* Execute Edge command `:zkln` (Zettelkasten Link New). This (1) creates a new
-  note with this title and a "Related" back-link to the original note, (2)
-  leaves the cursor right after the title (where the contents of the note will
-  begin), and (3) turns the text in the original note into a link to the new
-  note (and saves the original note).
+* Execute Edge command `:zkln` (Zettelkasten Link New). This creates a new note
+  with this title and a "Related" back-link to the original note, turns the text
+  in the original note into a link to the new note, and saves the original note.
+* At this point I just start typing the note directly.
+
+My initial implementation would leave the cursor at the end of the note (after
+the "Related" back-link). That meant that right after executing `:zkln` I would
+have to jump up to the 3rd line to start writing the text. To lower the friction
+further, I now make sure to leave the cursor exactly in the right position (the
+3rd line) so that I can just start entering the note's contents immediately.
 
 Sometimes, instead, I generate a new note not associated with any existing note.
 I do this less frequently, but sometimes it helps me when the title of the new
@@ -283,9 +311,10 @@ them.
 I have started by annotating notes with what I hope will allow me to
 programatically generate flashcards (and, ideally, update them, though that
 seems harder) but that don't clutter the Markdown visualization very much. To do
-this, I add a sequence of "Cloze: TEXT" annotations at the end of the notes,
-with the semantics that a flashcard should be generated from the title and text
-of the note with a cloze deletion of the selected text.
+this, I add a sequence of "Cloze: TEXT" or "Cloze: TEXT HINT" annotations at the
+end of the notes, with the semantics that a flashcard should be generated from
+the title and text of the note with a Cloze deletion of the selected
+text.
 
 Unfortunately, I haven't yet automated the generation of cards, and it isn't
 very clear to me how well this will work.
@@ -300,10 +329,36 @@ the parlament works), German and Italian vocabulary and grammar, and a few other
 random topics. I've been using this database since around 2014 (possibly
 earlier).
 
+### Cloze deletion
+
+Cloze deletion is a technique where a part of a short text (typically just one
+sentence) is deleted, replaced with a place holder line (sometimes with a hint).
+You use the obscured sentence as a question and must be able to state the
+contents of the deleted text.
+
+For example, you would receive the sentence "Wassily Kandinsky was a
+___(nationality)___ painter and art theorist" and answer "Russian".
+
+I find cloze deletion useful. Most of my flashcards cards use it. Perhaps it
+works because it allows me to have additional context around the
+question contained in the card.
+
+It also allows me to reinforce peripheral information in a card beyond the
+immediate fact in the card is trying to teach (without explicitly focusing my
+attention on it).
+
+#### Additional Context
+
+I've found it useful to include additional peripheral context around the main
+fact that a card teaches.
+
+Perhaps this works because it makes the card more memorable, so I have an easier
+topic remembering the main fact.
+
 ## Extracting articles
 
 I am extracting articles directly from my Zettelkasten and publishing them in
-github. For each article that I want to extract, I provide:
+GitHub. For each article that I want to extract, I provide:
 
 * A starting Zettel for the article, representing the main entry point into the
   topic.

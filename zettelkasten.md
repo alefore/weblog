@@ -324,6 +324,25 @@ Some of the main topics I've written about in my Zettelkasten are:
 * Bitcoin
 * Kowloon Walled City
 
+### Technical Topics
+
+Among many other things, I use my Zettelkasten to learn about very concrete
+technical topics such as programming languages, down to low-level details such
+as their syntax.
+
+To do this, I work through exercises and then set out to transcribe the main
+things I've learned into notes. These notes are slightly redundant with the
+original materials I've used to learn. However, I deliberately aim to organize
+the newly acquired knowledge in the structure and that I find most logical and
+at the level of detail that I find most useful. I think that going through the
+process of formulating these notes helps me reinforce what I've learned.
+
+For completion, I also save my exercises also as notes, though I don't expect
+this to be specially useful.
+
+The canonical example where I've done this is in [my notes about Lean
+Prover](https://github.com/alefore/weblog/blob/master/lean.md).
+
 ## Spaced Repetition and Notes
 
 I intend to generate flashcards from the notes I'm adding to my

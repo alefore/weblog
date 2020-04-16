@@ -45,7 +45,7 @@ To prove an implication statement of the form
     p → q ,
 
 for a given `p` and `q` of type `Prop`, implement a function that receives a
-value `hp` of the antecedent type `p` and manufacturs (and returns) a value
+value `hp` of the antecedent type `p` and manufactures (and returns) a value
 `hq`of the consequent type `q`.
 
 You'd use it thus:

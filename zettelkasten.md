@@ -302,6 +302,28 @@ my text editor:
 
 [![asciicast](https://asciinema.org/a/314506.png)](https://asciinema.org/a/314506)
 
+## Topics
+
+Some of the main topics I've written about in my Zettelkasten are:
+
+* Productivity and self-growth
+  * Thinking - techniques to augment or refine our thinking
+  * Logical fallacies and biases
+  * Forecasting
+* Management
+* Programming and cybernetics
+  * Detecting Errors Earlier
+  * Immutable AVL Trees
+  * PID Controllers
+  * Various technologies that I use at work (systems internal to Google)
+  * Computability
+  * Math: Topology, Logarithms
+  * Lean Prover
+* Switzerland (e.g., government bodies, Milizprinzip)
+* Bauhaus art school
+* Bitcoin
+* Kowloon Walled City
+
 ## Spaced Repetition and Notes
 
 I intend to generate flashcards from the notes I'm adding to my

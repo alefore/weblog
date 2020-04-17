@@ -51,25 +51,93 @@ through my text editor, since that allows me to modify them directly.
 
 ## Directory Structure
 
-My Zettelkasten is a single directory containing one Markdown file for
-each note.
+My Zettelkasten consists of two directories:
 
-The names of the files are simply three-character IDs starting from `000` and
-including numbers as well as lowercase characters (e.g., `0b9.md` is my note
+* Notes: A set of Markdown files, one for each note.
+
+* Images: A set of image files, mostly in JPEG and SVG format.
+
+### Flat namespace
+
+I decided to use a flat namespace that contains all my notes, rather than a
+hierarchical namespace (e.g., folders and sub-folders).
+
+Some Zettelkasten users structure their notes hierarchically, such as Luhmann's
+"4c1f12" system (i.e., alternating numbers and characters for deeply nested
+hierarchies of notes, where "4c1f12" is just short form for "4.3.6.12") and
+suplement that with note links.
+
+However, I think schewing the restriction of having to lay my notes in such a
+hierarchy and, instead, just collecting them in a flat namespace works best
+because it really forces an organical structure to evolve. Using links would
+still enable the set of notes to be organized as a semilattice (or arbitrary
+graph) rather than a tree, but it would still impose a default tree-like
+structure or view, foricing each note to take a unique place in the hierarchy.
+
+#### Notes Structure: Semilattice
+
+I think representing the set of notes in my Zettelkasten as a semilattice is
+more adequate than imposing a tree structure on it. I've seen plenty of examples
+where a given note relates equally to more than one "higher level" (parent)
+concept.
+
+##### Semilattices and Trees
+
+Christoph Alexander's definition of a semilattice: "A collection of sets forms a
+semilattice if and only if, when two overlapping sets belong to the collection,
+the set of elements common to both also belongs to the collection."
+
+Trees are a subset of semilattices: "those where for any two sets that belong to
+the collection, either one is wholly contained in the other, or else they are
+wholly disjoint."
+
+> Whenever we have a tree structure, it means that within this structure no
+> piece of any unit is ever connected to other units, except through the medium
+> of that unit as a whole.
+
+A semilattice can represent enormously greater structural complexity than a
+tree:
+
+> The enormity of this restriction is difficult to grasp. It is a little as
+> though the members of a family were not free to make friends outside the
+> family, except when the family as a whole made a friendship.
+
+###### We Categorize as Trees Systems That Demand Semilattices
+
+When we encounter systems that can't be adequately described by a tree structure
+(those which contain basic units that that have intersections that are not a
+basic unit and thus would be better categorized by a semilattice), we have an
+underlying tendency to, nevertheless, use trees to model them.
+
+From Christoph Alexander's A City is Not A Tree:
+
+> In experiments by Huggins and myself at Harvard, we showed people patterns
+> whose internal units overlapped, and found that they almost always invent a
+> way of seeing the patterns as a tree—even when the semilattice view of the
+> patterns would have helped them perform the task of experimentation which was
+> before them.
+
+This can drastically hamper our thinking, by preventing our models from
+capturing important parts of the underlying structure of the reality they
+portray,
+
+### Note names
+
+The names of the note files are simply three-character IDs starting from `000`
+and including numbers as well as lowercase characters (e.g., `0b9.md` is my note
 about the city of Macau). This seems to work well for me.
 
-With this schema I can create a total of (10 + 26)³ = 45e3 notes, which sounds
-adequate. If I ever reach that limit, that probably means I've been very
-successful with my Zettelkasten; I can, at that point, adopt uppercase
-characters, which would increase the namespace to 238e3 notes. As of 2020-04-11
-I'm still far from that, though: the last note I've created is `0r1.md` (the
-974th note).
+With this schema I can create a total of (10 + 26)³ = 45e3 notes, which I think
+suffices. If I ever reach that limit, that will mean I've been very successful
+with my Zettelkasten; I can, at that point, adopt uppercase characters, which
+would increase the namespace to 238e3 notes. As of 2020-04-11 I'm still far from
+that, though: the last note I've created is `0r1.md` (the 974th note).
 
 I have a symbolic link `index.md` which points to my main entry point note (note
 `0a9.md`). This is used by my `:zki` (Zettelkasten Index) command to take me to
 the "index" into my notes.
 
-### Why Not Readable Names
+#### Why Not Readable Names
 
 I considered using "human readable" names instead of my "unique ID" approach for
 the file names (paths) in my Zettelkasten. Perhaps I could have taken
@@ -86,7 +154,7 @@ through the index (with `:zki`) or search directly for articles that have a
 token in their title (e.g., `:zkt bitc`), which turned out to be more
 comfortable for me.
 
-### Why Not Dates
+#### Why Not Dates
 
 I considered using date-based schemas for the paths, such as `2020-04-10-0` or
 just `2004100`. Proponents of this approach emphasize the advantage of knowing
@@ -100,7 +168,7 @@ important enough to deserve additional mechanisms and, once these
 mechanisms are in place, embedding this in the note's title is somewhat
 superfluous.
 
-#### Notes: Metadata
+##### Notes: Metadata
 
 I keep metadata about my notes in the following ways:
 
@@ -120,6 +188,15 @@ I keep metadata about my notes in the following ways:
   logs for information such as total time I've spent looking at a given note,
   frequency of access to notes by different criteria (e.g., day of the week,
   time of the day), etc..
+
+### Image files
+
+I decided to collect images in my Zettelkasten. That allows me to augment my
+notes with pictures of paintings or graphs of functions. Whenever I add an
+image, I create a note about it (I have a few exceptions to this rule, but
+that's all they are: exceptions).
+
+![images/005.jpg](images/005.jpg)
 
 ## Note Structure
 

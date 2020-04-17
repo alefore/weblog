@@ -87,19 +87,24 @@ The following is a visualization of the structure of my Zettelkasten:
 
 ![images/007.png](images/007.png)
 
-I generate this with the following command:
+As you can see, there's heavy clustering around specific topics, but also a
+fairly large number of cross-topic links.
 
-    #!/bin/bash
-    echo "digraph Zk {"
-    for f in ???.md
-    do
-      grep -l $f ???.md | sed -e "s/\$/ -> $f/" | sed 's/\(...\)\.md/x\1/g'
-    done
-    echo "}"
+##### References
 
-I pipe this to `dot`:
+The following is a histogram (with no bucketing) of the number of links to each
+note:
 
-    dot -Tps graph.dot -o graph.ps && pnmtopng graph001.ppm >images/007.png
+![images/008.png](images/008.png)
+
+Most notes (roughly half of them) have just 1 link. A few have 2. Very few have
+more than 10.
+
+The most referenced notes are (as of 2020-04-17):
+
+* Bitcoin
+* Iterate
+* Zettelkasten
 
 ### Note names
 

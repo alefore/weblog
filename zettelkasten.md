@@ -95,7 +95,7 @@ fairly large number of cross-topic links.
 The following is a histogram (with no bucketing) of the number of links to each
 note:
 
-![images/008.png](images/008.png)
+![images/008.svg](images/008.svg)
 
 Most notes (roughly half of them) have just 1 link. A few have 2. Very few have
 more than 10.

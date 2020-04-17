@@ -88,7 +88,7 @@ Christoph Alexander's definition of a semilattice (from A City is not a Tree):
 sets belong to the collection, the set of elements common to both also belongs
 to the collection."
 
-![images/006.jpg](images/006.jpg)
+![images/006.png](images/006.png)
 
 Trees are a subset of semilattices: "those where for any two sets that belong to
 the collection, either one is wholly contained in the other, or else they are

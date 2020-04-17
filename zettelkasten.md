@@ -64,7 +64,7 @@ hierarchical namespace (e.g., folders and sub-folders).
 
 Some Zettelkasten users structure their notes hierarchically, such as Luhmann's
 "4c1f12" system (i.e., alternating numbers and characters for deeply nested
-hierarchies of notes, where "4c1f12" is just short form for "4.3.6.12") and
+hierarchies of notes, where "4c1f12" is just short form for "4.3.1.6.12") and
 suplement that with note links.
 
 However, I think schewing the restriction of having to lay my notes in such a

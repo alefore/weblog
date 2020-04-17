@@ -97,14 +97,14 @@ note:
 
 ![images/008.svg](images/008.svg)
 
-Most notes (roughly half of them) have just 1 link. A few have 2. Very few have
-more than 10.
+Most notes (roughly half of them) have just 1 link (i.e., are referenced only
+from one other note). A few have 2. Very few have more than 10.
 
 The most referenced notes are (as of 2020-04-17):
 
-* Bitcoin
-* Iterate
-* Zettelkasten
+* Bitcoin (26)
+* Iterate (24)
+* Zettelkasten (21)
 
 ### Note names
 

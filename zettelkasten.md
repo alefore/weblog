@@ -65,63 +65,41 @@ hierarchical namespace (e.g., folders and sub-folders).
 Some Zettelkasten users structure their notes hierarchically, such as Luhmann's
 "4c1f12" system (i.e., alternating numbers and characters for deeply nested
 hierarchies of notes, where "4c1f12" is just short form for "4.3.1.6.12") and
-suplement that with note links.
+supplement that hierarchical structure with additional links across notes.
 
-However, I think schewing the restriction of having to lay my notes in such a
-hierarchy and, instead, just collecting them in a flat namespace works best
-because it really forces an organical structure to evolve. Using links would
-still enable the set of notes to be organized as a semilattice (or arbitrary
-graph) rather than a tree, but it would still impose a default tree-like
-structure or view, foricing each note to take a unique place in the hierarchy.
+However, I prefer to schew the restriction of having to lay my notes in such a
+hierarchy and, instead, just collect them in a flat namespace. This works for me
+because it forces an organical structure to evolve. Using links would still
+enable the set of notes to be organized as a directed graph rather than a tree,
+but it would still impose an underlying tree-like structure or view, forcing
+each note to take a unique place in the hierarchy, which feels unnatural.
 
-#### Notes Structure: Semilattice
+#### Graph Structure
 
-I think representing the set of notes in my Zettelkasten as a semilattice is
-more adequate than imposing a tree structure on it. I've seen plenty of examples
+I think representing the set of notes in my Zettelkasten as a full graph is more
+adequate than imposing a tree structure on it. I've seen plenty of examples
 where a given note relates equally to more than one "higher level" (parent)
 concept.
 
-##### Semilattices and Trees
+##### Graph Visualization
 
-Christoph Alexander's definition of a semilattice (from A City is not a Tree):
-"A collection of sets forms a semilattice if and only if, when two overlapping
-sets belong to the collection, the set of elements common to both also belongs
-to the collection."
+The following is a visualization of the structure of my Zettelkasten:
 
-![images/006.png](images/006.png)
+![images/007.png](images/007.png)
 
-Trees are a subset of semilattices: "those where for any two sets that belong to
-the collection, either one is wholly contained in the other, or else they are
-wholly disjoint."
+I generate this with the following command:
 
-> Whenever we have a tree structure, it means that within this structure no
-> piece of any unit is ever connected to other units, except through the medium
-> of that unit as a whole.
+    #!/bin/bash
+    echo "digraph Zk {"
+    for f in ???.md
+    do
+      grep -l $f ???.md | sed -e "s/\$/ -> $f/" | sed 's/\(...\)\.md/x\1/g'
+    done
+    echo "}"
 
-A semilattice can represent enormously greater structural complexity than a
-tree:
+I pipe this to `dot`:
 
-> The enormity of this restriction [of trees] is difficult to grasp. It is a
-> little as though the members of a family were not free to make friends outside
-> the family, except when the family as a whole made a friendship.
-
-###### We Categorize as Trees Systems That Demand Semilattices
-
-When we encounter systems that can't be adequately described by a tree structure
-(those containing overlapping units whose intersection isn't a basic unit), we
-have an underlying tendency to, nevertheless, use trees to model them.
-
-From Christoph Alexander's A City is Not A Tree:
-
-> In experiments by Huggins and myself at Harvard, we showed people patterns
-> whose internal units overlapped, and found that they almost always invent a
-> way of seeing the patterns as a tree—even when the semilattice view of the
-> patterns would have helped them perform the task of experimentation which was
-> before them.
-
-This can drastically hamper our thinking, by preventing our models from
-capturing important parts of the underlying structure of the reality they
-portray,
+    dot -Tps graph.dot -o graph.ps && pnmtopng graph001.ppm >images/007.png
 
 ### Note names
 

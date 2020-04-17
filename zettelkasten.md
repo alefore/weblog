@@ -53,9 +53,9 @@ through my text editor, since that allows me to modify them directly.
 
 My Zettelkasten consists of two directories:
 
-* Notes: A set of Markdown files, one for each note.
+* `/`: A set of Markdown files, one for each note.
 
-* Images: A set of image files, mostly in JPEG and SVG format.
+* `images/`: A set of image files, mostly in JPEG and SVG format.
 
 ### Flat namespace
 
@@ -83,9 +83,12 @@ concept.
 
 ##### Semilattices and Trees
 
-Christoph Alexander's definition of a semilattice: "A collection of sets forms a
-semilattice if and only if, when two overlapping sets belong to the collection,
-the set of elements common to both also belongs to the collection."
+Christoph Alexander's definition of a semilattice (from A City is not a Tree):
+"A collection of sets forms a semilattice if and only if, when two overlapping
+sets belong to the collection, the set of elements common to both also belongs
+to the collection."
+
+![images/006.jpg](images/006.jpg)
 
 Trees are a subset of semilattices: "those where for any two sets that belong to
 the collection, either one is wholly contained in the other, or else they are
@@ -98,16 +101,15 @@ wholly disjoint."
 A semilattice can represent enormously greater structural complexity than a
 tree:
 
-> The enormity of this restriction is difficult to grasp. It is a little as
-> though the members of a family were not free to make friends outside the
-> family, except when the family as a whole made a friendship.
+> The enormity of this restriction [of trees] is difficult to grasp. It is a
+> little as though the members of a family were not free to make friends outside
+> the family, except when the family as a whole made a friendship.
 
 ###### We Categorize as Trees Systems That Demand Semilattices
 
 When we encounter systems that can't be adequately described by a tree structure
-(those which contain basic units that that have intersections that are not a
-basic unit and thus would be better categorized by a semilattice), we have an
-underlying tendency to, nevertheless, use trees to model them.
+(those containing overlapping units whose intersection isn't a basic unit), we
+have an underlying tendency to, nevertheless, use trees to model them.
 
 From Christoph Alexander's A City is Not A Tree:
 
@@ -130,8 +132,8 @@ about the city of Macau). This seems to work well for me.
 With this schema I can create a total of (10 + 26)³ = 45e3 notes, which I think
 suffices. If I ever reach that limit, that will mean I've been very successful
 with my Zettelkasten; I can, at that point, adopt uppercase characters, which
-would increase the namespace to 238e3 notes. As of 2020-04-11 I'm still far from
-that, though: the last note I've created is `0r1.md` (the 974th note).
+would increase the namespace to 238e3 notes. As of 2020-04-17 I'm still far from
+that, though: the last note I've created is `0th.md` (the 1062th note).
 
 I have a symbolic link `index.md` which points to my main entry point note (note
 `0a9.md`). This is used by my `:zki` (Zettelkasten Index) command to take me to
@@ -156,9 +158,9 @@ comfortable for me.
 
 #### Why Not Dates
 
-I considered using date-based schemas for the paths, such as `2020-04-10-0` or
-just `2004100`. Proponents of this approach emphasize the advantage of knowing
-when a note was created.
+I considered using date-based schemas for the paths, such as `2020-04-10-0.md`
+or just `2004100.md`. Proponents of this approach emphasize the advantage of
+knowing when a note was created.
 
 I decided to opt for the simpler 3-characters approach because I thought it
 would keep the friction (of refering to notes) slightly lower.

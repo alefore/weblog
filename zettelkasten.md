@@ -92,10 +92,16 @@ fairly large number of cross-topic links.
 
 ##### Semilattice
 
-Since I have a starting "index" note that contains links to most of topics in my
-Zettelkasten, by ordering notes based on their distance from the index and
-ignoring "upward" or "sideways" links, I can represent (a subset of the edges
-in) the graph as a semilattice:
+I have a starting "index" note that contains links to most of topics in my
+Zettelkasten. The following is a histogram of the distance (i.e., minimal number
+of links) that all reachable notes (which is the vast majority of notes) have
+from the index:
+
+![images/013.svg](images/013.svg)
+
+By ordering notes based on their distance from the index and ignoring "upward"
+or "sideways" links, I can represent (a subset of the edges in) the graph as a
+semilattice:
 
 ![images/010.svg](images/010.svg)
 

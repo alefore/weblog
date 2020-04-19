@@ -74,95 +74,6 @@ enable the set of notes to be organized as a directed graph rather than a tree,
 but it would still impose an underlying tree-like structure or view, forcing
 each note to take a unique place in the hierarchy, which feels unnatural.
 
-#### Structure
-
-I think representing the set of notes in my Zettelkasten as a full graph is more
-adequate than imposing a tree structure on it. I've seen plenty of examples
-where a given note relates equally to more than one "higher level" (parent)
-concept.
-
-##### Graph Visualization
-
-The following is a visualization of the structure of my Zettelkasten:
-
-![images/007.png](images/007.png)
-
-As you can see, there's heavy clustering around specific topics, but also a
-fairly large number of cross-topic links.
-
-##### Semilattice
-
-I have a starting "index" note that contains links to most of topics in my
-Zettelkasten. The following is a histogram of the distance (i.e., minimal number
-of links) that all reachable notes (which is the vast majority of notes) have
-from the index:
-
-![images/013.svg](images/013.svg)
-
-By ordering notes based on their distance from the index and ignoring "upward"
-or "sideways" links, I can represent (a subset of the edges in) the graph as a
-semilattice:
-
-![images/010.svg](images/010.svg)
-
-##### Graph Structure: Backlinks Distribution
-
-The following is a histogram (with no bucketing) of the number of links to each
-note (i.e., of backlinks):
-
-![images/008.svg](images/008.svg)
-
-Most notes (roughly half of them) have just 1 link (i.e., are referenced only
-from one other note). A few have 2. Very few have more than 10.
-
-I have a few notes (currently 5) that have no references. In the Graph
-Visualization these can be seen as a few small disconnected nodes.
-These are temporary anomalies, exceptions to the principle I follow of
-referencing every note.
-
-The distribution appears to follow a power law fairly closely. For contrast,
-the following is a graph of the distribution of y = 2⁻ˣ:
-
-![images/009.svg](images/009.svg)
-
-The correspondence is striking. The only visible difference is that in my
-Zettelkasten the tail (of notes with very few references) appears to be slightly
-bigger.
-
-##### Links Distribution
-
-The following is a histogram (with no bucketing) of the number of links in each
-note:
-
-![images/011.svg](images/011.svg)
-
-Most notes at least have a link to a "parent" node, but a reasonably large
-number have at list two links. The ones with 0 links are probably very early
-notes before I automated the creation of new notes (ensuring that I almost
-always insert cross-reference the note with a parent note).
-
-##### Most Referenced Notes
-
-The most referenced notes are (as of 2020-04-17):
-
-* Bitcoin (26)
-* Iterate (24)
-* Zettelkasten (21)
-* Impact Catalogue (19) (a project at work)
-* Eliminate Distractions (15)
-* List of Mistakes (14)
-* Walter Gropius (14)
-* Detect Errors Early (14)
-* Good Feedback Fosters Growth (14)
-
-All these notes represent topics about which I have a large number of notes.
-
-I think the top three or four notes dominate over topics that have a comparable
-or larger number of notes because they are nouns that are likely to be linked to
-their "canonical" note whenever they occur in notes on the topic. In other
-topics, notes are more likely to only link up to their immediate parent, without
-linking directly to their canonical note.
-
 ### Note names
 
 The names of the note files are simply three-character IDs starting from `000`
@@ -316,6 +227,95 @@ often enables you to strengthen (rather than discard) the model.
 The goal of analyzing contradictions in our thinking shouldn't necessarily be to
 resolve them (by adjusting or removing one of the ideas in conflict) but rather
 to enrich our understanding.
+
+#### Structure
+
+I think representing the set of notes in my Zettelkasten as a full graph is more
+adequate than imposing a tree structure on it. I've seen plenty of examples
+where a given note relates equally to more than one "higher level" (parent)
+concept.
+
+##### Graph Visualization
+
+The following is a visualization of the structure of my Zettelkasten:
+
+![images/007.png](images/007.png)
+
+As you can see, there's heavy clustering around specific topics, but also a
+fairly large number of cross-topic links.
+
+##### Semilattice
+
+I have a starting "index" note that contains links to most of topics in my
+Zettelkasten. The following is a histogram of the distance (i.e., minimal number
+of links) that all reachable notes (which is the vast majority of notes) have
+from the index:
+
+![images/013.svg](images/013.svg)
+
+By ordering notes based on their distance from the index and ignoring "upward"
+or "sideways" links, I can represent (a subset of the edges in) the graph as a
+semilattice:
+
+![images/010.svg](images/010.svg)
+
+##### Graph Structure: Backlinks Distribution
+
+The following is a histogram (with no bucketing) of the number of links to each
+note (i.e., of backlinks):
+
+![images/008.svg](images/008.svg)
+
+Most notes (roughly half of them) have just 1 link (i.e., are referenced only
+from one other note). A few have 2. Very few have more than 10.
+
+I have a few notes (currently 5) that have no references. In the Graph
+Visualization these can be seen as a few small disconnected nodes.
+These are temporary anomalies, exceptions to the principle I follow of
+referencing every note.
+
+The distribution appears to follow a power law fairly closely. For contrast,
+the following is a graph of the distribution of y = 2⁻ˣ:
+
+![images/009.svg](images/009.svg)
+
+The correspondence is striking. The only visible difference is that in my
+Zettelkasten the tail (of notes with very few references) appears to be slightly
+bigger.
+
+##### Links Distribution
+
+The following is a histogram (with no bucketing) of the number of links in each
+note:
+
+![images/011.svg](images/011.svg)
+
+Most notes at least have a link to a "parent" node, but a reasonably large
+number have at list two links. The ones with 0 links are probably very early
+notes before I automated the creation of new notes (ensuring that I almost
+always insert cross-reference the note with a parent note).
+
+##### Most Referenced Notes
+
+The most referenced notes are (as of 2020-04-17):
+
+* Bitcoin (26)
+* Iterate (24)
+* Zettelkasten (21)
+* Impact Catalogue (19) (a project at work)
+* Eliminate Distractions (15)
+* List of Mistakes (14)
+* Walter Gropius (14)
+* Detect Errors Early (14)
+* Good Feedback Fosters Growth (14)
+
+All these notes represent topics about which I have a large number of notes.
+
+I think the top three or four notes dominate over topics that have a comparable
+or larger number of notes because they are nouns that are likely to be linked to
+their "canonical" note whenever they occur in notes on the topic. In other
+topics, notes are more likely to only link up to their immediate parent, without
+linking directly to their canonical note.
 
 ## Low Friction
 

@@ -247,11 +247,13 @@ fairly large number of cross-topic links.
 ##### Semilattice
 
 I have a starting "index" note that contains links to most of topics in my
-Zettelkasten. The following is a histogram of the distance (i.e., minimal number
-of links) that all reachable notes (which is the vast majority of notes) have
-from the index:
+Zettelkasten; almost every note can be reached following links. The following is
+the distribution of the distances from the index over all notes (i.e., the
+shortest path across links starting at the index and ending at the note):
 
 ![images/013.svg](images/013.svg)
+
+I put at -1 unreachable notes.
 
 By ordering notes based on their distance from the index and ignoring "upward"
 or "sideways" links, I can represent (a subset of the edges in) the graph as a
@@ -261,8 +263,8 @@ semilattice:
 
 ##### Graph Structure: Backlinks Distribution
 
-The following is a histogram (with no bucketing) of the number of links to each
-note (i.e., of backlinks):
+The following is the distribution of the number of links to each note (i.e., of
+backlinks):
 
 ![images/008.svg](images/008.svg)
 
@@ -274,8 +276,8 @@ Visualization these can be seen as a few small disconnected nodes.
 These are temporary anomalies, exceptions to the principle I follow of
 referencing every note.
 
-The distribution appears to follow a power law fairly closely. For contrast,
-the following is a graph of the distribution of y = 2⁻ˣ:
+The distribution appears to follow a power Law fairly closely. For
+comparison, the distribution of y = 2⁻ˣ looks like this:
 
 ![images/009.svg](images/009.svg)
 
@@ -285,15 +287,14 @@ bigger.
 
 ##### Links Distribution
 
-The following is a histogram (with no bucketing) of the number of links in each
-note:
+This is the distribution of the number of links over all notes:
 
 ![images/011.svg](images/011.svg)
 
 Most notes at least have a link to a "parent" node, but a reasonably large
 number have at list two links. The ones with 0 links are probably very early
-notes before I automated the creation of new notes (ensuring that I almost
-always insert cross-reference the note with a parent note).
+notes before I automated the creation of new notes; this automation defaults to
+cross-referencing the note with a parent note.
 
 ##### Most Referenced Notes
 
@@ -440,6 +441,7 @@ Some of the main topics I've written about in my Zettelkasten are:
   * Lean Prover
 * Switzerland (e.g., government bodies, Milizprinzip)
 * Bauhaus art school
+* Stoicism
 * Bitcoin
 * Kowloon Walled City
 
@@ -452,9 +454,15 @@ as their syntax.
 To do this, I work through exercises and then set out to transcribe the main
 things I've learned into notes. These notes are slightly redundant with the
 original materials I've used to learn. However, I deliberately aim to organize
-the newly acquired knowledge in the structure and that I find most logical and
-at the level of detail that I find most useful. I think that going through the
-process of formulating these notes helps me reinforce what I've learned.
+the newly acquired knowledge:
+
+* In the logical structure that I find most useful, which can be fairly
+  subjective.
+
+* At the level of detail that I find most useful.
+
+I think that going through the process of formulating these notes helps me
+reinforce what I've learned.
 
 For completion, I also save my exercises also as notes, though I don't expect
 this to be specially useful.
@@ -539,9 +547,6 @@ I have some automation that:
 
 * Omits the "Related" sections (since all links there will be expanded or
   ignored).
-
-TODO: The automation should be improved to cap the amount of nesting for the
-subtitles.
 
 ### Results
 

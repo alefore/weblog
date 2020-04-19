@@ -247,17 +247,18 @@ fairly large number of cross-topic links.
 ##### Semilattice
 
 I have a starting "index" note that contains links to most of topics in my
-Zettelkasten; almost every note can be reached following links. The following is
-the distribution of the distances from the index over all notes (i.e., the
-shortest path across links starting at the index and ending at the note):
+Zettelkasten; almost every note can be reached following links from the index.
+The following is the distribution of the distances from the index over all notes
+(i.e., the shortest path across links starting at the index and ending at the
+note):
 
 ![images/013.svg](images/013.svg)
 
-I put at -1 unreachable notes.
+I put at -1 unreachable notes. At 0 you'll find one note: the index itself.
 
 By ordering notes based on their distance from the index and ignoring "upward"
 or "sideways" links, I can represent (a subset of the edges in) the graph as a
-semilattice:
+semilattices:
 
 ![images/010.svg](images/010.svg)
 
@@ -285,17 +286,6 @@ The correspondence is striking. The only visible difference is that in my
 Zettelkasten the tail (of notes with very few references) appears to be slightly
 bigger.
 
-##### Links Distribution
-
-This is the distribution of the number of links over all notes:
-
-![images/011.svg](images/011.svg)
-
-Most notes at least have a link to a "parent" node, but a reasonably large
-number have at list two links. The ones with 0 links are probably very early
-notes before I automated the creation of new notes; this automation defaults to
-cross-referencing the note with a parent note.
-
 ##### Most Referenced Notes
 
 The most referenced notes are (as of 2020-04-17):
@@ -317,6 +307,17 @@ or larger number of notes because they are nouns that are likely to be linked to
 their "canonical" note whenever they occur in notes on the topic. In other
 topics, notes are more likely to only link up to their immediate parent, without
 linking directly to their canonical note.
+
+##### Links Distribution
+
+This is the distribution of the number of links over all notes:
+
+![images/011.svg](images/011.svg)
+
+Most notes at least have a link to a "parent" node, but a reasonably large
+number have at list two links. The ones with 0 links are probably very early
+notes before I automated the creation of new notes; this automation defaults to
+cross-referencing the note with a parent note.
 
 ## Low Friction
 
@@ -504,8 +505,7 @@ sentence) is deleted, replaced with a place holder line (sometimes with a hint).
 You use the obscured sentence as a question and must be able to state the
 contents of the deleted text.
 
-For example, you would receive the sentence "Wassily Kandinsky was a
-___(nationality)___ painter and art theorist" and answer "Russian".
+![images/014.png](images/014.png)
 
 I find cloze deletion useful. Most of my flashcards cards use it. Perhaps it
 works because it allows me to have additional context around the

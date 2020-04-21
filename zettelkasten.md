@@ -6,9 +6,9 @@ thinking.
 ## What are Zettelkästen?
 
 A Zettelkasten (German for "notes box" or "notes cabinet") is a method to take
-and organize notes about multiple topics. This has been used by many writers for
-centuries and is being "rediscovered" recently by many bloggers and rationalists
-(myself included).
+and organize notes about multiple topics. This method has been used by many
+writers for centuries and is being "rediscovered" recently by many bloggers and
+rationalists (myself included).
 
 ### Plurals
 
@@ -69,7 +69,7 @@ supplement that hierarchical structure with additional links across notes.
 
 However, I prefer to schew the restriction of having to lay my notes in such a
 hierarchy and, instead, just collect them in a flat namespace. This works for me
-because it forces an organical structure to evolve. Using links would still
+because it forces a structure to evolve organically. Using links would still
 enable the set of notes to be organized as a directed graph rather than a tree,
 but it would still impose an underlying tree-like structure or view, forcing
 each note to take a unique place in the hierarchy, which feels unnatural.
@@ -286,28 +286,6 @@ The correspondence is striking. The only visible difference is that in my
 Zettelkasten the tail (of notes with very few references) appears to be slightly
 bigger.
 
-##### Most Referenced Notes
-
-The most referenced notes are (as of 2020-04-17):
-
-* Bitcoin (26)
-* Iterate (24)
-* Zettelkasten (21)
-* Impact Catalogue (19) (a project at work)
-* Eliminate Distractions (15)
-* List of Mistakes (14)
-* Walter Gropius (14)
-* Detect Errors Early (14)
-* Good Feedback Fosters Growth (14)
-
-All these notes represent topics about which I have a large number of notes.
-
-I think the top three or four notes dominate over topics that have a comparable
-or larger number of notes because they are nouns that are likely to be linked to
-their "canonical" note whenever they occur in notes on the topic. In other
-topics, notes are more likely to only link up to their immediate parent, without
-linking directly to their canonical note.
-
 ##### Links Distribution
 
 This is the distribution of the number of links over all notes:
@@ -445,6 +423,28 @@ Some of the main topics I've written about in my Zettelkasten are:
 * Stoicism
 * Bitcoin
 * Kowloon Walled City
+
+### Structure: Most Referenced Notes
+
+The most referenced notes are (as of 2020-04-17):
+
+* Bitcoin (26)
+* Iterate (24)
+* Zettelkasten (21)
+* Impact Catalogue (19) (a project at work)
+* Eliminate Distractions (15)
+* List of Mistakes (14)
+* Walter Gropius (14)
+* Detect Errors Early (14)
+* Good Feedback Fosters Growth (14)
+
+All these notes represent topics about which I have a large number of notes.
+
+I think the top three or four notes dominate over topics that have a comparable
+or larger number of notes because they are nouns that are likely to be linked to
+their "canonical" note whenever they occur in notes on the topic. In other
+topics, notes are more likely to only link up to their immediate parent, without
+linking directly to their canonical note.
 
 ### Technical Topics
 

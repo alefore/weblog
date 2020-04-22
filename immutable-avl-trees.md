@@ -430,7 +430,8 @@ operations run asynchronously, on a snapshot. I use this to:
 * Asynchronously update the syntax tree (for syntax highlighting) while the
   user may continue to modify the buffer.
 
-* Asynchronously save the buffer to disk.
+* Asynchronously save the buffer to disk. The user may continue to modify the
+  buffer concurrently; the save operation will just store the snapshot.
 
 When background threads are done computing something, they simply schedule a
 callback to consume the results, to be executed in the main thread.

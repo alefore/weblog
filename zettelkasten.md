@@ -597,6 +597,17 @@ well, much better than I anticipated:
   between forms like "You should do X", "One should do X", "Do X", etc.. I don't
   yet have a good idea for improving this.
 
+* One very unexpected side-effect is that reading the resulting article often
+  helps me identify improvements to make to the underlying set of notes. This
+  often happens in two ways:
+
+  * I identify partially overlapping ideas that should be merged or bound more
+    strongly.
+
+  * It helps me reason better about the best underlying structure, often
+    resulting in important refactors to the semilattice in which I organize
+    concepts.
+
 I haven't had to edit any of these dumps just yet.
 
 ### Example

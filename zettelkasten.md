@@ -473,20 +473,35 @@ Prover](https://github.com/alefore/weblog/blob/master/lean.md).
 
 ## Spaced Repetition and Notes
 
-I intend to generate flashcards from the notes I'm adding to my
-Zettelkasten in order to use Spaced Repetition to memorize
-them.
+I am generating flashcards from the notes in my Zettelkasten in order
+to use Spaced Repetition to memorize them.
 
-I have started by annotating notes with what I hope will allow me to
-programatically generate flashcards (and, ideally, update them, though that
-seems harder) but that don't clutter the Markdown visualization very much. To do
-this, I add a sequence of "Cloze: TEXT" or "Cloze: TEXT HINT" annotations at the
-end of the notes, with the semantics that a flashcard should be generated from
-the title and text of the note with a Cloze deletion of the selected
-text.
+To do this, I annotate notes by adding lines generating Cloze
+deletions at the end, such as:
 
-Unfortunately, I haven't yet automated the generation of cards, and it isn't
-very clear to me how well this will work.
+    zkcloze "1879" "year"
+    zkcloze "1940" "year"
+    zkcloze "Switzerland" "Country"
+
+This would generate 3 flashcards with the entire contents of the note. The first
+flashcard would replace "1879" with "[year]" and show the year as the answer,
+something like:
+
+    Paul Klee timeline:
+
+    * [year]: Born in Münchenbuchsee, Switzerland.
+    * 1940: Died.
+
+After adding `zkcloze` annotations or updating notes with them, I re-run a
+script to update existing flashcards and create new ones. This script outputs a
+`cards.xml` file that I can then import into Mnemosyne. The script is available
+at https://github.com/alefore/edge/blob/master/src/clozes.py.
+
+The script aims to generate flashcard in a "stable" manner, allowing you to
+update cards (e.g., add a new entry to Paul Klee's timeline with a corresponding
+cloze deletion) without losing the history of existing cards when you reimport.
+Previously created cards will show the updated text, but will preserve their
+history.
 
 ### Spaced Repetition
 
@@ -497,6 +512,11 @@ database of 8.1k cards (as of 2020-04-10), mostly about Swiss facts (e.g., how
 the parlament works), German and Italian vocabulary and grammar, and a few other
 random topics. I've been using this database since around 2014 (possibly
 earlier).
+
+#### Mnemosyne
+
+Mnemosyne is a free software application for Spaced Repetition
+implemented in Python.
 
 ### Cloze deletion
 
@@ -609,7 +629,10 @@ extension](https://github.com/alefore/edge/blob/master/rc/editor_commands/lib/zk
 
 The following are ideas for my Zettelkasten that deserve further exploration:
 
-* Giving presentations out of my Zettelkasten.
+* Giving presentations out of my Zettelkasten. I'm somewhat skeptical about this
+  given that I believe presentation slides should use little text, but
+  I wonder whether this would be useful when I'm walking one person through some
+  topic.
 
 * Using a Zettelkasten for fiction. I've been working on a novel and I'm curious
   as to whether a Zettelkasten, perhaps with significant metadata, may be a good

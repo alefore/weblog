@@ -476,32 +476,11 @@ Prover](https://github.com/alefore/weblog/blob/master/lean.md).
 I am generating flashcards from the notes in my Zettelkasten in order
 to use Spaced Repetition to memorize them.
 
-To do this, I annotate notes by adding lines generating Cloze
-deletions at the end, such as:
-
-    zkcloze "1879" "year"
-    zkcloze "1940" "year"
-    zkcloze "Switzerland" "Country"
-
-This would generate 3 flashcards with the entire contents of the note. The first
-flashcard would replace "1879" with "[year]" and show the year as the answer,
-something like:
-
-    Paul Klee timeline:
-
-    * [year]: Born in Münchenbuchsee, Switzerland.
-    * 1940: Died.
-
-After adding `zkcloze` annotations or updating notes with them, I re-run a
-script to update existing flashcards and create new ones. This script outputs a
-`cards.xml` file that I can then import into Mnemosyne. The script is available
-at https://github.com/alefore/edge/blob/master/src/clozes.py.
-
-The script aims to generate flashcard in a "stable" manner, allowing you to
-update cards (e.g., add a new entry to Paul Klee's timeline with a corresponding
-cloze deletion) without losing the history of existing cards when you reimport.
-Previously created cards will show the updated text, but will preserve their
-history.
+I find that this works well for me because it allows my Zettelkasten to remain
+the authoritative/canonical source of information (about any topics), but it
+also gives me a low friction mechanism to generate flashcards from my notes.
+Thanks to the atomicity of notes, most tend to be brief enough that they work
+fairly well as cloze deletion sources.
 
 ### Spaced Repetition
 
@@ -518,7 +497,25 @@ earlier).
 Mnemosyne is a free software application for Spaced Repetition
 implemented in Python.
 
-### Cloze deletion
+### zkcloze annotations
+
+To generate flashcards, I annotate notes by adding lines generating Cloze
+deletions at the end, such as:
+
+    zkcloze "1879" "year"
+    zkcloze "1940" "year"
+    zkcloze "Switzerland" "Country"
+
+The semantics are that I want 3 flashcards based on Cloze deletions over the
+entire contents of the note. The first flashcard would replace "1879" with
+"[year]" and show the year as the answer, something like:
+
+    Paul Klee timeline:
+
+    * [year]: Born in Münchenbuchsee, Switzerland.
+    * 1940: Died.
+
+#### Cloze deletion
 
 Cloze deletion is a technique where a part of a short text (typically just one
 sentence) is deleted, replaced with a place holder line (sometimes with a hint).
@@ -535,13 +532,28 @@ It also allows me to reinforce peripheral information in a card beyond the
 immediate fact in the card is trying to teach (without explicitly focusing my
 attention on it).
 
-#### Additional Context
+##### Additional Context
 
 I've found it useful to include additional peripheral context around the main
 fact that a card teaches.
 
 Perhaps this works because it makes the card more memorable, so I have an easier
 topic remembering the main fact.
+
+### Updating Flashcards
+
+After adding `zkcloze` annotations or updating notes with them, I run a program
+that scans the Zettelkasten finding all existing flashcards. This program
+outputs a `cards.xml` file that I can then import into Mnemosyne.
+
+This program is available at:
+https://github.com/alefore/edge/blob/master/src/clozes.py.
+
+The program generates flashcard in a "stable" manner, allowing you to update
+cards (e.g., add a new entry to Paul Klee's timeline with a corresponding cloze
+deletion) without losing the history (e.g., repetitions, schedule, scores...) of
+existing cards when you reimport. Updated cards show the updated text, but
+preserve their history.
 
 ## Extracting articles
 

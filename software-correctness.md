@@ -7,24 +7,430 @@ and it's free of software defects (bugs).
 
 We can distinguish errors of two types:
 
-* Common Errors: These correspond to the expected variation in a system. While
-  we should generally aim to minimze their occurrence, specific instances are to
-  be expected and shouldn't trigger any corrective interventions.
+* Common Errors
+* Special Errors
 
-* Special Errors: These correspond to unexpected new situations and call for
-  direct analysis and intervention into the system.
+### Common Errors
 
-This distinction is useful because the two different types of errors deserve
-very different treatment.
+Common errors (called "chance causes") are those corresponding to the expected
+variation in a system. While we should generally aim to minimze their
+occurrence, specific instances are to be expected and shouldn't trigger any
+corrective interventions into the system.
 
-This distinction has been made for matematicians and statisticians for a very
-long time. In modern times, William Edwards Deming championed this
-distinction.
+In fact, for these errors, intervention (to correct a single instance) tends to
+be harmful as it may introduce additional risk and tends to destabilize the
+system.
 
-### William Edwards Deming
+### Special Errors
+
+Special errors correspond to unexpected new situations that call for direct
+analysis and intervention into the system.
+
+These errors are often said to have "assignable causes". In Shewhart analysis,
+they are attributed to "a low-level worker". The indicate that there is
+something unexpected that "we can point the finger at".
+
+### Why Distinguish Common and Special Errors
+
+The distinction of errors into common and special errors is useful because the
+two different types deserve very different treatment.
+
+### History
+
+The distinction of errors into common and special types has been made by
+matematicians and statisticians for a very long time.
+
+In modern times, William Edwards Deming championed this distinction.
+
+#### William Edwards Deming
 
 William Edwards Deming was an American engineer, statistician, professor,
 author, lecturer, and management consultant.
+
+## Catalogue of Software Errors
+
+This section is work in progress. It's still wildly incomplete.
+
+### Software Errors: Threading Issues
+
+Threading errors include:
+
+* Shared mutable state
+* Priority inversion
+
+#### High Contention
+
+High contention happens on systems with a large number of threads running in
+multi-core machines when multiple threads compete to acquire the same mutex.
+
+One technique that can be useful to avoid contention is the use of reader locks,
+allowing multiple "reader" threads to make progress concurrently.
+
+Strictly speaking, high contention is more performance issue than a software
+bug.
+
+##### Effects of High Contention
+
+Contention serializes execution. In the extreme case, several threads are
+constantly waiting on the mutex. This can drastically impact the latency and
+throughput of large systems, as many requests are blocked waiting for the hot
+mutex.
+
+Additionally, many mutex implementations apply optimizations that may backfire
+when there's high contention. For example, spin-lock based implementations will
+waste a large amount of CPU. Even hybrid approaches (such as Abseil) will still
+end up wasting significant CPU, while doing less actual work.
+
+#### Race conditions
+
+Race conditions are errors caused by multiple threads that interfere with one
+another. This happens often because reasoning about code that executes under
+multiple threads is significantly more difficult than reasoning about single
+threaded code.
+
+They typically happen because of multiple threads (possibly running in different
+machines) that attempt to perform sequences of operations on a shared object
+that changes state because of these operations.
+
+##### Race Conditions: Example: Counter
+
+A good example of these conditions is a server that maintains a counter, which
+can be read or set. If a client does read-modify-write operations (read the
+counter, increment it by one, write the incremented counter), even if both the
+client and the server are correct, a combination of two clients will start
+losing increments.
+
+#### Deadlocks
+
+Deadlocks are a type of software error where careless use of locks results in a
+situation where two or more operations become blocked, waiting for other
+operations to complete.
+
+The two most common cases of this are:
+
+* Careless acquision of mutex locks
+* Executor exhaustion
+
+##### Careless acquision of mutex locks
+
+When critical sections protected by different mutexes overlap, it's possible for
+two threads to each acquire one of the mutex instances and then block trying to
+acquire the other.
+
+
+###### Ordering Mutex
+
+The solution to deadlocks is to define a complete order for any set of
+mutex instances that overlap (i.e., any two mutexes that a thread may attempt to
+acquire concurrently). We then make threads always follow this order when they
+acquire mutexes.
+
+This isn't always easy to do; it may cause significant complexity to a class.
+
+##### caused by callbacks
+
+A judicious programmer will isolate mutexes within a single class (i.e., never
+expose them beyond the small class that they protect) and, in those rare cases
+where a single instance of the class needs more than a single mutex, ensure that
+they are always acquired in a given order. However, one particularly nasty
+source of deadlocks remains: when classes execute callbacks that their customers
+provided while holding locks. In this case, the customer callback may trigger
+some action that may call back into the original class and cause it to attempt
+to reacquire the lock.
+
+We've seen this happen in practice in our team at Google. To avoid this, our
+coding principle mandates to avoid running customer-provided callbacks while
+holding an internal lock; in the rare cases where this is necessary, the
+contract must be very explicit about the semantics of which methods of a given
+class can be called by callbacks that the class receives.
+
+We try hard to avoid this (even if it costs us additional performance) because
+we see it as a very poor form of interface design (where an internal detail, the
+use of a mutex, leaks to its customers).
+
+One technique to avoid this, in some cases, is to schedule the execution of the
+callbacks asynchronously, in a separate executor. This may be feasible in cases
+where the function that wants to execute the callback is itself called under a
+lock (so that the function can't just unlock and execute the callback).
+
+##### Executor exhaustion
+
+In executors (e.g., thread pools) that have a fixed size, it may happen that all
+slots become occupied (i.e, all threads become busy) but no progress can be made
+because all threads may block waiting for completion of scheduled work that
+hasn't started (and that won't start, because the executor is exhausted).
+
+To avoid this, one must either use dynamically growing (unbounded) executors,
+or use libraries that ensure that threads never block waiting for other threads
+(in other words, threads that would block will instead adopt and execute
+scheduled work).
+
+###### Generic Completion Handler
+
+At Google, we had to add custom logic to one of the libraries that my team owns
+that has its custom implementation of settable futures, to ensure that executor
+exhaustion doesn't happen: a thread that wants to block until a future receives
+its value will potentially execute pending work that is needed in order for the
+future to receive its value.
+
+Before we implemented this, we received a few (very occasional!) reports of
+deadlocks in our system. We were already aware of the potential for these
+deadlocks to happen, but we thought we had eliminated the possible causes. This
+was particularly tricky because we had to look very closely at a few of our
+classes and reason about all the ways in which they could trigger executor
+exhaustion.
+
+#### Thread Safety Analysis (C++)
+
+[Thread Safety Analysis](https://clang.llvm.org/docs/ThreadSafetyAnalysis.html)
+can be invaluable to avoid thread safety issues.
+
+In our team, it is standard practice that every field in a class that aims to be
+thread-compatible must be either:
+
+* Declared as `const` and thread-compatible.
+* Thread-safe.
+* Protected by a mutex and use the `GUARDED_BY` annotation.
+
+This has been very helpful for the development of large multi threaded
+libraries.
+
+### Software Errors: Arithmetic errors
+
+Many arithmetic errors happen because programmers tend to incorrectly assume
+that number types represent "perfect" numbers, with no precision limits. In
+practice, the vast majority of numbers are represented using types with very
+significant limitations (in terms of expressivity at corner cases), such as
+32-bit signed or unsigned integers or floating-point numbers. This is a very
+good trade-off for performance (it would be prohibitively expensive to use
+arbitrary precision numbers in most situations), but can be a source of errors.
+
+#### Numerical Overflow
+
+Numberical overflow happens when arithmetic operations produce values that are
+too large or too small (i.e., too far away from zero) for what the underlying
+types can represent.
+
+Unfortunately, many implementations just ignore these errors silently, violating
+our principle of detecting errors early.
+
+#### Boundary Conditions
+
+Incorrect boundary conditions are a common source of errors. Two subtypes are
+"off by one" errors, where a programmer incorrectly uses a "greater than"
+comparison instead of a "greater than or equal to" comparison (or vice versa).
+
+This tends to happen because, similar to handling corner cases, careful
+inspection of the boundary conditions tends to be difficult and is often not
+given as much attention as it deserves.
+
+#### Loss of Precision
+
+This error happens when the underlying number types can't represent numbers with
+adequate enough precision.
+
+For example, in many languages, `0.3 == 0.1 * 3` evaluates to false.
+
+#### Unsigned Types
+
+Use of unsigned types is a source of common errors.
+
+This probably happens because unsigned types are often silently promoted to
+signed types. For example, the difference of two unsigned values is a signed
+value (i.e., the subtrahend may be larger than the minuend), but, due to its
+context, it may often be implicitly converted to an unsigned value.
+
+An example of this would be:
+
+    for(size_t i = my_vector.size(); i >= 0; --i) ...
+
+This loop would never stop: an unsigned number is always greater than or equal
+to 0.
+
+To avoid this, programmers should:
+
+* Avoid unsigned types.
+
+* When subtracting two numbers and storing the result in an unsigned type, make
+  sure to always confirm that the subtrahend is less than or equal than the
+  minuend, which can be quite cumbersome.
+
+##### Only Make Errors Undetectable
+
+The temptation to use unsigned types is that one may incorrectly expect that
+this makes invalid states impossible to represent (for variables that are
+expected to never be negative). However, what ends up happening in practice is
+that these errors still occur, but the use of unsigned types just makes it
+impossible to detect them.
+
+##### Gosling Quote about Unsigned Types
+
+[According to Gosling](http://www.gotw.ca/publications/c_family_interview.htm):
+
+> Quiz any C developer about unsigned, and pretty soon you discover that almost
+> no C developers actually understand what goes on with unsigned, what unsigned
+> arithmetic is. Things like that made C complex. The language part of Java is,
+> I think, pretty simple.
+
+##### Bjarne Stroustrup: Subscripts and sizes should be signed
+
+In [Subscripts and sizes should be
+signed](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1428r0.pdf),
+Bjarne Stroustrup makes a very compelling case against the use of unsigned
+integers even for subscripts and sizes.
+
+##### Scott Meyers: Signed and Unsigned Types in Interfaces
+
+In [Signed and Unsigned Types in
+Interfaces](https://www.aristeia.com/Papers/C++ReportColumns/sep95.pdf), Scott
+Meyers argues against the use of unsigned types:
+
+> One problem is that unsigned types tend to decrease your ability to detect
+> common programming errors. Another is that they often increase the likelihood
+> that clients of your classes will use the classes incorrectly.
+
+His conclusion:
+
+> In many cases, it’s better to simply return an int directly [...]. If you do
+> that, of course, you reduce the range of values you can return, because you
+> must pay for a sign bit you don’t really need. In many cases, however, the
+> increase in software robustness more than compensates for the reduced range of
+> values.
+
+### Software Errors: Life Cycle Errors
+
+#### Use After Free
+
+Use-after-free is a type of software error where a memory position is
+deallocated (i.e., returned to the application-level allocator or the operating
+system for reuse) while structures in the application still reference it. When
+the memory is reused (reached through those remaining references), it may have
+already been reused, leading to data corruption.
+
+This type of errors can be difficult to identify in cases where the patterns in
+the application only reuse the deallocated memory very shortly after it is
+deallocated and in a way where it is very unlikely to have been corrupted.
+
+This error is only possible in language implementations that don't manage memory
+automatically. In those, memory debuggers (such as valgrind, Bruce Peren's
+[Electric Fence](https://en.wikipedia.org/wiki/Electric_Fence) library, or
+Google's AddressSanitizer) may be very useful to track down these errors.
+
+#### Read Before Initialized
+
+This error occurs in languages (such as C++) that allow variables to be created
+without being fully initialized. In this case, a programmer may declare a
+variable and try to read it before it has been fully initialized.
+
+Nowadays most compilers will detect these errors and warn programmers about
+them. A judicious programmer would always initialize variables where they are
+declared (or in class constructors, for class variables that can't be
+initialized where they are declared because they depend in parameters to the
+constructors).
+
+#### Memory Leaks
+
+Memory leaks are a type of memory problem where parts of the address space of a
+given process become unreachable yet don't get released to the underlying
+allocations manager (or operating system). This renders this memory
+inaccessible, reducing the effective amount of memory that the process can use.
+
+This can be divided in two subcases:
+
+* Bounded leaks. In this case, the application leaks a constant amount of memory
+  per process. This makes the application less efficient.
+
+* Unbounded (or ongoing) leaks. In this case, the application continues to leak
+  memory during its execution. This is significantly worse than the previous
+  situation because the application will eventually run out of memory.
+
+#### & Garbage Collection
+
+Memory Leaks affect systems with garbage collection. In those systems, memory
+leaks are less common than in systems that manage memory explicitly, but they
+still occur. In systems with garbage collection, this happens when structures
+maintain unnecessary references to large structures.
+
+For example, a "substring" function may receive a very large string and return a
+view over it. Depending on the implementation, the view may be a very small
+string that references the original view. This may be a very valid design choice
+for performance (since it avoids having to explicitly copy contents, thus making
+the substring operation execute in constant time). However, this means that even
+if the application relinquishes every other reference to the original string,
+the garbage collector will still be unable to deallocate the very large portions
+of the original string, even though they'll never be used.
+
+#### File Descriptor Leaks
+
+File descriptor leaks are similar to memory leaks but happen in a relatively
+different manner. In this case, applications may not judiciously close file
+descriptors, eventually filling up their file descriptor tables and becoming
+unable to create new file descriptors (e.g., open new files or create or receive
+new connections).
+
+We've seen this happen during the development of gRPC or other low-level
+interprocess communication libraries that leaked inactive connections in some
+corner cases. Our standard monitoring systems will track the number of open file
+descriptors per process and alert if this exceeds a threshold. Unfortunately,
+this doesn't necessarily indicate a file descriptor leak.
+
+### Software Errors: Out of Capacity Errors
+
+#### Stack Overflow
+
+This error happens when a thread runs out of stack space. This typically
+indicates a very long chain of possibly recursive calls in a language or set of
+functions that don't support proper tail recursion.
+
+This happens relatively sooner than one may naively assume, specially in highly
+threaded systems, since each stack must be contiguous. There's a trade off
+between the maximum number of threads that can be supported and the maximum size
+that their stacks can grow to.
+
+To avoid this, programmers must be careful when using recursion. One
+particularly nasty case where we encountered this at Google was in a library
+that creates "stacks" of delegating behaviors. Each behavior in our library
+would just call a method of the next behavior in line. Even if we didn't have
+recursion, the chain of delegations often got deep enough that this became a
+problem. To avoid this, we inserted "break" points where the delegating calls
+would schedule a callback (to call the next in line) in an executor, thus
+allowing the stack to unwind.
+
+#### Out of File Descriptors
+
+This error happens when a process opens too many file descriptors and, unlike
+the case of file descriptor leaks, these are all in use. This is a
+problem because, like file descriptor leaks, it prevents the process from
+opening new files and establishing new connections (either inbound or outbound).
+
+I encountered this a few times in my career. In 2020-04, one of the systems
+under my purview, a gateway for a push component, started alerting because
+several of its tasks are regularly creating more than 50k file descriptors. I
+strongly suspect this is not due to leaks but rather because some specific
+configurations are asking the gateway to connect to way too many server tasks.
+
+Unfortunately, in multi tenant systems (such as the aforementioned gateway), a
+single problematic configuration can put the entire stability of the system at
+risk (i.e., rarely are the well-behaved tenants isolated from the problems
+caused by the abusive ones).
+
+### Software Errors: Distributed Systems
+
+#### Lack of Flow Control
+
+In distributed systems, a client may initiate work in a server at a given rate
+that doesn't observe the capacity of the server. For example, the client may
+simply initiate new requests at a constant rate, regardless of the rate at which
+they complete in the server.
+
+This is bad because it makes overflow likely: more in-flight work may accumulate
+than either side has capacity to process.
+
+The solution to this is relatively simple: one should put limits in the client
+processes in terms of active work that they are allowed to initiate. For
+example, each client process may be allowed to initiate up to a thousand active
+requests and, once that point is reached, only initiate new requests as existing
+requests complete.
 
 ## Avoid Errors
 
@@ -445,23 +851,10 @@ This is especially useful for server-type processes.
 ### Observability Tools
 
 It pays off to invest in observability tools, that make it easy to inspect the
-state of the system and to understand why an unexpected behavior occurs. Among
-these tools I include:
+state of the system and to understand why an unexpected behavior occurs. The
+goal is to increase the number of questions we can ask of the behavior of the
+system.
 
-* Generate good logs during the regular execution. When errors that can't be
-  easily reproduced occur, those logs may immediately point to the culprit.
-
-* Logic to dump state.
-
-* Adequate monitoring. For complicated systems, it pays tremendously to have
-  separate systems constantly monitoring different operational parameters. These
-  would keep track of both:
-
-  * General parameters, such as memory or CPU used over time, number of threads
-    by state, etc..
-
-  * Application specific parameters, tracking operations or state in the
-    semantics of the business logic.
 
 Of course, these techniques are only useful to the extent that good systems are
 available to analyze the information they provide. A giant log is useless if we
@@ -492,6 +885,24 @@ servers.
 A key aspect here is that adding debuginfo support to a new class is trivial. If
 it was even slightly difficult, it's likely that significantly fewer classes in
 our systems would have adopted this library.
+
+#### Monitoring
+
+For distributed systems, adequate monitoring tools is a crucial observability
+tool. For these systems, it pays tremendously to have separate systems
+constantly monitoring operational parameters. These would keep track of both:
+
+* General parameters, such as memory or CPU used over time, number of threads by
+  state, etc..
+
+* Application specific parameters, tracking operations or state in the semantics
+  of the business logic.
+
+#### Execution Logs
+
+Generating good logs during the regular execution of a program can be very
+useful as an observability tool, especially for errors that are difficult to
+reproduce.
 
 ### Debugging
 

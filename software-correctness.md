@@ -49,6 +49,9 @@ author, lecturer, and management consultant.
 
 ## Catalogue of Software Errors
 
+This is a catalogue of software errors, including both types of software bugs as
+well as runtime/operational conditions that may cause software to malfunction.
+
 This section is work in progress. It's still wildly incomplete.
 
 ### Software Errors: Threading Issues
@@ -297,6 +300,71 @@ His conclusion:
 > increase in software robustness more than compensates for the reduced range of
 > values.
 
+### Software Errors: Algorithmic Errors
+
+#### Runaway Algorithmic Complexity
+
+Runaway algorithmic complexity occurs when algorithms are used that
+have an inadequate runtime or memory complexity for the inputs that they are
+given. Technically, it may be that the software *is* correct, but this won't
+help: the software will still fail to produce any useful results.
+
+When this happens, this is typically much worse than just some slightly bad
+performance; rather, it tends to manifest in programs that seemingly run
+forever. This is especially common when algorithms that have exponential
+complexity are used.
+
+##### Avoid n² Algorithmic Complexity
+
+In practice, for the types of sets that we often manipulate, algorithms of
+n² or worse runtime complexity tend to not be acceptable.
+
+Of course, the specifics will depend on the context and this is a gross
+simplification.
+
+###### Why n² Algorithmic Complexity Breaks
+
+Given that a variable that grows exponentially can only be in one of
+two states, systems with n² runtime complexity (or worse) transition
+very suddenly from a state where there's no palpable cause for alarm (the
+threshold where things fail is very far from the current value) to a state where
+they cease too work by a large margin (e.g., take disproportionately long to
+complete).
+
+Furthermore, most algorithms we encounter in practice (e.g., around containers)
+tend to consume values of n that are large enough to make this very problematic.
+For example, a container with only ten thousand elements will already require
+10 million operations, which is often unacceptable.
+
+####### Exponential Growth: Binary
+
+When analyzing the effects of variables that experience exponential
+growth, most of the time we can think of them as binary values that can
+only be in one of these states:
+
+* Zero (or "very low").
+* Infinite (or "ridiculously high").
+
+This is because the transition between the two happens very quickly, almost
+instantaneously.
+
+####### Once Inflection Point Arrives, we Underestimate Speed of Change
+
+Once an inflection point arrives, people commonly underestimate the speed with
+which change governed by power laws will occur.
+
+Source: Paul Saffo, HBR: Six Rules for Effective Forecasting
+
+#### Unhandled Corner Cases
+
+Corner cases are a common source of software failures. Because, by definition,
+they happen rarely, programmers will often cut corners and not handle them.
+
+This doesn't simply happen out of lazyness: there's a point of diminishing
+returns where we must make a pragmatic decision not to handle every possible
+corner case. When we make the decision inappropriately (for example, because
+reality changes), these corner cases will appear.
+
 ### Software Errors: Life Cycle Errors
 
 #### Use After Free
@@ -374,6 +442,37 @@ corner cases. Our standard monitoring systems will track the number of open file
 descriptors per process and alert if this exceeds a threshold. Unfortunately,
 this doesn't necessarily indicate a file descriptor leak.
 
+#### Memory Fragmentation
+
+Memory Fragmentation is a condition where the largest contiguous region that
+a memory allocator can reserve is significantly smaller than the total amount of
+memory available to the allocator.
+
+Fragmentation is a result of the inherent randomness in the
+allocation/deallocation process, where the application returns memory in random
+fashion (from the perspective of the allocator).
+
+Platforms use several strategies to deal with fragmentation, including executing
+"compaction" procedures (where memory is moved, and references are updated) as
+part of garbage collection (which has other effects beyond reducing
+fragmentation).
+
+In long-running systems, it may be important to factor in the effect of
+fragmentation when estimating the memory capacity of a system. In some
+distributed systems, periodically dumping the state to persistent storage and
+restarting the process may be necessary.
+
+##### Example: Authentication
+
+I had to troubleshoot some issues related to fragmentation around 2012, where we
+had a few localized outages with some authentication systems at Google: some C++
+servers were ocassionally losing significant amounts of memory to fragmentation.
+Exposing statistics about the state of the allocators helped us recognize the
+problem. The solution at the time (I don't know what the current state is) was
+to force those systems to dump state and restart (with some redundant servers
+that could continue to serve, so no observable loss of availability during the
+restart), and to ensure this happened periodically.
+
 ### Software Errors: Out of Capacity Errors
 
 #### Stack Overflow
@@ -395,6 +494,46 @@ recursion, the chain of delegations often got deep enough that this became a
 problem. To avoid this, we inserted "break" points where the delegating calls
 would schedule a callback (to call the next in line) in an executor, thus
 allowing the stack to unwind.
+
+#### Computer Out of Memory
+
+This error occurs when a machine doesn't have enough physical memory to hold all
+the pages that processes running on it need. Most of the time this will be
+caused by a single "abusive" process (or small set of related processes) that
+upset the usual balance.
+
+Multi-tenant systems will often impose a limit on the amount of process each
+user or "job" is allowed to consume.
+
+This can happen because of:
+
+* Life-cycle issues such as memory leaks, where an underlying issue causes a
+  process to continue reserving more and more pages, unbounded.
+
+* Runaway Algorithmic Complexity. This is relatively rare but it may happen for
+  algorithms with super-linear memory complexity, where small changes in the
+  input sizes may have a disproportionate effect on memory requirements.
+
+* Temporary overload conditions. Perhaps the program simply needs slightly more
+  memory than currently available for a brief period of time. This may happen
+  because of overload (e.g., a server receives a spike of large requests).
+
+##### Out of Memory: Effects
+
+When a computer runs out of memory for its processes, it will typically start
+aggressively flushing pages down to a disk cache (if available). since disks are
+several orders of magnitude slower than main memory, this will tend to cause
+very noticeable latency degradation, as processes get interrupted due to page
+faults. The system may technically still make progress (and it may eventually
+free enough memory and recover), but for practical purposes it may become
+effectively unusable.
+
+After a while (e.g., if the disk cache is full), the operating system will start
+killing processes, typically starting with the abusive one.
+
+#### Process Out of Memory Space
+
+TODO.
 
 #### Out of File Descriptors
 
@@ -736,6 +875,17 @@ We often don't notice the systems we depend on until they fail.
 
 This makes graceful degradation particularly important.
 
+### Make the Environment Resilient
+
+The environment in which a system operates is part of the system. This includes
+things like the social context in which it is built, released, used, and
+maintained. Optimizing the environment to be more resilient towards failures in
+the system (reduce the effect of errors) can be a great way to increase the
+robustness of a system.
+
+This is because there's a point after which the cost of avoiding common errors
+grows very steeply.
+
 ### Isolate Components into Failure Domains
 
 Isolating components into separate failure domains that are managed
@@ -781,6 +931,105 @@ be a small but representative subset of the regular production deployments
 One important reason to have a "development" instance that mimics production
 somewhat closely (but doesn't really affect end users) is so that errors with
 very bad effects (data corruption) will be isolated from the real system.
+
+### Atomic Operations
+
+A sequence of operations that have side-effects is implemented atomically when
+at any point in time either none of the operations or all of the operations have
+executed successfully.
+
+### & Graceful Degradation
+
+Atomic operations yields a form of graceful degradation: when some unusual
+conditions causes one of the operations in the sequence to fail, the entire
+sequence is aborted and yields no visible changes to the world. This is a very
+strong form of robustness against errors, since it prevents them from corrupting
+shared state.
+
+#### Example: Overwrite a File
+
+When a large set of changes have to be applied to a file, it may be a better
+strategy to create an entirely independent copy of the file with the mutations
+applied. Once the mutations have been successfully applied, the new file can be
+atomically moved to the original location (overwriting the old file).
+
+This is because for most systems it's preferable to leave the old file
+unmodified than to only apply a subset of the operations, corrupting the file.
+This approach ensures that the file won't be modified when errors occur, making
+the system more robust against this type of errors:
+
+* Out of disk errors: the system doesn't have enough disk space to store the
+  modified file.
+
+* Hardware failures: the system was shutdown while the operation was executing.
+
+* Software bugs: an invariant violation is detected during the process of
+  writing the file. This is specially likely in systems that execute complex
+  logic as they generate the modified file.
+
+This is typically how most text editors "save file" functionality works.
+
+#### Example: Update a Directory
+
+The same technique described in Example: Overwrite a File can be
+applied for systems that have to periodically regenerate an entire directory.
+Those systems could generate the entire directory in a new location and only (1)
+update a symbolic link, and (2) delete the old directory when they have
+succeeded. Failures during the generation process (i.e., before the symbolic
+link has been updated) are invisible.
+
+#### Partial Atomic
+
+Even though this isn't fully atomic, it may be convenient to separate operations
+in a sequence into two phases:
+
+* A preparation phase where the majority of the logic runs but the results
+  aren't yet "committed". This phase is encouraged to attempt any parts of the
+  operation that are likely to fail. That means mainly two things:
+
+  * Run any complex logic that may trigger invariant violations in the data
+    being produced.
+
+  * Run validations on the state of the world, such that operational problems
+    are likely to be detected here.
+
+* A "commit" state that communicates the effect of the operation with the
+  world.
+
+A sequence of operations that abides by this principle will first execute the
+preparation phase of all operations and, only if they have all succeeded, start
+the commit phase.
+
+Such a sequence won't be atomic: as the sub-operations are committed, some of
+their results, but not others, may be observable; a failure half-way will
+corrupt the state. Besides, this may still allow (just discourage) the software
+to abort during the commit phase.
+
+However, this is still valuable because it drastically decreases the odds of
+failure during the commit phase: it makes it likely for most failures to occur
+during the preparation phase.
+
+#### Atomic Read-Modify-Write
+
+Read-Modify-Write are operations that first read some data (from a database,
+a file, a distributed system), then apply a logical change, and then write the
+resulting data back to storage.
+
+In order for these operations to be atomic, the Write operation must atomically
+confirm that the data hasn't been modified (by a racing operation) since it was
+read (and, obviously, the underlying storage system must allow the write to be
+atomic). Several caching systems or distributed file systems allow this.
+
+To implement this, it's enough if:
+
+* Along with the data, the Read operation returns an opaque identifier which
+  changes whenever the data is mutated. Some systems use a hash over the entire
+  data; others use a version counter or the timestamp of the last write.
+
+* The Write operation allows the user to pass back the opaque identifier, with
+  the semantics that the write must only succeed if the identifier is still
+  current. When such a write fails (i.e., the data has changed since it was
+  read), the Read-Modify-Write operation is restarted.
 
 ### Recover And Alert
 

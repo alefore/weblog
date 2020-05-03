@@ -358,12 +358,89 @@ Source: Paul Saffo, HBR: Six Rules for Effective Forecasting
 #### Unhandled Corner Cases
 
 Corner cases are a common source of software failures. Because, by definition,
-they happen rarely, programmers will often cut corners and not handle them.
+they happen rarely, programmers will sometimes cut corners and not handle them.
 
 This doesn't simply happen out of lazyness: there's a point of diminishing
 returns where we must make a pragmatic decision not to handle every possible
 corner case. When we make the decision inappropriately (for example, because
-reality changes), these corner cases will appear.
+reality changes), these corner cases will appear. As software gains more users,
+these will bring new demands and more stringent requirements. Perhaps they'll
+apply the software in unanticipated situations. When this happens, it's likely
+that maintainers of complex software will need to extend it, so that it can
+continue to correctly meet the demands of its customers.
+
+#### Null pointer dereference
+
+Null pointer dereferencing happens when an attempt is made to read a pointer
+that doesn't point to a valid object but, rather, to the null address. Because
+the null address is guaranteed to be different than the address of any actual
+object, this is indicative of errors: some piece of code expected an object but
+didn't receive one.
+
+Because null is often used to indicate the absence of an object (for code that
+needs to handle two separate cases: when an object is present and when an object
+is absent), mismatches between modules makes null pointer dereference errors
+more common than one might expect.
+
+##### Effects
+
+In most modern language implementations (at least for Java, C, and C++) attempts
+to read from the null address will raise a runtime error:
+
+* In Java, this throws a NullPointerException.
+
+* In C++ in Linux, the null pointer is mapped to the address 0; reading from
+  this address causes a segmentation fault. I believe this happens simply
+  because the first page (and possibly a few additional ones) are reserved and
+  never used, precissely to detect this situation.
+
+These runtime errors will abort the execution of the application (unless the
+application deliberately consumes them).
+
+##### Old Unix
+
+In 2006 I worked in a project to port applications written in C and a few other
+languages from old Unix implementations to Linux. Most of these were the
+applications that run the datacenters and shops in the largest retail
+corporation in the world.
+
+One of the challenges we faced was that the old Unix implementations that we
+were migrating from allowed null pointer dereferences, effectively ignoring
+these logical errors. Instead, the first few pages of memory (I don't recall
+how many) would just be filled with zeros.
+
+Consider code such as this:
+
+    char* value = strcpy(getenv("SETTING_FOO"));
+
+In the old Unix systems, this would create a new char buffer of size 1 with the
+0 character (i.e., `{'\0'}`), as the programmers expected. In Linux, this yields
+a segmentation fault.
+
+Another example of things that worked in the old Unix systems was the following,
+where `bar` is a pointer to a `struct` with a pointer `foo` (possibly among
+many other objects):
+
+    Foo* foo = bar->foo;
+
+In the old systems, `foo` is now a null pointer; in Linux ... segmentation
+fault.
+
+We had to adjust many expressions that, like this one, assumed that reading the
+first page of memory was OK, it just returned zeros.
+
+##### Crash
+
+When a null pointer is dereferenced, raising a runtime error, as most modern
+language implementations do, is the best behavior.
+
+One could instead suggest that the first few pages should simply be readable and
+mapped to a memory area filled with zeros. This would perhaps simplify a few
+expressions by saving the programmer from the need to explicitly check against
+null in some situations (see examples in Null pointer dereference: Old
+Unix), but it would have the unfortunate effect of hiding actual
+errors, where some code *requires* an actual object but doesn't receive it. This
+goes against the principle of detecting errors early.
 
 ### Software Errors: Life Cycle Errors
 

@@ -300,6 +300,93 @@ His conclusion:
 > increase in software robustness more than compensates for the reduced range of
 > values.
 
+### Software Errors: Clock Issues
+
+Managing time is surprisingly hard.
+
+#### Jump Back in Time: Synchronization
+
+Programmers often assume that time always increases monotonically, up to the
+resolution provided by their representation of time. However, not all clocks
+have this property. For example, `clock_gettime` in Linux asking for the time in
+the "real" clock may observe decreasing values.
+
+This would mean that the following code has bugs:
+
+    clock_gettime(CLOCK_REALTIME, &start_time);
+    ...
+    clock_gettime(CLOCK_REALTIME, &end_time);
+    auto elapsed_time = TimeBetween(&start_time, &end_time);
+
+This may even yield a negative `elapsed_time`. This happens very rarely and most
+of the time doesn't have significantly negative consequences (e.g., it may just
+bias some measurements imperceptibly). However, it may have disastruous
+consequences by yielding values that don't match the expectations of their
+consumers.
+
+For this reason, many languages provide separate clock implementations that are
+guaranteed to be monotonically increasing.
+
+This typically happens because of network time synchronization. I would expect
+most implementations not to jump back in time (but, instead, to slow down the
+local clock temporally until it's synchronized with the expected time).
+
+Obviously, this may also happen by deliberate operations by the administrator.
+That should be rare in production systems but may happen in devices, especially
+when the user has something to gain (e.g., cheat some game) by fiddling with the
+system's time.
+
+#### Jump Back in Time: Daylight Savings
+
+Because daylight saving changes happen infrequently (just twice per year), they
+are a common source of bugs for systems that don't correctly anticipate them or
+test them.
+
+##### Example: Android Party
+
+I threw a party with my Google coworkers in my apartment on Saturday the 30th of
+March of 2008. When we reached the point where we all started realizing that it
+was time to call it a night, everybody asked me for the train schedule, to catch
+the night train back to the Zurich main station. That late in the night, the
+evening train ran once per hour. It was 1:55 a.m.. I confirmed: the train runs
+at fifteen minutes past the hour, so I told the group that they should probably
+leave around ten minutes later (to have time to make it to the train station).
+
+Some time went by and we were all idling, wrapping up our conversations,
+finishing the last sips of alcohol. People would check their phones from time to
+time to make sure they still had time. One person in the group started getting
+increasingly aggitated, anxious about how we would miss the train, but everybody
+ignored him. "Come on, Christoph, you're always so eager, we still have plenty
+of time... you are so German!"
+
+I double-checked: yeah, it was 1:59, they still had a few minutes left. Why
+would Christoph be so eager to leave?
+
+At some point, Christoph announced that he didn't think we'd make the train. I
+checked my phone and... it was still 1:59.
+
+"Christoph," said someone else, "come on, we still have like 15 minutes before
+the train!"
+
+"What? No! We have like five minutes!"
+
+We all confirmed that it was 1:59, surely something was wrong with Christoph's
+clock. He showed us that it was 3:11 in his phone, no chance to make the train.
+We would have assumed he was wrong, but... it had been 1:59 for a fairly long
+time.
+
+It turned out that everybody in the party save for Christoph was using one of
+the new Android phones that Google had kindly given us as a holiday gift.
+Christoph, who has been a heavy Apple user since for ever, was the only one
+using an iPhone. Android, a very new system at the time, had a bug where the
+clock simply got stuck at 1:59 on the very first Daylight Savings switch. I
+don't know the details.
+
+By the time we realized that Christoph had been right all along, We had to open
+another bottle of wine and my guests had to wait for another fifty minutes or
+so, for the next train. Christoph, always the insufferable Apple fanboy, had
+plenty of reasons to poke fun of us, early Android adopters. :-)
+
 ### Software Errors: Algorithmic Errors
 
 #### Runaway Algorithmic Complexity

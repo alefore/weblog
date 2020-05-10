@@ -30,11 +30,11 @@ consisting of 25.000 notes.
 
 ## Digital Zettelkasten
 
-I decided to create my Zettelkasten as a set of files, rather than following the
-time-tested approach of writing physical notes. This mostly reflects the fact
-that I'm very comfortable viewing and editing text files and prefer the
-mobility, durability and efficiency (of searching, navigating, etc.) aspects of
-the digital medium.
+I decided to create my Zettelkasten as a set of digital files, rather than
+following the time-tested approach of writing physical notes. This mostly
+reflects the fact that I'm very comfortable viewing and editing text files and
+prefer the mobility, durability and efficiency (of searching, navigating, etc.)
+aspects of the digital medium.
 
 I'm somewhat curious as to what advantages a physical Zettelkasten would have
 that I'm missing out on. I suppose I'll never know.
@@ -594,12 +594,15 @@ well, much better than I anticipated:
 
 * Unfortunately, inconsistencies occur in terms of the "voice" used and other
   assumptions about the reader. For example, the text switches back and forth
-  between forms like "You should do X", "One should do X", "Do X", etc.. I don't
-  yet have a good idea for improving this.
+  between forms like "You should do X", "One should do X", "Do X", etc.. I think
+  the way to improve this would be to start some style guidelines, standardizing
+  these things across all my notes; that seems a bit cumbersome, but will
+  probably work.
 
-* One very unexpected side-effect is that reading the resulting article often
-  helps me identify improvements to make to the underlying set of notes. This
-  often happens in two ways:
+* One very unexpected side-effect is that the generated articles often help me
+  identify improvements to make to the underlying set of notes. In a way, the
+  articles become a visualization of (a subset of) the Zettelkasten. This often
+  happens in two ways:
 
   * I identify partially overlapping ideas that should be merged or bound more
     strongly.
@@ -654,7 +657,7 @@ The following are ideas for my Zettelkasten that deserve further exploration:
 
 * Giving presentations out of my Zettelkasten. I'm somewhat skeptical about this
   given that I believe presentation slides should use little text, but
-  I wonder whether this would be useful when I'm walking one person through some
+  I wonder whether this would be useful when I'm walking somebody through some
   topic.
 
 * Using a Zettelkasten for fiction. I've been working on a novel and I'm curious

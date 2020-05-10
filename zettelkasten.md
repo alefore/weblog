@@ -452,22 +452,18 @@ Among many other things, I use my Zettelkasten to learn about very concrete
 technical topics such as math or programming languages, down to low-level
 details such as their syntax.
 
-
-
 #### Advantages
-
-Articulate my thinking about things I'm learning has advanced my thinking.
 
 Writing notes requires additional effort: it takes time to (1) express each idea
 clearly, and (2) reason about the ideal structure to organize the topic into a
 semilattice.
 
-However, this helps me evolve my thinking about the topic. I suppose this is a
-variation of Seneca's *Docendo discimus*. By taking the time/effort to organize
-my ideas into my Zettelkasten, my thinking evolved and reinforce what I've
-learned. By writing good notes about specific topics I've gained more
-understanding about them. In this sense a Zettelkasten is truly a tool for the
-mind.
+However, fleshing out into my Zettelkasten contents I'm learning has advanced my
+thinking. I suppose this is a variation of Seneca's *Docendo discimus*. By
+taking the time/effort to organize my ideas into my Zettelkasten, my thinking
+evolved and I've reinforce what I've learned. By writing good notes about
+specific topics I've gained more understanding about them. In this sense a
+Zettelkasten is truly a tool for the mind.
 
 #### How
 

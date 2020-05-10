@@ -449,27 +449,58 @@ linking directly to their canonical note.
 ### Technical Topics
 
 Among many other things, I use my Zettelkasten to learn about very concrete
-technical topics such as programming languages, down to low-level details such
-as their syntax.
+technical topics such as math or programming languages, down to low-level
+details such as their syntax.
 
-To do this, I work through exercises and then set out to transcribe the main
-things I've learned into notes. These notes are slightly redundant with the
-original materials I've used to learn. However, I deliberately aim to organize
-the newly acquired knowledge:
+
+
+#### Advantages
+
+Articulate my thinking about things I'm learning has advanced my thinking.
+
+Writing notes requires additional effort: it takes time to (1) express each idea
+clearly, and (2) reason about the ideal structure to organize the topic into a
+semilattice.
+
+However, this helps me evolve my thinking about the topic. I suppose this is a
+variation of Seneca's *Docendo discimus*. By taking the time/effort to organize
+my ideas into my Zettelkasten, my thinking evolved and reinforce what I've
+learned. By writing good notes about specific topics I've gained more
+understanding about them. In this sense a Zettelkasten is truly a tool for the
+mind.
+
+#### How
+
+To write notes about technical topics, I typically work through materials
+(including doing exercises, if relevant) and then set out to transcribe the main
+things I've learned into notes.
+
+These notes are slightly redundant with the original sources I've used to learn.
+However, I deliberately aim to organize the newly acquired knowledge:
 
 * In the logical structure that I find most useful, which can be fairly
   subjective.
 
 * At the level of detail that I find most useful.
 
-I think that going through the process of formulating these notes helps me
-reinforce what I've learned.
-
 For completion, I also save my exercises also as notes, though I don't expect
 this to be specially useful.
 
-The canonical example where I've done this is in [my notes about Lean
-Prover](https://github.com/alefore/weblog/blob/master/lean.md).
+Finally, I consider creating cloze deletions for knewly learned contents for
+which I expect that spaced repetition may be useful.
+
+#### Examples
+
+The following are public examples of technical topics where I've written notes:
+
+* [My notes about Lean
+  Prover](https://github.com/alefore/weblog/blob/master/lean.md)
+
+* [My notes about Software
+  Correctness](https://github.com/alefore/weblog/blob/master/software-correctness.md)
+
+* [My notes about Immutable AVL
+  Tress](https://github.com/alefore/weblog/blob/master/immutable-avl-trees.md)
 
 ## Spaced Repetition and Notes
 

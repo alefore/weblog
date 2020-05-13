@@ -120,8 +120,7 @@ When critical sections protected by different mutexes overlap, it's possible for
 two threads to each acquire one of the mutex instances and then block trying to
 acquire the other.
 
-
-###### Ordering Mutex
+###### Ordering Mutex Instances
 
 The solution to deadlocks is to define a complete order for any set of
 mutex instances that overlap (i.e., any two mutexes that a thread may attempt to
@@ -163,10 +162,10 @@ slots become occupied (i.e, all threads become busy) but no progress can be made
 because all threads may block waiting for completion of scheduled work that
 hasn't started (and that won't start, because the executor is exhausted).
 
-To avoid this, one must either use dynamically growing (unbounded) executors,
-or use libraries that ensure that threads never block waiting for other threads
-(in other words, threads that would block will instead adopt and execute
-scheduled work).
+To avoid this, one must either use dynamically growing (unbounded) executors, or
+use libraries that ensure that threads never block waiting for other threads (in
+other words, threads that might block will instead adopt and execute scheduled
+work).
 
 ###### Generic Completion Handler
 
@@ -442,6 +441,32 @@ which change governed by power laws will occur.
 
 Source: Paul Saffo, HBR: Six Rules for Effective Forecasting
 
+#### Hash collisions
+
+Hash collisions can be an important source of security vulnerabilities or
+errors. Programmers assume a good distribution of values over the set of
+possible outputs; when this assumption fails, software may misbehave.
+
+##### Hash Collisions: Effects
+
+The most obvious effects of hash collisions would be:
+
+* Degradation in algorithms. The canonical example is an imbalanced hash-table
+  that starts exhibiting linear (rather than constant) access runtime
+  complexity.
+
+* Potential privacy/security violations.
+
+  * One example where I had to consider this very carefully was in a generic
+    key-value caching system that's widely used at Google as a pass-through
+    cache for RPCs. This system stores a hash of the keys as 128 bit hashes
+    (rather than storing the full key). This yields significant memory savings
+    (because the keys can be very large), but a hash collision could be
+    disastruous: it could mean that the wrong data would be served for a given
+    request. We've had to analyze the tradeoffs very carefully here, and have
+    had to revisit this decision many times throughout the years (as systems
+    with different characteristics deploy this caching system).
+
 #### Unhandled Corner Cases
 
 Corner cases are a common source of software failures. Because, by definition,
@@ -528,6 +553,17 @@ null in some situations (see examples in Null pointer dereference: Old
 Unix), but it would have the unfortunate effect of hiding actual
 errors, where some code *requires* an actual object but doesn't receive it. This
 goes against the principle of detecting errors early.
+
+### Software Errors: Security & Privacy
+
+#### Leaking Private Information Through Second Effects
+
+Given that we're often bad at considering second effects, a common type of
+security problem is systems that leak private information through second
+effects.
+
+The Meltdown and Spectre vulnerabilities from 2018 are probably the most
+notorious examples of this type of issues.
 
 ### Software Errors: Life Cycle Errors
 
@@ -734,6 +770,85 @@ processes in terms of active work that they are allowed to initiate. For
 example, each client process may be allowed to initiate up to a thousand active
 requests and, once that point is reached, only initiate new requests as existing
 requests complete.
+
+#### Oscillations
+
+Oscillations and thundering herds can be a common source of inefficiencies,
+unnecessary latency, and even unavailability for distributed systems. In a
+distributed system you have many actors making decisions simultaneously based on
+incomplete and stale information about the system state.
+
+##### Avoiding Oscillation
+
+The obvious approach to avoid oscillation is to decrease reaction times: only
+allow each part in the system to change gradually. This can be tricky because it
+tends to requires tunning, where bad parameters would either cause the system to
+react too slowly or not avoid oscillations.
+
+We've dealt with this by using PID controllers (or simpler controllers) in
+various systems to let them converge slowly towards their desired state.
+
+For example, we often smear out traffic spikes directly at the source: in
+various batch systems we use track the traffic rate (requests per second)
+observed on a recent window (based on exponential decay) and only allow the rate
+to grow slowly (delaying requests if the application suddenly sends a burst,
+which happens often for systems that have very heterogeneous number of outputs
+per input).
+
+#### Hotspots
+
+A hotspot happens when systems with affinity reach the per-entity scalability
+limits. These systems may simultaneously be overloaded and mostly idle.
+
+For example, a system with 10k tasks each capable of serving 1k requests per
+second can serve a total of 10m requests per second, but if each entity is
+mapped to just five tasks, for any given entity the system will only be able to
+execute up to 5k requests per second.
+
+##### Why affinity?
+
+Parts of distributed systems will often use affinity as an optimization or out
+of necessity: requests for a given "entity" (e.g., for a given user) will often
+be sent to the same task (or small set of tasks) in a large distributed system.
+
+This is typically the case for the low-level storage systems: the data for the
+entity will be stored in a small set of hard-drives, so requests for it will
+have to go to one of the few machines that can serve it.
+
+##### Dealing with Hotspots
+
+Hotspots can be tricky to deal with, especially in systems that have high
+consistency requirements.
+
+###### Coalesce Mutations
+
+For mutations, you can sometimes coallesce mutations, which may allow them to be
+applied atomically in the data owner. This may allow the data owner to scale
+significantly.
+
+The canonical example is incrementing a counter; rather than send millions of
+requests with the semantics of "increment the counter by 1", clients can
+aggregate those requests and send significantly fewer "increment the counter by
+37492" requests to the single machine that owns the counter.
+
+Obviously, this doesn't always work, and typically requires significant
+application logic.
+
+###### Replicated Caches for Reads
+
+One strategy we've used (which depends on the product requirements) is to relax
+consistency requirements for certain read-type operations and deploy large
+caches for very frequently accessed items. Some of our caching systems contain
+logic to detect these situations and automatically replicate the "hot" data to a
+large number of machines, as well as "deduplicate" redundant requests.
+
+Thanks to these caches, we have deployments where a client may be fetching data
+for a given entity up to 65k times per second and receiving results with up to
+five seconds of staleness. These caching layers deduplicate requests and don't
+need to refresh the data for any such active entity more than once per second
+from the underlying storage. This type of systems can be very useful for things
+such as very popular videos in systems like YouTube or Google+, where millions
+of users could suddenly start requesting data for a given entity.
 
 ## Avoid Errors
 

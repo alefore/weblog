@@ -422,7 +422,7 @@ tend to consume values of n that are large enough to make this very problematic.
 For example, a container with only ten thousand elements will already require
 10 million operations, which is often unacceptable.
 
-####### Exponential Growth: Binary
+####### Exponential Growth: Instantaneous Transition
 
 When analyzing the effects of variables that experience exponential
 growth, most of the time we can think of them as binary values that can
@@ -938,10 +938,11 @@ aliases (or simple extensions) of primitive types, rather than using these
 primitive types directly; the ghost types will more readibly reflect the
 semantics and may enable the compiler to detect type errors.
 
-Tags: software
+In C++, I have some logic to do this that I use in my text editor:
 
-Questions:
-* What's the best way to define these types in C++?
+    https://github.com/alefore/edge/blob/master/src/ghost_type.h
+
+Tags: software
 
 ###### Interface: Vanish Invalid States
 

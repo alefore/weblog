@@ -1132,6 +1132,18 @@ The following are desirable characteristics of such a system:
 
 * Isolate failures.
 
+###### Blue/Green Deployment
+
+The Blue/Green deployment strategy consists of executing two identical but
+separate environments:
+
+* The Blue environment, where the majority of traffic is served.
+* The Green environment, where the a new version (or configuration change) is
+  deployed.
+
+After a period of testing, the traffic is migrated from the blue to the green
+environment and the blue environment is turned off.
+
 ## Degrade Gracefully
 
 Rather than fail catastrophically, systems should degrade gracefully.

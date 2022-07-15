@@ -5,11 +5,17 @@ on the hills.
 ☙
 
 Landing on the yellow petals on the sidewalk,
-another purple petal, shed by the magnolia tree,
+another purple flower, shed by the magnolia tree,
 disappears.
 
 ☙
 
 Paper thin walls.
-This morning, my neighbor's alarm crumpled my dreams.
+The neighbor's early alarm crumpled my dreams.
+
+☙
+
+The bright balloon finally escapes
+the clutch of the birthday boy,
+only to get tangled in a magnolia tree.
 

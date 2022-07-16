@@ -14,8 +14,8 @@ The neighbor's early alarm crumpled my dreams.
 
 ☙
 
-The bright balloon finally escapes
-the clutch of the birthday boy,
+The red balloon finally breaks free
+from the sticky fingers of the birthday boy,
 only to get tangled in a magnolia tree.
 
 ☙

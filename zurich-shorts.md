@@ -4,9 +4,8 @@ on the hills.
 
 ☙
 
-Landing on the yellow petals on the sidewalk,
-another purple flower, shed by the magnolia tree,
-disappears.
+Yet another purple flower shed by the magnolia
+joins the mantle of yellow petals drying on the sidewalk.
 
 ☙
 
@@ -18,4 +17,9 @@ The neighbor's early alarm crumpled my dreams.
 The bright balloon finally escapes
 the clutch of the birthday boy,
 only to get tangled in a magnolia tree.
+
+☙
+
+Ducks fight for breadcrumbs an old lady throws them.
+She wishes her son called more often.
 

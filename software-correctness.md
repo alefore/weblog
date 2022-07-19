@@ -940,7 +940,7 @@ semantics and may enable the compiler to detect type errors.
 
 In C++, I have some logic to do this that I use in my text editor:
 
-    https://github.com/alefore/edge/blob/master/src/ghost_type.h
+    https://github.com/alefore/edge/blob/master/src/language/ghost_type.h
 
 Tags: software
 

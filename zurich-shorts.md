@@ -20,6 +20,18 @@ only to get tangled in a magnolia tree.
 
 ☙
 
-Ducks fight for breadcrumbs an old lady throws them.
-She wishes her son called more often.
+In the winter, an old lady throws breadcrumbs to the ducks.
+She wishes her son called.
+
+☙
+
+The late snow finally melts
+but the daffodils can no longer rise
+to greet the sun.
+
+☙
+
+I walk over the bridge, clutching my umbrella tightly.
+Plop!
+The wind turns it into a useless antenna.
 

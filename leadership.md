@@ -299,6 +299,11 @@ This often forces the author of the proposal to waste time exploring orthogonal 
 Another formulation of this anti-pattern is that the perfect is the enemy of the good.
 We are all too eager to see the speck in our sister’s design doc, but not notice the horrible bugs in our own.
 
+This isn't an exhortation to avoid delivering critical or "negative" feedback.
+Far from it.
+"Painful" feedback can often foster long term growth, which can justify the short term pain/stress it may induce.
+In any case, make sure you make a deliberate decision, based on the expected net effect.
+
 ##### Feedback: Humility
 
 There's a logical fallacy where, when we're unable to explain, justify, or establish a proposition, we often assume incorrectly that the proposition must be false.

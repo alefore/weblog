@@ -35,3 +35,9 @@ I walk over the bridge, clutching my umbrella tightly.
 Plop!
 The wind turns it into a useless antenna.
 
+☙
+
+Summer afternoon:
+my refreshing Spritz arrived
+with a wasp that won't leave.
+

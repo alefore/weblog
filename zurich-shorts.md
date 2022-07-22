@@ -41,3 +41,9 @@ Summer afternoon:
 my refreshing Spritz arrived
 with a wasp that won't leave.
 
+☙
+
+At the park the son walks backwards,
+further and further and further away
+from the ball he's about to kick.
+

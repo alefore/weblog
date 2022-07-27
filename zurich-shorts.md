@@ -47,3 +47,9 @@ At the park the son walks backwards,
 further and further and further away
 from the ball he's about to kick.
 
+☙
+
+Old people at the flea market
+weave an everlasting mishmash
+of patched-up half-forgotten stories.
+

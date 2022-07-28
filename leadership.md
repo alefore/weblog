@@ -27,10 +27,15 @@ Regardless, I've heard this misconception so often that I figured it was time to
 The word "leadership" has many different meanings.
 In my view, leadership at Google consists of two closely related skills:
 
-1. The ability to deliver qualitative improvements of adequate (i.e., level-adjusted) scope.
-2. The ability to make *good* technical (and, eventually, organizational) decisions.
+1. The ability to **deliver qualitative improvements of adequate scope** (i.e., corresponding to the level).
+   These may be improvements to existing systems or to the "status quo"
+   —for example, building new products that improve engineers' or end users' lives.
+2. The ability to **make *good* decisions**, both technical and, eventually (at higher levels), organizational.
    What are good decisions?
    Those that enable our software (and organizations) to thrive in the long run.
+
+Other metrics such as running presentations, doing trainings, or coaching/mentoring others are often associated with leadership.
+I believe there's no need to include them in my definition explicitly, as I explain below, in [Social Context](1n3.md#skip).
 
 Astute readers may object that this formulation speaks more to impact and difficulty than to leadership.
 Nevertheless, this serves as a robust definition, despite this overlap.
@@ -51,6 +56,12 @@ Leadership means, rather, structurally/fundamentally redefining the organization
 It requires the creativity to see opportunities others may have missed and the initiative and drive to persevere and resolve blockers that would otherwise prevent you (and thus Google) from realizing its impact.
 Leaders challenge the status quo, generate new ideas, and see them through fruition.
 They take ownership of problem domains and land solutions.
+
+*Transforming* the world isn't the goal; the goal is transformative *improvements*.
+This isn't an exhortation to seek change simply for the sake of change.
+The *impact* of your changes must significantly offset their costs.
+For example, when replacing a prior lead, a new lead should consider carefully the ideal pace at which to introduce interventions:
+the goal is to maximize the positive transformational impact on the organization, not just to cause churn.
 
 "The organizational/technical world around you" is somewhat ambiguous.
 The thing being transformed could be "the way other engineers work"
@@ -106,7 +117,7 @@ it just so happens that changing the world (or a level-adjusted smaller part the
 These social aspects are a necessity of the goal, not the goal itself.
 
 Google's goal isn't to include these social aspects in the promotion process;
-instead, the goal is simply to align the promotion process (and the role profiles) with the reality in which software exists: what makes it succeed or fail.
+instead, the goal is simply to align the promotion process (and the role profiles) with the reality in which software exists: what makes it thrive or fail.
 
 ### Leadership by Level
 
@@ -120,7 +131,7 @@ I'll offer the leadership requirements that I associate with each SWE level at G
 
 * **L4**: You start owning larger parts of a project.
   You've shown that you can manage yourself and your interactions with the rest of your team reasonably
-  —e.g., show up on time, communicate adequately, learn new technologies on your own…)
+  —e.g., show up on time, communicate adequately, learn new technologies on your own…
   At this point, your contributions go beyond executing tasks scoped/defined by others;
   your feedback starts influencing some of the designs.
   For example, you start pointing out problems in specific parts of the larger designs —and proposing solutions.
@@ -227,14 +238,25 @@ Some important design tasks may end up listed as the expectations for the L5 eng
 To make things interesting, assume that the project is forecasted to land with minimal involvement from the L6 engineer.
 
 However, if the project fails, should that be considered a failure of the L6 engineer?
-If so, it should be reflected in the expectations for the L6 engineer.
-If we want the L6 to be responsible for the success of the project, we need to make sure that he'll receive credit for it, our forecast notwithstanding.
+We have two options:
 
-In doing so, we are codifying in the expectations that if something unforeseen happens, the L6 is expected to step in and support the junior engineers, seeing them through to success.
+* The project is not a responsibility of the L6.
+  Our forecast doesn't expect the L6 to be involved anyway.
+  If the project fails, the L6 shouldn't even bat an eye…
+  This may be the outcome of our prioritization (we'd rather let the project fail than distract the L6).
 
-More interestingly, we're also codifying that the L6 engineer should be influencing the team significantly, increasing the probability of success for the project.
-This doesn't change simply because he's not expected to participate in the project *directly*;
+* The project is a responsibility of the L6.
+  If the project struggles, the L6 is expected to step in and support the junior engineers, seeing them through to success.
+  If the project fails, the L6 is failing.
+  If, on the other hand, the project succeeds, the L6 is succeeding and deserves recognition, *even if they ended up not having anything to do with the project directly*.
+
+The choice should be codified in the L6's expectations.
+
+Regardless of this choice, the L6 engineer's expectations likely reflect that they should be influencing the team significantly.
+They'll be increasing the probability of success (impact, delivery, quality, etc.) for this project and other projects the team invests in.
+This doesn't change simply because they're not expected to participate in the project *directly*;
 this influence is exerted in indirect/invisible ways, through things like career guidance, long-term planning and technical direction setting, and mentorship.
+In this sense, even if the project is not a direct responsibility of the L6, it's likely that he'll deserve recognition for its success.
 None of this assumes authority —the L6 engineer doesn't need to be a manager nor TL;
 the expectations in terms of leadership on the L6 are entirely orthogonal to that.
 
@@ -252,30 +274,34 @@ Another important tool is escalation —ideally starting with your manager, who 
 
 ### Working Well with Others
 
-More unfortunate news: there are also no silver bullets for how to work well in a team:
-it also takes a lot of experience to do this well.
+More unfortunate news: there are also no silver bullets for how to work well in a team.
+It also takes a lot of experience to do this well.
 
 The good news is that deliberate effort can yield drastic improvements here, which, in my experience, can have a dramatic impact on most engineer's careers.
 A lot of this comes simply from paying attention to these aspects.
 Work with your mentor to identify concrete steps you can take to get better at things like:
 
-* Communicate well.
-  Avoid ambiguities.
-  Be explicit when it pays to be explicit.
-  And succinct when it pays to be succinct.
-  Adjust your writing to match your target audience.
-  Identify your target audience, to begin with.
-  Understand that communicating clearly requires thinking clearly;
-  you can't speak very well until it becomes clear what to say.
-* Foster psychological safety.
+* **Foster psychological safety**.
   You want open feedback and connection.
-  For example, when a peer does a terrible job, you want to be able to tell them directly (and why),
+  For example, when a peer drops the ball, you want to be able to tell them directly (and why),
   without any negative/destructive emotions/intentions on either side,
   in a way that supports them (see below).
-  You want others to tell you when/why you've done a terrible job, also without any negative emotions.
-* Negotiate well.
-* Understand in which conversations/meetings to be "transactional" and when to be "connection oriented".
-  Become effective at both.
+  You want others to tell you when they think you could/should have done better, also without any negative emotions.
+* **Negotiate well**.
+  Seek to understand others and find common ground with them, rather than "win" the argument.
+  The way I think of this is:
+  (1) understanding well the needs of others
+  (2) understanding the possibilities your technical/organizational reality affords you, and
+  (3) and being inventive/creative enough to build solid and elegant bridges that satisfy both.
+* **Communicate well**. For example:
+  * Avoid ambiguities and [use consistent terminology](http://go/consistent-terminology).
+  * Be explicit when it pays to be explicit (e.g., call out AIs in meeting notes explicitly).
+    And succinct when it pays to be succinct (e.g., don't include unnecessarily long "Background" sections in your design docs).
+  * Adjust your writing to match your target audience.
+    Identify your target audience, to begin with.
+  * Understand that communicating clearly requires thinking clearly;
+    you can't speak very well until it becomes clear what to say.
+  * Understand in which conversations/meetings to be "transactional" and when to be "connection oriented"; become effective at both.
 
 #### Delivering Feedback Well
 

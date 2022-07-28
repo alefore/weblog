@@ -38,18 +38,24 @@ The wind turns it into a useless antenna.
 ☙
 
 Summer afternoon:
-my refreshing Spritz arrived
-with a wasp that won't leave.
+a swarms of wasps
+dances around my Spritz.
 
 ☙
 
 At the park the son walks backwards,
 further and further and further away
-from the ball he's about to kick.
+from the ball.
 
 ☙
 
 Old people at the flea market
-weave an everlasting mishmash
+weave an endless quilt
 of patched-up half-forgotten stories.
+
+☙
+
+A furtive drop of ciocolatto nero
+leaps from the ice cream cone
+and kisses my white linen shirt.
 

@@ -61,23 +61,16 @@ They take ownership of problem domains and land solutions.
 This isn't an exhortation to seek change simply for the sake of change.
 The *impact* of your changes must significantly offset their costs.
 For example, when replacing a prior lead, a new lead should consider carefully the ideal pace at which to introduce interventions:
-the goal is to maximize the positive transformational impact on the organization, not just to cause churn.
+the goal is to maximize the positive transformational impact on the organization, not just to create churn.
 
 "The organizational/technical world around you" is somewhat ambiguous.
 The thing being transformed could be "the way other engineers work"
-(e.g., how they structure their code, how they deal with outages, the team structure of a large organization, etc.).
+(e.g., how they structure their code, how they deal with outages, the team structure of a large organization).
 It could also be purely technical things such as:
 
 * The way some specific server stack works.
 * The interface between two low-level systems.
 * The algorithms used to balance RPC traffic by a significant fraction of the fleet.
-
-You don't need formal authority over other engineers to execute any of this.
-Formal authority certainly helps.
-But formal authority (e.g., promotions and/or being formally made a manager or TL) is earned at Google by demonstrating leadership, not the other way around.
-Getting promoted to a given level usually boosts your authority —or the perception that others have of the authority that you have, which is the same thing.
-This happens mostly in implicit, silent ways.
-To get promoted to the next level, it still is on you to demonstrate enough leadership before you earn the next-level authority.
 
 ### Social Context
 
@@ -158,6 +151,22 @@ I'll offer the leadership requirements that I associate with each SWE level at G
   At this point you very likely have a very significant influence on the medium- to long-term success of many engineers.
   This influence very likely wielded in a large number of indirect ways.
 
+### Leadership and Authority
+
+You don't need authority over other engineers to demonstrate the conditions of leadership.
+
+Formal authority certainly helps.
+But formal authority (e.g., promotions and/or being formally made a manager or TL) is earned at Google by demonstrating leadership, not the other way around.
+
+Getting promoted to a given level usually boosts your authority —or the perception that others have of the authority that you have, which is the same thing.
+This happens mostly in implicit, silent ways.
+To get promoted to the next level, it still is on you to demonstrate enough leadership before earning the next-level authority.
+
+This is true even if you're a manager:
+
+* To be hired into a management position, you need to provide evidence of leadership to Google (which, obviously, doesn't need to have occurred at Google).
+* To earn more formal authority (e.g., get promoted, take on more HC), you need to demonstrate leadership.
+
 ## Developing Leadership
 
 You want to grow your leadership?
@@ -226,48 +235,49 @@ Many books have been written on this, so I'm leaving it out of scope.
 
 How do we allocate credit (for success) and blame (for failure) fairly?
 
-Let's make this concrete.
-Imagine a team consisting of:
+To make this concrete, imagine you are an L6 engineer in a team consisting of:
 
 * Three L4 engineers
 * One L5 engineer
-* One L6 engineer
+* One L6 engineer (you!)
 
 If this team sets out to execute a specific project, level-appropriate subtasks should be reflected in the expectations of the junior engineers that will execute them.
 Some important design tasks may end up listed as the expectations for the L5 engineer.
-To make things interesting, assume that the project is forecasted to land with minimal involvement from the L6 engineer.
+To make things interesting, assume that the project is forecasted to land with minimal involvement from you.
 
-However, if the project fails, should that be considered a failure of the L6 engineer?
-We have two options:
+However, if the project fails, should that be considered your failure?
+There are two options:
 
-* The project is not a responsibility of the L6.
-  Our forecast doesn't expect the L6 to be involved anyway.
-  If the project fails, the L6 shouldn't even bat an eye…
-  This may be the outcome of our prioritization (we'd rather let the project fail than distract the L6).
+* The project is *not* your responsibility.
+  We don't expect you to be involved anyway.
+  If the project fails, you shouldn't even bat an eye…
+  This may be the outcome of the prioritization/planning (i.e., we'd rather let the project fail than distract you from more important work).
 
-* The project is a responsibility of the L6.
-  If the project struggles, the L6 is expected to step in and support the junior engineers, seeing them through to success.
-  If the project fails, the L6 is failing.
-  If, on the other hand, the project succeeds, the L6 is succeeding and deserves recognition, *even if they ended up not having anything to do with the project directly*.
+* The project is your responsibility.
+  If the project struggles, you are expected to step in and support the junior engineers, seeing them through to success;
+  if the project fails, *you* are failing (to meet your expectations).
+  If, on the other hand, the project succeeds, you are succeeding and deserve recognition, *even if you ended up not having anything to do with the project directly*.
 
-The choice should be codified in the L6's expectations.
+The choice should be codified in your expectations.
 
-Regardless of this choice, the L6 engineer's expectations likely reflect that they should be influencing the team significantly.
-They'll be increasing the probability of success (impact, delivery, quality, etc.) for this project and other projects the team invests in.
-This doesn't change simply because they're not expected to participate in the project *directly*;
-this influence is exerted in indirect/invisible ways, through things like career guidance, long-term planning and technical direction setting, and mentorship.
-In this sense, even if the project is not a direct responsibility of the L6, it's likely that he'll deserve recognition for its success.
-None of this assumes authority —the L6 engineer doesn't need to be a manager nor TL;
-the expectations in terms of leadership on the L6 are entirely orthogonal to that.
+Regardless of this choice, your L6 expectations likely reflect that you should be influencing the team significantly.
+You'll be increasing the probability of success (impact, delivery, quality, etc.) for this and other projects the team invests in.
+This doesn't change simply because you're not expected to participate in some projects *directly*;
+your influence is exerted, often in indirect/invisible ways, through things like career guidance, long-term planning and technical direction setting, and mentorship.
+In this sense, even in that case where the project is not your *direct* responsibility, it's likely that you'll still deserve some recognition for its success.
+
+None of this assumes authority —you don't need to be a manager nor TL;
+your expectations in terms of leadership are entirely orthogonal to that.
 
 #### Resolving Blockers
 
 One important aspect of ownership that is sometimes neglected is focusing on proactively ensuring that blockers get addressed or escalated.
 
-As the owner of a given project, I remain responsible for ensuring that all blockers get resolved appropriately (timely, with quality, etc.).
-This is true even for blockers that depend on other engineers or teams, even after they have been assigned to them explicitly.
-If they don't, blaming the project failure/delays on other engineers or teams won't change the fact that I have failed to fulfill my responsibility/expectations:
-the project I own still failed.
+As the owner of a given project, you are responsible for ensuring that all blockers get resolved appropriately (timely, with quality, etc.).
+This is true *even for blockers that depend on other engineers or teams*, even after they have been assigned to them explicitly.
+When blockers don't get resolved, blaming the project failure/delays on other engineers or teams…
+doesn't change the fact that you have failed to fulfil your responsibility/expectations:
+the project you own still failed/stalled.
 
 The main skills for this all have to do with working well with other engineers (e.g., knowing when/how to use email pings, chat, meetings, etc., effectively; using tools like joint OKRs).
 Another important tool is escalation —ideally starting with your manager, who may have ideas to help you unblock things.
@@ -291,8 +301,9 @@ Work with your mentor to identify concrete steps you can take to get better at t
   Seek to understand others and find common ground with them, rather than "win" the argument.
   The way I think of this is:
   (1) understanding well the needs of others
-  (2) understanding the possibilities your technical/organizational reality affords you, and
-  (3) and being inventive/creative enough to build solid and elegant bridges that satisfy both.
+  (2) understanding well your own needs
+  (3) understanding the possibilities your technical/organizational reality affords you, and
+  (4) being inventive/creative enough to build solid and elegant bridges that satisfy both.
 * **Communicate well**. For example:
   * Avoid ambiguities and [use consistent terminology](http://go/consistent-terminology).
   * Be explicit when it pays to be explicit (e.g., call out AIs in meeting notes explicitly).
@@ -327,8 +338,17 @@ We are all too eager to see the speck in our sister’s design doc, but not noti
 
 This isn't an exhortation to avoid delivering critical or "negative" feedback.
 Far from it.
-"Painful" feedback can often foster long term growth, which can justify the short term pain/stress it may induce.
-In any case, make sure you make a deliberate decision, based on the expected net effect.
+Constructive feedback often fosters long term growth, even when it's painful.
+This can justify the short term pain/stress it may cause.
+In any case, make sure you:
+
+* Make a deliberate decision, based on the expected net effect.
+* Do what you can to deliver your feedback in a way that promotes psychological safety.
+
+Additional information:
+
+* [For better commenting, avoid PONDS](https://www.lesswrong.com/posts/k5TTsuHovbeTWgszD/for-better-commenting-avoid-ponds)
+* [Situation-Behavior-Impact Feedback Framework](https://medium.com/pm101/the-situation-behavior-impact-feedback-framework-e20ce52c9357)
 
 ##### Feedback: Humility
 

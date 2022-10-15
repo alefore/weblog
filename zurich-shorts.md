@@ -59,3 +59,8 @@ A furtive drop of ciocolatto nero
 leaps from the ice cream cone
 and kisses my white linen shirt.
 
+☙
+
+A beautiful stranger sleeps next to me.
+Where am I?
+

@@ -64,3 +64,8 @@ and kisses my white linen shirt.
 A beautiful stranger sleeps next to me.
 Where am I?
 
+☙
+
+October.
+Brown leaves soften the cobblestones.
+

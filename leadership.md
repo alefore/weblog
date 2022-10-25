@@ -1,5 +1,7 @@
 # Leadership at Google
 
+*The opinions stated here are my own, not those of my company.*
+
 TL;DR:
 Leadership doesn’t require delegating work to others nor having authority over them (section "The Myth of Leadership").
 While leadership has important social aspects, these are incidental, not essential.

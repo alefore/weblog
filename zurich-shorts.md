@@ -39,7 +39,7 @@ The wind turns it into a useless antenna.
 ☙
 
 Summer afternoon:
-a swarms of wasps
+a swarm of wasps
 dances around my Spritz.
 
 ☙
@@ -126,7 +126,7 @@ In the willows, shadows caw.
 
 ☙
 
-Cyclist rushing along the river
+Cyclist rushing along river
 recognizes staring pedestrian
 a second too late.
 
@@ -219,7 +219,7 @@ Young girl holding a small nutcracker leans forward on her seat.
 
 ☙
 
-Black branches of naked trees along the river trail
+Black branches of naked trees along river trail
 admit the brightness of cloudy autumn skies.
 
 ☙
@@ -235,4 +235,45 @@ Niente ferma una valanga.
 ☙
 
 Leise fällt der erste Schnee auf die alte Kastanie.
+
+☙
+
+Unbeirrt folgt das klapprige Tram der Strasse durch den Sturm.
+Draussen wirbelt der Schnee.
+
+☙
+
+Te despierta un suspiro.
+Cortinas abiertas.
+La nieve ha llegado mientras dormían.
+
+☙
+
+Powdery snow, birches washed white.
+On a twig, a twinkle: a yellow tit chirps.
+Was it really there?
+
+☙
+
+Like prickly legs of a dried up bettle,
+gnarly twigs in the naked chestnut
+reach out to the cloudy sky.
+
+☙
+
+Silence becomes laughter;
+kids sled down the hill,
+smearing dirt over snow.
+
+☙
+
+Alegres gorriones cantan en un arbusto.
+Me detengo a escuchar y se callan.
+
+☙
+
+La lluvia cesa;
+ventanas se abren
+al ruido de carros
+en calles mojadas.
 

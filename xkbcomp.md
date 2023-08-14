@@ -32,9 +32,9 @@ File ~/.xkb/map:
 
 ## Spanish accents
 
-The first custom file sets accents for Spanish.
+The first custom file sets accents for Spanish and diaeresis for German.
 
-File ~/.xkb/symbols/accents:
+File `~/.xkb/symbols/accents`:
 
     partial alphanumeric_keys
     xkb_symbols "accents" {
@@ -49,6 +49,13 @@ File ~/.xkb/symbols/accents:
       replace key <AD08> {[ i, I, iacute, Iacute ]};
       replace key <AD09> {[ o, O, oacute, Oacute ]};
       replace key <AC01> {[ a, A, aacute, Aacute ]};
+      replace key <AD01> {[ z, Z, adiaeresis, Adiaeresis ]};
+      replace key <AC03> {[ d, D, ediaeresis, Ediaeresis ]};
+      replace key <AC07> {[ j, J, udiaeresis, Udiaeresis ]};
+      replace key <AC08> {[ k, K, idiaeresis, Idiaeresis ]};
+      replace key <AC09> {[ l, L, odiaeresis, Odiaeresis ]};
+      replace key <AB01> {[ z, Z, adiaeresis, Adiaeresis ]};
+      replace key <AB02> {[ x, X, ssharp ]};
       replace key <AB06> {[ n, N, ntilde, Ntilde ]};
       replace key <AB10> {[ slash, question, questiondown ]};
     };
@@ -57,7 +64,7 @@ File ~/.xkb/symbols/accents:
 
 I disable caps lock. I never found it useful. Instead, I map it to tab.
 
-File ~/.xkb/symbols/caps:
+File `~/.xkb/symbols/caps`:
 
     hidden partial modifier_keys
     xkb_symbols "caps" {

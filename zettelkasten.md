@@ -83,8 +83,8 @@ about the city of Macau). This seems to work well for me.
 With this schema I can create a total of (10 + 26)³ = 45e3 notes, which I think
 suffices. If I ever reach that limit, that will mean I've been very successful
 with my Zettelkasten; I can, at that point, adopt uppercase characters, which
-would increase the namespace to 238e3 notes. As of 2020-04-17 I'm still far from
-that, though: the last note I've created is `0th.md` (the 1062th note).
+would increase the namespace to 238e3 notes. As of 2023-09-02 I'm still far from
+that, though: the last note I've created is `2hp.md` (the 3227th note).
 
 I have a symbolic link `index.md` which points to my main entry point note (note
 `0a9.md`). This is used by my `:zki` (Zettelkasten Index) command to take me to
@@ -160,37 +160,14 @@ structure:
 
 * Text describing the idea.
 
-* Set of related links.
+* Set of related links, in a "Related" section.
 
 * Set of tags (optional). I haven't yet derived any actual value from the tags.
   Perhaps this means that I have fairly good structure Zettel; perhaps that my
   search functionality works very well; perhaps that my Kasten hasn't grown
   enough to the point where this will become useful.
 
-### Good Names
-
-Choose carefully the names you use in your models, making them as
-self-explanatory as possible.
-
-### Make Patterns Memorable
-
-Giving good names to patterns we can observe and reason about makes them more
-memorable and makes us more likely to be aware of them and to notice them when
-they occur.
-
-#### Consistent Names
-
-Avoid using different names for the same entity; always refer to a given entity
-with the same name.
-
-Using multiple names is confusing because it introduces ambiguity - it isn't
-clear to the reader if the two names actually refer to exactly the same entity,
-or to entities that differ in subtle ways.
-
-#### Short Names
-
-A good name is short; it only contain tokens that refer to fundamental parts of
-the thing being named.
+* Metadata
 
 ### Links
 
@@ -296,6 +273,50 @@ Most notes at least have a link to a "parent" node, but a reasonably large
 number have at list two links. The ones with 0 links are probably very early
 notes before I automated the creation of new notes; this automation defaults to
 cross-referencing the note with a parent note.
+
+### Metadata
+
+I have a few special paragraphs in my Zettelkasten to encode metadata. They
+always start with a specific token.
+
+* Paragraphs starting with `TODO:` and `TODO(YYYY-MM-DD)` mark things I would
+  like to get back to in the future.
+
+* `Prediction(@YYYY_MM_DD)`: Means that at the date given, I made a prediction.
+  The text in the paragraph articulates unambiguously what the prediction is.
+  * The prediction must either have:
+    * A given probability: `.withProbability(p)` (where p is between 0 and 1)
+    * An expected range with a confidence of 90%, reflecting a normal
+      distribution: `.withNormalDistribution(min, max)`
+  * The prediction may have any of these:
+    * A target date by which it should be evaluated: `.withDate(@DATE)`
+    * The value (`true`, `false`, or a numeric value) if known:
+    `.withValue(value)`.
+
+### Good Names
+
+Choose carefully the names you use in your models, making them as
+self-explanatory as possible.
+
+### Make Patterns Memorable
+
+Giving good names to patterns we can observe and reason about makes them more
+memorable and makes us more likely to be aware of them and to notice them when
+they occur.
+
+#### Consistent Names
+
+Avoid using different names for the same entity; always refer to a given entity
+with the same name.
+
+Using multiple names is confusing because it introduces ambiguity - it isn't
+clear to the reader if the two names actually refer to exactly the same entity,
+or to entities that differ in subtle ways.
+
+#### Short Names
+
+A good name is short; it only contain tokens that refer to fundamental parts of
+the thing being named.
 
 ## Low Friction
 

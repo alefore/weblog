@@ -535,7 +535,7 @@ fairly well as cloze deletion sources.
 Spaced repetition is a very good way to learn. It requires consistency.
 
 I use [Mnemosyne](https://en.wikipedia.org/wiki/Mnemosyne_(software)) and have a
-database of 8.1k cards (as of 2020-04-10), mostly about Swiss facts (e.g., how
+database of 8239 cards (as of 2023-09-02), mostly about Swiss facts (e.g., how
 the parlament works), German and Italian vocabulary and grammar, and a few other
 random topics. I've been using this database since around 2014 (possibly
 earlier).

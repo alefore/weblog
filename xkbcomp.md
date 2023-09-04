@@ -2,10 +2,6 @@
 
 I configure my keyboard using `xkbcomp`.
 
-I apply my configurations with this command:
-
-    xkbcomp -I$HOME/.xkb ~/.xkb/map $DISPLAY
-
 ## Master file
 
 My master file starts with the `us` keyboard and includes two custom files,
@@ -42,6 +38,7 @@ File `~/.xkb/symbols/accents`:
       };
 
       replace key <SPCE> {[ space, space, space, nobreakspace ]};
+      replace key <AE11> {[ minus, underscore, endash, emdash ]};
 
       // Spanish characters.
       replace key <AE01> {[ 1, exclam, exclamdown ]};
@@ -66,22 +63,37 @@ File `~/.xkb/symbols/accents`:
 
 ## Caps Lock
 
-I disable caps lock. I never found it useful. Instead, I map it to tab.
+I disable caps lock.
+I never found it useful.
+
+Instead, I map it to Control.
+I use Control very frequently
+and I find it uncomfortable to press Control
+in the default position in most keyboards.
 
 File `~/.xkb/symbols/caps`:
 
     hidden partial modifier_keys
     xkb_symbols "caps" {
-      replace key <CAPS> {[ Tab ]};
+      replace key <CAPS> {[ Control_L ]};
+      modifier_map Control { <CAPS> };
     };
 
-## Udev
+## Applying this configuration
+
+### Executing xkbcomp directly
+
+I can apply my configurations with this command:
+
+    xkbcomp -I$HOME/.xkb ~/.xkb/map $DISPLAY
+
+### Integration with Udev
 
 My keyboard is connected to a USB switch.
 Occasionally, the configuration is dropped, as if I had unplugged the keyboard and plugged it back in.
 To apply my settings every time this happens, I wrote the following script:
 
-File `~/bin/xkb`:
+File `~/bin/xkb` (mode 755):
 
     #!/bin/bash
     export XAUTHORITY="/run/user/$(id -u alejo)/gdm/Xauthority"
@@ -96,7 +108,8 @@ File `/etc/udev/rules.d/99-custom-kb.rules`:
 
 The reason for the call to `sleep 2` is that my distribution comes with some `/etc/udev/rules.d/99-...` files that override my settings.
 I don't want to edit (or move) any of these files;
-I fear this would cause ongoing pain (e.g., having to restore things or manage conflicts whenever my distribution is updated).
+I fear this would cause ongoing pain
+(e.g., having to restore things or manage conflicts whenever my distribution is updated).
 
 I opted for the ugly solution:
 for the first ~2 seconds after the keyboard is redetected (which happens a few times per day), my customizations are missing.

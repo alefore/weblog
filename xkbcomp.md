@@ -24,6 +24,8 @@ File `~/.xkb/map`:
 ## Spanish & German support
 
 The first custom file sets accents for Spanish and diaeresis for German.
+It also sets a few other custom characters, such as `emdash`, `nobreakspace`,
+arrow characters (`←↑↓→`), and `×`.
 
 File `~/.xkb/symbols/accents`:
 
@@ -47,6 +49,8 @@ File `~/.xkb/symbols/accents`:
       replace key <AD08> {[ i, I, iacute, Iacute ]};
       replace key <AD09> {[ o, O, oacute, Oacute ]};
       replace key <AC01> {[ a, A, aacute, Aacute ]};
+      replace key <AB06> {[ n, N, ntilde, Ntilde ]};
+      replace key <AB10> {[ slash, question, questiondown ]};
 
       // German characters. To avoid clashes with the definitions for Spanish
       // characters, I define the special keys *below* the corresponding normal
@@ -56,9 +60,13 @@ File `~/.xkb/symbols/accents`:
       replace key <AC08> {[ k, K, idiaeresis, Idiaeresis ]};
       replace key <AC09> {[ l, L, odiaeresis, Odiaeresis ]};
       replace key <AB01> {[ z, Z, adiaeresis, Adiaeresis ]};
-      replace key <AB02> {[ x, X, ssharp ]};
-      replace key <AB06> {[ n, N, ntilde, Ntilde ]};
-      replace key <AB10> {[ slash, question, questiondown ]};
+      replace key <AB02> {[ x, X, ssharp, U00D7 ]};
+
+      // Arrows.
+      replace key <LEFT> {[ Left, Left, U2190 ]};
+      replace key <UP>   {[ Up, Up, U2191 ]};
+      replace key <DOWN> {[ Down, Down, U2193 ]};
+      replace key <RGHT> {[ Right, Right, U2192 ]};
     };
 
 ## Caps Lock
@@ -120,4 +128,3 @@ I had originally used an `xmodmap` file with all my bindings.
 This work well in practice up until some point around 2014;
 something happened that made it incredibly slow.
 So I migrated away from `xmodmap` to `xkbcomp`.
-

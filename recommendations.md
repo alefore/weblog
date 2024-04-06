@@ -1,0 +1,167 @@
+# Recommendations
+
+This is a list of things or software programs
+that I enjoy using.
+
+## Why Share
+
+I'm sharing this list for two reasons:
+
+* Maybe it helps my friends or random readers get one or two useful ideas.
+
+* I've benefited a lot from advice from my friends.
+  I'm hoping my sharing this opening
+  may encourage others to reach out to me
+  with advice or suggestions:
+
+  * You may be encouraged to write down and share a similar list
+    of your favorite objects and recommendations.
+    In this case, please send me an email (alefore@gmail.com)
+    with a link to your list.
+    I'd be happy to read it.
+
+  * You may notice something missing or have an idea along the lines of
+    "if you like X, you'll probably like Y".
+    If you're one of my friends, please tell me next time we meet.
+
+Goes without saying that this list is highly subjective.
+
+## Software
+
+### Excalidraw
+
+I find Excalidraw excellent,
+a great example of a good user interface.
+
+As I was learning to use it,
+I often found myself thinking
+"oh, it would be great if I could adjust this object in this way,"
+to just find out that the corresponding feature exists
+and is accessible at the most natural place.
+
+There's also a lesson to be learned at the fact that
+the outputs are deliberately drawn imperfectly
+(immitating a hand-drawn sketch).
+
+### Syncthing
+
+Syncthing very quickly became a critical part of my workflow,
+allowing me to synchronize my Zettelkasten into various devices
+much more efficiently than with other tools (including `git`) that I tried.
+
+If you haven't heard of it, I recommend you check it out.
+You may not need it yet,
+but knowing about it may save you some time in the future.
+
+### Git
+
+I depend on `git` to maintain a lot of my information.
+
+I can't say that git is an example of great design,
+not when describing its user interface.
+It sometimes seems more complex than merited.
+
+On the other hand, I can't say that it isn't (an example of great design);
+it may just be that my needs are relatively straightforward.
+
+In any case, I love the flexibility and ease
+with which it allows me to access and update
+various repositories of information
+across many devices.
+
+## Furniture
+
+### Aeron Miller
+
+My personal chair is an Aeron Miller.
+
+It doesn't look very pretty,
+but I find it very comfortable.
+
+### horgenglarus Classic
+
+I own a set of horgenglarus Classic chairs.
+While they are now a bit too old,
+I'm very happy with them.
+
+Originally designed in 1918,
+they are still manufactured and sold,
+with only minor variations.
+These chairs not only
+honor Swiss traditions and history
+(and from the Sihl valley and Albis range) but also
+exemplify great design.
+
+## Home
+
+# Sonos
+
+# Aero Press
+
+# Mud Australia
+
+### Acaia Lunar
+
+The Lunar scale is a pleasure to use.
+I use it nearly every day (when making coffee) and it just gets the job done.
+It's expensive, but it's one of those great examples of good design,
+an object that just lets you achieve your goal and gets out of the way.
+
+### Philips Hue Lightbulbs
+
+We decided to upgrade _most_ lightbulbs in our home to be smart lightbulbs.
+Great decision.
+
+You can trivially reconfigure all your light switches
+to accomodate requirements you hadn't (and couldn't have) anticipated.
+I think there's something to be said about enabling iteration,
+about adopting practices that let you more easily adjust your surroundings
+to fit better with your constantly evolving desires.
+Christopher Alexander would say that you make your buildings alive.
+
+We went with the Philips Hue line,
+on the recommendations from a friend.
+It just works! We haven't had any issues.
+I suppose other similar smart-lightbulb systems may just as well;
+I can't comment on how Philips Hue stands in comparison to their competitors.
+
+I'm impressed by the fact that the technology has reached the point
+where [a lightswitch](https://www.feller.ch/de/sortiment/schalter-und-taster/funktaster)
+doesn't need any bateries or electricity:
+the act of pressing it generates enough power for it to communicate
+wirelessly with the home control system.
+
+We still have some old-fashioned lightbulbs in our home.
+Some are, unfortunately, not compatible;
+for others (e.g., on very visible lamps)
+we haven't found beautiful-enough bulbs in the Philips hue line.
+
+## Clothing
+
+### Patagonia Better Sweater Fleece Jacket
+
+My Patagonia Better Sweater Fleece Jacket is the best sweater I've ever owned.
+It's probably the sweater I've worn the most in my life.
+
+I've not only worn it in mountain hikes or antarctic expeditions,
+but many days in the office or at home.
+And, after almost a decade,
+it's still pretty much in the same condition it was when I just got it.
+
+I got it as a gift from Google.
+The best piece of swag I've gotten.
+Many of my colleagues who also got one are as appreciative of it as I am.
+
+## Writing
+
+### Pilot Vanishing Point
+
+I write on paper using a Pilot Vanishing Point fountain pen.
+I use it nearly every day for journaling.
+I've owned it since 2013-01-05.
+
+The pen has its fare share of scratches.
+They bothered me in the beginning:
+"oh no, it's scratched!"
+I've now come to appreciate them.
+

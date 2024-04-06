@@ -277,3 +277,33 @@ ventanas se abren
 al ruido de carros
 en calles mojadas.
 
+☙
+
+En el cementerio
+llueven ligeros
+los graznidos
+de los cuervos.
+
+☙
+
+Blossoms fair chance a final snow.
+An old man, unsteady steps, a fall.
+His crutches rest on the bench.
+
+☙
+
+Tarde lluviosa.
+En la sala, nubes de hierbabuena.
+Alguien timbra.
+
+☙
+
+A solitary leaf lands on the thick rug.
+The living-room tree knows not of storms.
+
+☙
+
+Brutalism, dark shadows.
+Raindrops fade on bare concrete.
+Gray jungle breath.
+

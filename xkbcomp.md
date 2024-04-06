@@ -41,6 +41,7 @@ File `~/.xkb/symbols/accents`:
 
       replace key <SPCE> {[ space, space, space, nobreakspace ]};
       replace key <AE11> {[ minus, underscore, endash, emdash ]};
+      replace key <AB09> {[ period, greater, U2026 ]};
 
       // Spanish characters.
       replace key <AE01> {[ 1, exclam, exclamdown ]};
@@ -120,7 +121,8 @@ I fear this would cause ongoing pain
 (e.g., having to restore things or manage conflicts whenever my distribution is updated).
 
 I opted for the ugly solution:
-for the first ~2 seconds after the keyboard is redetected (which happens a few times per day), my customizations are missing.
+for the first ~2 seconds after the keyboard is re-detected
+(which happens a few times per day), my customizations are missing.
 
 ## Xmodmap
 
@@ -128,3 +130,4 @@ I had originally used an `xmodmap` file with all my bindings.
 This work well in practice up until some point around 2014;
 something happened that made it incredibly slow.
 So I migrated away from `xmodmap` to `xkbcomp`.
+

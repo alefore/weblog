@@ -41,7 +41,7 @@ and is accessible at the most natural place.
 
 There's also a lesson to be learned at the fact that
 the outputs are deliberately drawn imperfectly
-(immitating a hand-drawn sketch).
+(imitating a hand-drawn sketch).
 
 ### Syncthing
 
@@ -96,7 +96,7 @@ exemplify great design.
 
 # Sonos
 
-# Aero Press
+# AeroPress
 
 # Mud Australia
 
@@ -107,31 +107,31 @@ I use it nearly every day (when making coffee) and it just gets the job done.
 It's expensive, but it's one of those great examples of good design,
 an object that just lets you achieve your goal and gets out of the way.
 
-### Philips Hue Lightbulbs
+### Philips Hue Light Bulbs
 
-We decided to upgrade _most_ lightbulbs in our home to be smart lightbulbs.
+We decided to upgrade _most_ light bulbs in our home to be smart light bulbs.
 Great decision.
 
 You can trivially reconfigure all your light switches
-to accomodate requirements you hadn't (and couldn't have) anticipated.
+to accommodate requirements you hadn't (and couldn't have) anticipated.
 I think there's something to be said about enabling iteration,
 about adopting practices that let you more easily adjust your surroundings
-to fit better with your constantly evolving desires.
-Christopher Alexander would say that you make your buildings alive.
+to better fit your constantly evolving desires.
+Christopher Alexander would say that you make your buildings come alive.
 
 We went with the Philips Hue line,
 on the recommendations from a friend.
 It just works! We haven't had any issues.
-I suppose other similar smart-lightbulb systems may just as well;
+I suppose other similar smart-light bulb systems may just as well;
 I can't comment on how Philips Hue stands in comparison to their competitors.
 
 I'm impressed by the fact that the technology has reached the point
 where [a lightswitch](https://www.feller.ch/de/sortiment/schalter-und-taster/funktaster)
-doesn't need any bateries or electricity:
+doesn't need any batteries or electricity:
 the act of pressing it generates enough power for it to communicate
 wirelessly with the home control system.
 
-We still have some old-fashioned lightbulbs in our home.
+We still have some old-fashioned light bulbs in our home.
 Some are, unfortunately, not compatible;
 for others (e.g., on very visible lamps)
 we haven't found beautiful-enough bulbs in the Philips hue line.
@@ -144,7 +144,7 @@ My Patagonia Better Sweater Fleece Jacket is the best sweater I've ever owned.
 It's probably the sweater I've worn the most in my life.
 
 I've not only worn it in mountain hikes or antarctic expeditions,
-but many days in the office or at home.
+but many days in the office or home.
 And, after almost a decade,
 it's still pretty much in the same condition it was when I just got it.
 
@@ -157,11 +157,21 @@ Many of my colleagues who also got one are as appreciative of it as I am.
 ### Pilot Vanishing Point
 
 I write on paper using a Pilot Vanishing Point fountain pen.
-I use it nearly every day for journaling.
+I use it almost daily for journaling.
 I've owned it since 2013-01-05.
 
-The pen has its fare share of scratches.
+The pen has its fair share of scratches.
 They bothered me in the beginning:
 "oh no, it's scratched!"
 I've now come to appreciate them.
+
+### Topre Realforce Keyboard XF01T0
+
+Since 2021-09, I do all my typing on a Topre Realforce XF01T0 keyboard.
+It's a pleassure to use.
+
+As of 2024-04-06, I haven't owned it for that long;
+I don't know for how long it'll hold up.
+But, until now, I haven't experienced any issues with it.
+It works like a charm.
 

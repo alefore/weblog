@@ -18,29 +18,47 @@ that tend to be easier to answer
 and/or to advance my model of the reality under analysis
 in directions that can yield further insights.
 
+### Asking Questions
+
+Asking the right questions can be more important than figuring out their exact
+answers.
+
+#### Why?
+
+The reason asking the right questions can be very valuable is that it
+helps us direct our concentration towards the most important aspects of a model.
+
+#### Ask the meta-question
+
+In order to figure out the answer to a given question,
+it often pays focus on the derivative:
+to explicitly reframe the question as the meta-question
+"how could I figure out the answer to this question?"
+
 ## Think of Your Future Self
 
 Be considerate to your future self (the version of you that will exist in the future): do now the things that will make them the happiest.
 
-In particular, consider the version of you that will exist:
+In particular, consider the future version of you that will exist in:
 
-* 1 hour from now
-* 4 hours from now
-* 12 hours from now
-* 1 day from now
-* 2 days from now
-* 4 days from now
-* 1 week from now
-* 2 weeks from now
-* 1 month from now
-* 1 quarter from now
-* 1 year from now
-* 2 years from now
-* 5 years from now
-* 15 years from now
+* 1 hour
+* 4 hours
+* 12 hours
+* 1 day
+* 2 days
+* 4 days
+* 1 week
+* 2 weeks
+* 1 month
+* 1 quarter
+* 1 year
+* 2 years
+* 5 years
+* 15 years
 
 When journaling, for each of these identities, ask the question:
 "What can I do now that $IDENTITY will appreciate the most?"
+The "now" time-frame depends somewhat on the $IDENTITY.
 
 ## Format
 

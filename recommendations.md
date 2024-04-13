@@ -127,9 +127,10 @@ I can't comment on how Philips Hue stands in comparison to their competitors.
 
 I'm impressed by the fact that the technology has reached the point
 where [a lightswitch](https://www.feller.ch/de/sortiment/schalter-und-taster/funktaster)
-doesn't need any batteries or electricity:
-the act of pressing it generates enough power for it to communicate
-wirelessly with the home control system.
+can communicate wirelessly
+with the home control system
+without needing any batteries or electric input
+—the simple act of pressing it generates enough power.
 
 We still have some old-fashioned light bulbs in our home.
 Some are, unfortunately, not compatible;

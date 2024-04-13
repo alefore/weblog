@@ -18,12 +18,21 @@ that tend to be easier to answer
 and/or to advance my model of the reality under analysis
 in directions that can yield further insights.
 
-### Asking Questions
+### Asking Questions: More important than Finding Answers
 
-Asking the right questions can be more important than figuring out their exact
-answers.
+Asking the right questions can be more important
+than figuring out their exact answers.
 
-#### Why?
+> The mere formulation of a problem
+> is far more often essential than its solution,
+> which may be merely a matter of mathematical or experimental skill.
+> To raise new questions, new possibilities,
+> to regard old problems from a new angle,
+> requires creative imagination
+> and marks real advances in science.
+> – Albert Einstein
+
+#### Asking Questions: Why?
 
 The reason asking the right questions can be very valuable is that it
 helps us direct our concentration towards the most important aspects of a model.
@@ -35,11 +44,13 @@ it often pays focus on the derivative:
 to explicitly reframe the question as the meta-question
 "how could I figure out the answer to this question?"
 
-## Think of Your Future Self
+## Think of Your Future Selves
 
-Be considerate to your future self (the version of you that will exist in the future): do now the things that will make them the happiest.
+Be considerate to your future selves
+—the versions of you that will exist in the future.
+Do now the things that maximize their happiness.
 
-In particular, consider the future version of you that will exist in:
+In particular, consider the future versions of you that will exist in:
 
 * 1 hour
 * 4 hours

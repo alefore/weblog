@@ -11,12 +11,37 @@
 ## Introduction
 
 This document is work-in-progress.
-It is an attempt to capture lessons I've learned
-after working on my text editor and using it exclusively
-for ten years.
-
 As of 2024-04-13, this is still incomplete
 and I haven't yet had the time to fully review the manuscript.
+
+This document is an attempt to capture lessons I've learned
+working on Edge
+for a decade.
+Edge is a Linux C++ terminal-based text editor.
+I started working on
+Edge in 2014.
+I've used it exclusively since 2015.
+
+Many of the lessons described are fairly technical
+but at least one (Bursts & Pauses) is general
+—observations about the life-cycle of side-projects.
+Among the technical lessons,
+many are specific to C++,
+but they probably apply, to some extent,
+to other languages.
+
+Edge has its own extension language,
+which looks like C++ with memory management,
+and has logic (such as syntax highlighting)
+for editing C++, Markdown, Java, Python
+and a few other file types.
+
+I use Edge for programming at work
+(though this days I program relatively little at work)
+and to maintain my
+[Zettelkasten](https://github.com/alefore/weblog/blob/master/zettelkasten.md).
+
+Todo: Loc
 
 ## Fix Bug Categories
 

@@ -22,7 +22,7 @@ I started working on
 Edge in 2014.
 I've used it exclusively since 2015.
 As of 2024-04-14, its implementation is 67.9k lines of C++
-(per `wc -large $(find src -name '*.cc' -or -name '*.h' -or -name '*.y'`).
+(per `wc -l $(find src -name '*.cc' -or -name '*.h' -or -name '*.y'`).
 
 Many of the lessons described are fairly technical
 but at least one (Bursts & Pauses) is general

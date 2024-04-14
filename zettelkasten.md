@@ -49,6 +49,22 @@ well so far. I even get a repository viewer that renders Markdown files well
 enough, though I use it very rarely; I'm much more likely to peruse my notes
 through my text editor, since that allows me to modify them directly.
 
+### Searching
+
+To search inside my Zettelkasten I mainly use plain text search.
+I don't keep any reverse index or such,
+basically just `grep` (or `awk`) directly.
+
+As of 2024-04-14, the search glob `???.md` matches 3.8k files;
+these Markdown files contain
+1.8e6 bytes in 66.5e3 lines.
+The search is so fast that I can display results as I type the search query.
+
+[![asciicast](https://asciinema.org/a/654131.svg)](https://asciinema.org/a/654131)
+
+This is implemented in functions `Search` and `TitleSearch` in Edge's
+[rc/editor_commands/lib/zk.cc](https://github.com/alefore/edge/blob/master/rc/editor_commands/lib/zk.cc).
+
 ## Directory Structure
 
 My Zettelkasten consists of two directories:
@@ -420,7 +436,7 @@ steps:
 This recording gives examples of how I perform some of these operations through
 my text editor:
 
-[![asciicast](https://asciinema.org/a/314506.png)](https://asciinema.org/a/314506)
+[![asciicast](https://asciinema.org/a/314506.svg)](https://asciinema.org/a/314506)
 
 ## Topics
 

@@ -12,7 +12,8 @@
 
 This document is work-in-progress.
 As of 2024-04-13, this is still incomplete
-and I haven't yet had the time to fully review the manuscript.
+and probably contains errors.
+I haven't yet had the time to fully review it.
 
 This document is an attempt to capture lessons I've learned
 working on Edge
@@ -779,9 +780,8 @@ such as finding elements matching a predicate,
 transforming elements,
 or aggregating elements.
 
-In those cases, I avoid writing explicit `for` or `while` loops;
-instead, I call into standard functions
-(such as `std::views::transform` and related logic)
+In those cases, I avoid writing explicit `for` or `while` loops.
+I prefer standard functions (such as `std::views::transform` and related logic)
 for manipulating and aggregating containers.
 I'm a big fan of the recent ranges/views APIs.
 

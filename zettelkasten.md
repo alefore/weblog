@@ -64,6 +64,7 @@ The search is so fast that I can display results as I type the search query.
 
 This is implemented in functions `Search` and `TitleSearch` in Edge's
 [rc/editor_commands/lib/zk.cc](https://github.com/alefore/edge/blob/master/rc/editor_commands/lib/zk.cc).
+As you can see, just plain calls to `grep` and `awk`.
 
 ## Directory Structure
 

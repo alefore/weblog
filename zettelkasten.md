@@ -58,7 +58,11 @@ basically just `grep` (or `awk`) directly.
 As of 2024-04-14, the search glob `???.md` matches 3.8k files;
 these Markdown files contain
 1.8e6 bytes in 66.5e3 lines.
-The search is so fast that I can display results as I type the search query.
+The search is so fast that I can preview results
+(up to a limit controlled by the size of Edge's preview buffer,
+which is dynamically determined depending on the terminal's size).
+as I type the search query
+(and display the full results if I press Enter):
 
 [![asciicast](https://asciinema.org/a/654131.svg)](https://asciinema.org/a/654131)
 

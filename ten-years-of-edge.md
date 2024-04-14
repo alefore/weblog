@@ -21,6 +21,8 @@ Edge is a Linux C++ terminal-based text editor.
 I started working on
 Edge in 2014.
 I've used it exclusively since 2015.
+As of 2024-04-14, its implementation is 67.9k lines of C++
+(per `wc -large $(find src -name '*.cc' -or -name '*.h' -or -name '*.y'`).
 
 Many of the lessons described are fairly technical
 but at least one (Bursts & Pauses) is general
@@ -37,11 +39,10 @@ for editing C++, Markdown, Java, Python
 and a few other file types.
 
 I use Edge for programming at work
-(though this days I program relatively little at work)
-and to maintain my
-[Zettelkasten](https://github.com/alefore/weblog/blob/master/zettelkasten.md).
-
-Todo: Loc
+(though this days I program relatively little at work),
+to maintain my
+[Zettelkasten](https://github.com/alefore/weblog/blob/master/zettelkasten.md),
+and… to develop Edge.
 
 ## Fix Bug Categories
 

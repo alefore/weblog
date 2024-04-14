@@ -49,6 +49,18 @@ well so far. I even get a repository viewer that renders Markdown files well
 enough, though I use it very rarely; I'm much more likely to peruse my notes
 through my text editor, since that allows me to modify them directly.
 
+### Android: Syncthing & Markor
+
+I use Syncthing to keep a copy of my Zettelkasten in my Android phone.
+
+On my phone,
+I use Markor to view and edit notes.
+It works relatively well.
+
+In the past, I had used Google Keep to capture fleeting thoughts,
+which I'd then transfer into the Zettelkasten.
+I've now replaced this with a specific note that I use as an inbox.
+
 ### Searching
 
 To search inside my Zettelkasten I mainly use plain text search.

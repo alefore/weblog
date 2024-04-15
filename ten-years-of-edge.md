@@ -56,6 +56,19 @@ I use it mainly
 As of 2024-04-14, Edge is 67.9k lines of C++ code
 (per `wc -l $(find src -name '*.cc' -or -name '*.h' -or -name '*.y'`).
 
+### Caveats
+
+* The lessons described here are somewhat subjective.
+  I don't mean to imply that these are universally applicable principles.
+  They rest on various assumptions that apply to my specific context,
+  but may not apply to other environments or systems.
+
+* I believe there's signficant recency bias in this distillation.
+  I'm probably overweighing insights I've reached relatively recently
+  –towards Edge's tenth anniversary–
+  and not doing justice
+  to those from the beginning of the journey.
+
 ## Fix Bug Categories
 
 If you identify a bug,

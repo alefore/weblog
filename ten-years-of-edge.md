@@ -829,6 +829,35 @@ there's something unusual in this block.
 
 TODO: Flesh out.
 
+### Testing
+
+Perhaps not very surprising to anyone who knows anything about
+software engineering, but it bears being said explicitly:
+tests are an essential part of software.
+
+I discovered this relatively early in the journey with Edge.
+When I started, I didn't bother writing tests.
+I started paying the price earlier than I had anticipated.
+I decided to gradually increase coverage.
+
+As of 2024-04-15, Edge contains 627 tests grouped into 119 logical units.
+
+I don't have much to say on testing,
+but I'll mention a few ideas that may not be widely accepted.
+
+#### Unit Testing beats REPL Testing
+
+REPL testing has a small advantage over Unit testing:
+having very low friction: tests are executed immediately
+(and thrown away).
+
+However, unit tests are significantly superior:
+they become part of the software and can be validated automatically at any time.
+
+While it can be beneficial to be able to use REPL testing during development,
+it would be foolish to fall into the trap of thinking that
+it obviates the need to develop adequate sets of tests.
+
 ## Bursts & Pauses
 
 ### Bursts

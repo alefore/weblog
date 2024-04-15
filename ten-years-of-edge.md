@@ -16,14 +16,7 @@ and probably contains errors.
 I haven't yet had the time to fully review it.
 
 This document is an attempt to capture lessons I've learned
-working on Edge
-for a decade.
-Edge is a Linux C++ terminal-based text editor.
-I started working on
-Edge in 2014.
-I've used it exclusively since 2015.
-As of 2024-04-14, its implementation is 67.9k lines of C++
-(per `wc -l $(find src -name '*.cc' -or -name '*.h' -or -name '*.y'`).
+working on Edge (my personal text editor) for a decade.
 
 Many of the lessons described are fairly technical
 but at least one (Bursts & Pauses) is general
@@ -33,17 +26,35 @@ many are specific to C++,
 but they probably apply, to some extent,
 to other languages.
 
+### Background
+
+Edge is a Linux C++ terminal-based text editor.
+I started working on
+Edge in 2014.
+
 Edge has its own extension language,
 which looks like C++ with memory management,
 and has logic (such as syntax highlighting)
 for editing C++, Markdown, Java, Python
 and a few other file types.
 
-I use Edge for programming at work
-(though this days I program relatively little at work),
-to maintain my
-[Zettelkasten](https://github.com/alefore/weblog/blob/master/zettelkasten.md),
-and… to develop Edge.
+I've used Edge ~exclusively since 2015.
+I use it mainly
+
+* for programming at work
+  (though this days I program relatively little at work),
+
+* to maintain my
+  [Zettelkasten](https://github.com/alefore/weblog/blob/master/zettelkasten.md),
+
+* as my planning & productivity management system
+  (which is integrated with my Zettelkasten,
+  so this is really repeating the previous point), and…
+
+* to develop Edge.
+
+As of 2024-04-14, Edge is 67.9k lines of C++ code
+(per `wc -l $(find src -name '*.cc' -or -name '*.h' -or -name '*.y'`).
 
 ## Fix Bug Categories
 

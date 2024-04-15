@@ -6,6 +6,8 @@
 * Futures & Threading
 * Make Things Explicit
 * Bursts & Pauses
+* Ideas that worked well
+* What's Next?
 * Conclusions
 
 ## Introduction
@@ -845,7 +847,7 @@ As of 2024-04-15, Edge contains 627 tests grouped into 119 logical units.
 I don't have much to say on testing,
 but I'll mention a few ideas that may not be widely accepted.
 
-#### Unit Testing beats REPL Testing
+#### Unit testing beats REPL testing
 
 REPL testing has a small advantage over Unit testing:
 having very low friction: tests are executed immediately
@@ -858,7 +860,7 @@ While it can be beneficial to be able to use REPL testing during development,
 it would be foolish to fall into the trap of thinking that
 it obviates the need to develop adequate sets of tests.
 
-#### Tests Adjacent To Tested Code
+#### Tests adjacent to tested code
 
 Unit tests should be stored as close as possible to the code they test.
 Tests are an integral part of software;
@@ -1251,7 +1253,65 @@ I think this is what enables
 things that previously seemed ~impossible
 to "suddenly ... fall gracefully into place, effortlessly".
 
-## Conclusions
+## Ideas that worked well
+
+The following are a few ideas or principles that
+influenced my work in Edge,
+which worked better than I had initially anticipated:
+
+* The most precious resource is your user's mental energy.
+  Computers are fast, and
+  –even if Moore's law is dead–
+  keep getting faster and cheaper;
+  if you can spend a few million cycles to
+  save the user from
+  having to mentally compute something
+  (that distracts them from their goal),
+  you should do it, go the extra mile.
+  Never force the user to wait for the results of an operation.
+
+* Being able to check if a program expression
+  is free of side effects (without running it)
+  is powerful.
+  This enables me to asynchronously evaluate such expressions
+  when they appear inside a file,
+  displaying the evaluation results.
+  Being able to enter (and edit) such expressions as I'm editing a file,
+  this sort of "evaluate-as-you-type" functionality is very useful.
+
+* Optimize for development speed.
+  You can't always know
+  the direction in which you'll take a function or module in the future,
+  but you can always invest in making your software more malleable.
+  Make it easier to iterate faster.
+  Avoid optimizing things for performance
+  in ways that leave you stuck on local maxima.
+
+## What's Next?
 
 TODO.
+
+## Conclusions
+
+It's crazy to see that it's already been ten years
+since I started working on Edge.
+I couldn't have known how far I'd go,
+how many features I would have implemented.
+
+I've invested a lot of energy into developing Edge.
+Starting this effort and continuing to invest in it has been very satisfying.
+I've learned a lot through this journey.
+
+I think the main lesson I learned
+is to resist the urge to compromise correctness.
+This is behind a lot of the lessons in this article,
+such as:
+
+* Digging deep in order to fix bug categories
+  (rather than only specific manifestations)
+
+* Making expectations and invariants explicit
+  –through judicious use of strong types,
+  runtime validations,
+  and unit tests.
 

@@ -858,6 +858,22 @@ While it can be beneficial to be able to use REPL testing during development,
 it would be foolish to fall into the trap of thinking that
 it obviates the need to develop adequate sets of tests.
 
+#### Tests Adjacent To Tested Code
+
+Unit tests should be stored as close as possible to the code they test.
+Tests are an integral part of software;
+unit tests deserve to be stored directly adjacent to the units they test,
+rather than relegated to separate files.
+
+This makes it trivial to see
+to what extent a specific function or module has tests;
+functions lacking tests immediately stand out.
+
+In Edge, I do this through my
+[tests module](https://github.com/alefore/edge/blob/master/src/tests/tests.h).
+This allows me to statically register all tests at the top-level,
+directly in the modules they test.
+
 ## Bursts & Pauses
 
 ### Bursts

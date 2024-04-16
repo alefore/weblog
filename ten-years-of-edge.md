@@ -44,7 +44,7 @@ and has logic (such as syntax highlighting)
 for editing C++, Markdown, Java, Python
 and a few other file types.
 
-I use it mainly…
+I mainly use it…
 
 * for programming at work
   (though this days I program relatively little at work),
@@ -68,7 +68,7 @@ As of 2024-04-14, Edge is 67.9k lines of C++ code
   They rest on various assumptions that apply to my specific context,
   but may not apply to other environments or systems.
 
-* I believe there's signficant **recency bias** in this distillation.
+* I believe there's significant **recency bias** in this distillation.
   I'm probably overweighing insights I've reached relatively recently
   –towards Edge's tenth anniversary–
   and not doing justice
@@ -77,14 +77,14 @@ As of 2024-04-14, Edge is 67.9k lines of C++ code
 ## Fix Bug Categories
 
 If you identify a bug,
-avoid the temptation to just fix it and move on;
-instead, **fix the underlying issue that enabled the bug to exist**.
+avoid the temptation to just fix it and move on.
+Instead, **fix the underlying issue that enabled the bug to exist**.
 The specific instance of the bug should just happen to disappear,
-as a consequence of the underlying fix.
+due to the underlying fix.
 
 Sometimes this is impossible;
 software *will* have bugs.
-But I've found many causes where digging deeper pays off.
+But I've found many cases where digging deeper pays off.
 
 How can it be that I've made the mistake that
 allowed this bug to exist?
@@ -102,7 +102,7 @@ to avoid the entire category of bug.
 
 The following examples show how this can be done through runtime checks.
 A much preferable technique is to use types effectively;
-however, that's covered [a separate section](#use-types-effectively).
+however, that's covered in [a separate section](#use-types-effectively).
 
 #### Range
 
@@ -120,8 +120,8 @@ by operations that only affect a part of a buffer
 (*e.g.*, "search only in this section").
 
 I had a bug
-where an expression was incorrectly computing a range;
-in some corner cases
+where an expression was incorrectly computing a range.
+In some corner cases
 the *end* `LineColumn`
 preceeded the *begin* `LineColumn`
 in the computed range
@@ -140,7 +140,7 @@ making debugging significantly more cumbersome).
 It only took a few days for this to uncover
 another instance of the same issue
 ([fix](https://github.com/alefore/edge/commit/14f8ed2655c09690cb86b3a7115b0efb51798398)).
-Who knows for how long this bug would have gone undetected.
+Who knows how long this bug would have gone undetected.
 
 #### Validate NonNull
 
@@ -181,8 +181,8 @@ with which custom types are implemented.
 In general, I try to only use primitive types to define these custom types.
 
 If a telephone number is an important concept for your application,
-define a corresponding type;
-don't just use `string` (or `int`).
+define a corresponding type.
+Don't just use `string` (or `int`).
 
 A good function receives:
 
@@ -198,8 +198,8 @@ A bad function receives:
 * another int (with a file descriptor), and
 * another string (with a location description).
 
-Aim to convey this through types;
-if you pass the wrong information
+Aim to convey this through types.
+If you pass the wrong information
 (or the right information in the wrong order),
 the compiler should reject the expression.
 
@@ -214,8 +214,8 @@ in relatively few places.
 #### Validation
 
 Using **custom types enables validation of expectations
-in the constructor**;
-the rest of the application
+in the constructor**.
+The rest of the application
 can readily conclude that these preconditions are met.
 
 Concrete examples in Edge are:
@@ -269,7 +269,7 @@ including  appropriate constructors and operators
 (things like std::hash, operator==, operator+=, etc.)
 based on what the underlying type supports.
 
-I'm not too happy with this approach, though.
+I'm not too happy with this approach.
 I suspect a **better approach may be
 to do it based on template metaprogramming**,
 something like:
@@ -278,8 +278,8 @@ something like:
 
 This would support significantly more customization
 through template parameters for the `GhostType` class.
-Specifically, I would like to make it easier to define validation functions;
-with the current `GHOST_TYPE` macros this is difficult.
+Specifically, I would like to make it easier to define validation functions.
+With the current `GHOST_TYPE` macros this is difficult.
 
 ### Predicate Types
 
@@ -321,11 +321,11 @@ Judicious use of predicate types tends to:
   Validation (and/or corresponding conversion to the subtype)
   tends to happen in just a few places;
   this often renders irrelevant
-  a lot of assertion checks
-  allow them to be safely removed.
+  a lot of assertion checks,
+  allowing them to be safely removed.
 
   **Delete dead code in a robust way.**
-  I've even found cases where this allowed me delete code
+  I've even found cases where this allowed me to delete code
   that was handling situations
   that could never occur:
   all callers were always passing non-null pointers,
@@ -338,11 +338,11 @@ Judicious use of predicate types tends to:
 
 ##### SortedLineSequence
 
-A good example of using types to represent explicitly
+A good example of using types to express explicitly
 that an instance of a more general type matches a predicate:
 `SortedLineSequence` and `SortedLineSequenceUniqueLines`.
 
-We start with the general type, `LineSequence`.
+Start with the general type, `LineSequence`.
 A `LineSequence` instance holds an immutable series of lines
 ([implementation](https://github.com/alefore/edge/blob/master/src/language/text/line_sequence.h)).
 
@@ -358,10 +358,10 @@ The reason the `LineSequence` needs to be sorted
 is to be able to run binary searches given a prefix.
 
 One could argue that these modules should receive a `std::set`
-or some other similar type;
-such a discussion would be entirely orthogonal
+or some other similar type.
+Such a discussion would be entirely orthogonal
 to the point of this example.
-We uses `LineSequence` because that's the structure used by Edge
+We use `LineSequence` because that's the structure used by Edge
 to represent file contents.
 This allows us to reuse Edge's file-reading logic
 to read dictionaries from the file system.
@@ -395,7 +395,7 @@ for a few milliseconds after start).
 This is significantly better,
 but you still need to either:
 
-1. Validate "manually" validate that all customers of these modules
+1. Validate "manually" that all customers of these modules
    are passing sorted contents.
    This is brittle.
    If you add a new customer and neglect to sort,
@@ -504,11 +504,11 @@ managing object lifetimes.
 TODO: Move the following paragraph:
 
 A pattern that deserves mention is balanced trees of immutable objects.
-This is very specific in comparison with the previous patterns,
+This is very specific compared tothe previous patterns,
 but this structure is so versatile that it deserves its own mention.
 Mutation operations don't mutate the tree,
 they return new trees with the operation applied.
-The new and old trees share as much of the branches as possible.
+Trees new and old share as many branches as possible.
 This allows very efficient implementation of most operations.
 Inserting, erasing or retriving an element at an arbitrary location
 all have logarithmic runtime complexity.
@@ -575,7 +575,7 @@ which means it should give the builder `friend` access.
 
 Most builder instances are used to build a single output.
 As a performance optimization,
-I avoid any deep copies inside `Build`.
+I avoid deep copies in `Build`.
 I do this by making the `Build` method require `*this`
 to be an rvalue reference (`&&`)
 —so that data can be moved out of the builder—
@@ -608,8 +608,8 @@ for classes that need to be thread-safe:
 
 Using types effectively can boost thread-safety significantly.
 Before I introduced `concurrent::Protected`,
-Edge only had a relativley small amount of parallelization.
-I was wory of the insidious woes brought upon by multi-threading
+Edge only had a relatively small amount of parallelization.
+I was wary of the insidious woes brought upon by multi-threading
 and wanted to only allow it in a controlled and careful manner.
 
 And yet, even though `concurrent::Protected` isn't 100% fool-proof
@@ -622,10 +622,10 @@ already helped me detect bugs
 ([example, where `WorkQueue::NextExecution` was neglecting to lock a
 mutex](https://github.com/alefore/edge/commit/69fafea1d557bbb16ca579067dfc3f68a7712c0d)).
 
-The amount of concurrency in Edge has only gone up since then.
-I'm defering a lot more work to background threads.
+The amount of concurrency in Edge has only grown since.
+I'm deferring a lot more work to background threads.
 I don't think I'd have been able to get this far
-if I hand't relied on types to maintain correctness.
+if I had not relied on types to maintain correctness.
 
 There are other solutions to this problem, such as
 [Abseil's lock annotations](https://abseil.io/docs/cpp/guides/synchronization#thread-annotations)
@@ -637,8 +637,8 @@ I've had **great success using a Futures API**
 to implement asynchronous requirements.
 
 Futures-based code is not as clean as synchronous code, but close.
-It is much cleaner than callback spaghetti:
-code still generally reflects that a function is creating and returning a value,
+It is much cleaner than callback spaghetti.
+Code still generally reflects that a function is creating and returning a value,
 and its caller is consuming the returned value.
 
 TODO: Error handling in futures.
@@ -714,7 +714,7 @@ that contains a `futures::ListenableValue<EmptyValue>`.
 A producer that wants to support cancellation simply receives the
 `futures::ListenableValue<EmptyValue>` abort notification.
 The producer can either poll on this future or add a listener callback.
-The customer of the producer simply creates a `DeleteNotification`,
+The producer's customer simply creates a `DeleteNotification`,
 passes its corresponding future to the producer,
 and ensures that the `DeleteNotification` is retained
 as long as the value is still relevant.
@@ -733,7 +733,7 @@ and kick off a new operation.
 ### Futures in Const Objects
 
 You can store `const` views of `ListenableFutures` inside `const` structures.
-The producer will eventually give them a value, triggering consumers' execution
+The producer will eventually give them a value, triggering consumers' execution.
 When parts of an object are computed asynchronously,
 this allows customers to access each such part as soon as it is ready.
 
@@ -784,13 +784,13 @@ due to its nested `LineMetadataEntry`,
 
 **The implementation should reflect your thought process explicitly;
 not only its conclusions**.
-Stripping away the thought process makes the software less malleable.
+Removing the thought process makes the software less malleable.
 
 Early in my career,
 I made the mistake of optimizing my implementations for brevity.
-If you can you say it with fewer words, why more?
+If you can say it with fewer words, why more?
 
-> Je n’ai fait celle-ci plus longue que parce que je n’ai pas eu leadership loisir de la faire plus courte.
+> Je n’ai fait celle-ci plus longue que parce que je n’ai pas eu le loisir de la faire plus courte.
 
 But simplicity and brevity are different things.
 In fact, in software you often reach a point
@@ -802,12 +802,12 @@ doesn't mean it's simpler.
 
 This has obvious non-controversial implications:
 
-* Define appropriately named constants,
+* Define appropriately named constants;
   rather than using magic values directly.
 
 * Add `const` annotations to relevant class methods.
 
-* Use appropriate names that convey meaning; schew abbreviations.
+* Use appropriate names that convey meaning; eschew abbreviations.
 
 It also has some less-obvious implications.
 
@@ -848,9 +848,9 @@ TODO: Flesh out.
 
 ### Testing
 
-Not very surprising to anyone who knows anything about
+Perhaps not very surprising to anyone who knows anything about
 software engineering, but it bears being said explicitly:
-**tests are an essential part of software**.
+tests are an essential part of software.
 
 I discovered this relatively early in the journey with Edge.
 When I started, I didn't bother writing tests.
@@ -885,8 +885,8 @@ rather than relegated to separate files.
 Putting your tests directly under the function they test
 (in the same source file)
 makes it trivial to see
-to what extent a specific function or module has tests;
-functions lacking tests immediately stand out.
+to what extent a specific function or module has tests.
+Functions lacking tests immediately stand out.
 
 In Edge, I do this through my
 [tests module](https://github.com/alefore/edge/blob/master/src/tests/tests.h).
@@ -972,7 +972,7 @@ Edge's GC implementation was as efficient as I could reasonably expect
 
 And then, ten months later,
 between 2023-09 and 2023-10,
-I optimized collection
+I optimized the collection
 through a series of gradual changes
 that made GC pauses imperceptible.
 I did this through a combination of:
@@ -1014,7 +1014,7 @@ The core implementation
 ([gc.h](https://github.com/alefore/edge/blob/master/src/language/gc.h),
 [bag.h](https://github.com/alefore/edge/blob/master/src/concurrent/bag.h) and
 [gc.cc](https://github.com/alefore/edge/blob/master/src/language/gc.cc))
-dind't become significantly more complex:
+didnd't become significantly more complex:
 LOC only grew by 3%.
 
 * From 2022-12-24 to 2023-08-29 these files didn't change;
@@ -1028,7 +1028,7 @@ LOC only grew by 3%.
   (572 + 129 + 497, respectively) LOC.
 
 In this specific case, LOC is a reasonable proxy
-for the level of complexity of the implementation.
+for implementation complexity.
 To compute LOC, I excluded unit tests and included header documentation.
 
 #### Ramp Down
@@ -1067,7 +1067,7 @@ The order of events is very clear:
    but this gradually drops
    to a small change or two a week.
    I'm still trying to make progress, but …
-   I've ran out of easy things to implement.
+   I've run out of easy things to implement.
    everything that remains is way too challenging or impossible
    (e.g., everything has been optimized
    for performance and correctness and simplicity
@@ -1088,9 +1088,9 @@ The shift away from Edge happens afterwards.
 
 And then starts a pause.
 Other things fully take precedence.
-Perhaps I switch to write a short story,
+Perhaps I switch to writing a short story,
 or
-[Zuri Shorts](https://github.com/alefore/weblog/blob/master/zurich-shorts.md).
+a [Zuri Short](https://github.com/alefore/weblog/blob/master/zurich-shorts.md).
 Or learn to play the harmonica.
 Or knit.
 I go on a long trip.
@@ -1100,7 +1100,7 @@ This lasts six months on average, sometimes significantly longer.
 Until suddenly I can't resist the itch
 to finally fix that annoying behavior
 or implement that great idea that found me
-and I end getting sucked back in.
+and I end up getting sucked back in.
 A new cycle begins.
 
 #### Background Thinking
@@ -1115,20 +1115,20 @@ What enables the fast progress on areas I previously considered out of reach?
 
 During the pauses
 my brain **keeps making connections and generating and encountering ideas**.
-This can be alternative approaches I could try:
+These can be alternative approaches I could try:
 new underlying APIs,
 different data structures,
 entirely new user journeys,
 etc..
 
 This happens mostly subconsciously.
-I'm not be working on Edge actively,
+I'm not working on Edge actively,
 but I'm still passively thinking about these problems:
 the places where I got stuck
 and couldn't figure out a better solution;
 the things that annoy me as I use Edge,
 even if I don't notice them consciously.
-I still read articles related with text editors
+I still read articles about text editors
 and find new ideas I had never considered.
 
 I don't know if this type of medium-term background thinking can be rushed.
@@ -1152,7 +1152,7 @@ The timing of bursts is strongly associated
 with important events happening in my life:
 
 * Some bursts started when I was going through difficult personal situations
-  (*e.g.*, breaking up from a serious relationships)
+  (*e.g.*, breaking up from a serious relationship)
   and wanted some distraction from real life.
   This is the case for the long burst from 2019-12 to 2020-05.
 
@@ -1177,13 +1177,13 @@ these cycles have also caused changes in my life.
   to a pure engineering role.
   The team I was managing grew
   from 6 engineers in 2020
-  to 17 at the beginning of 2022.
+  to 17 in early 2022.
   Most of my time (at work)
   became occupied by managerial tasks,
   pushing out technical work.
   I interpreted the amount of energy I was dedicating to Edge
   as a strong sign that I was missing technical work.
-  Interestingly, the burst stoped shortly after I made the decision
+  Interestingly, the burst stopped shortly after I made the decision
   and started searching for someone
   I could transfer my management responsibilities to.
 
@@ -1216,7 +1216,7 @@ the main relationships from
 
 * In the long-term, however,
   *Unrelated distractions* are necessary for *Progress*
-  because they enables the *Transformative ideas* to manifest
+  because they enable *Transformative ideas* to manifest
   (relationships (g), (h), (a)).
 
 ### Implications
@@ -1226,7 +1226,7 @@ What are the main implications?
 #### Acceptance
 
 I have to understand and accept when a burst is coming to its conclusion.
-**Things seem implausibly difficult today
+**Things that seem impossibly difficult today
 may become trivial in the future**.
 I find this very encouraging.
 
@@ -1241,12 +1241,12 @@ listing things that I think I may want to improve some day.
 I try too:
 
 * Classify them by difficulty (trivial, easy, normal)
-* Give them hash tags (to help me find related changes)
+* Give them hash-tags (to help me find related changes)
 
 As I'm reading the code working on implementing a specific feature
 unrelated ideas come up.
 I'm not going to work on them right away;
-I'd never accomplish the task in working on.
+I'd never accomplish the task I'm working on.
 But I'll make sure to document them right away.
 
 As of 2023-12-21, I have 220 TODO notes in the code.
@@ -1259,15 +1259,15 @@ It's easy to underestimate the effect of small changes.
 can have very drastic effects as a group**.
 I think this is the self-reinforcing loop
 of Progress (in one area) enables Progress (in others).
-This is a big part of why these bursts happen:
-they start as just a few small improvements,
+This is a big part of why these bursts happen.
+They start as just a few small improvements,
 but these small improvements precipitate
 and enable many other small improvements and...
 eventually they add up to large changes.
 
 The majority of my commits are small "no-op" changes whose only purpose
 is "preparation" to make follow-up changes easier or smaller.
-A big change is divided into a million of baby steps
+A big change is divided into a million baby steps
 and one final simple step that enables the new functionality.
 I think this is what enables
 things that previously seemed ~impossible
@@ -1313,17 +1313,13 @@ TODO.
 
 ## Conclusions
 
-It's crazy to see that it's already been ten years
-since I started working on Edge.
+It's crazy to see that I've continued to work on Edge
+for ten years.
 I couldn't have known how far I'd go,
 how many features I would have implemented.
 
-I've invested a lot of energy into developing Edge.
-Starting this effort and continuing to invest in it has been very satisfying.
-I've learned a lot through this journey.
-
 I think the main lesson I learned
-is to **resist the urge to compromise correctness**.
+is to **resist the urge to compromise on correctness**.
 This is behind a lot of the lessons in this article,
 such as:
 
@@ -1334,4 +1330,9 @@ such as:
   –through judicious use of strong types,
   runtime validations,
   and unit tests.
+
+I've invested a lot of energy into developing Edge.
+I'm glad I've done so.
+Starting this effort and continuing to invest in it has been very satisfying.
+I've learned a lot on this journey.
 

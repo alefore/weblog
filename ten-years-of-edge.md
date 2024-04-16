@@ -1309,7 +1309,32 @@ which worked better than I had initially anticipated:
 
 ## What's Next?
 
-TODO.
+TODO: Flesh these out more. This list is very incomplete.
+
+The following are some ideas that I'd like to explore in the future:
+
+* Improve the extension language.
+  I'd like to be able to define structures
+  entirely within the extension language.
+  This hasn't been too constraining for me
+  (because I can define structures within the host language
+  and easily surface them to extensions),
+  but I think it would enable extensions to grow significantly.
+
+* Improve the API given to extensions for document inspection and manipulation.
+  I'd like to provide friendlier ways to express operations
+  that filter
+  (*e.g.,*
+  "find all links with the text `xyz` within a bullets list in a section
+  where the header is `Tags` in this Markdown file")
+  or transform sub-tress of a document
+  ("apply this <function> to transform the text of those links").
+
+* Continue improving the integration with my Zettelkasten.
+  For example, enable me to add more annotations to my notes
+  and… use those annotations as I'm editing files.
+  Essentially, allow me to define stronger semantics in my notes,
+  deriving ontologies.
 
 ## Conclusions
 

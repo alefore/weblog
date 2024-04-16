@@ -17,8 +17,8 @@ As of 2024-04-13, this is still incomplete
 and probably contains errors.
 I haven't yet had the time to fully review it.
 
-This document is an attempt to capture lessons I've learned
-working on Edge (my personal text editor) for a decade.
+This document is **an attempt to capture lessons I've learned
+after a decade of working on Edge** (my personal text editor).
 
 Many of the lessons described are fairly technical
 but at least one (Bursts & Pauses) is general
@@ -32,7 +32,11 @@ to other languages.
 
 Edge is a Linux C++ terminal-based text editor.
 I started working on
-Edge in 2014.
+Edge in 2014
+–the
+[very first commit to the git repository](https://github.com/alefore/edge/commit/312ecc2462315e8e0648cbd2680cc0366819df1e)
+happened on 2014-08-09.
+I've used Edge ~exclusively since 2015.
 
 Edge has its own extension language,
 which looks like C++ with memory management,
@@ -40,8 +44,7 @@ and has logic (such as syntax highlighting)
 for editing C++, Markdown, Java, Python
 and a few other file types.
 
-I've used Edge ~exclusively since 2015.
-I use it mainly
+I use it mainly…
 
 * for programming at work
   (though this days I program relatively little at work),
@@ -60,12 +63,12 @@ As of 2024-04-14, Edge is 67.9k lines of C++ code
 
 ### Caveats
 
-* The lessons described here are somewhat subjective.
+* The lessons described here are somewhat **subjective**.
   I don't mean to imply that these are universally applicable principles.
   They rest on various assumptions that apply to my specific context,
   but may not apply to other environments or systems.
 
-* I believe there's signficant recency bias in this distillation.
+* I believe there's signficant **recency bias** in this distillation.
   I'm probably overweighing insights I've reached relatively recently
   –towards Edge's tenth anniversary–
   and not doing justice
@@ -75,7 +78,7 @@ As of 2024-04-14, Edge is 67.9k lines of C++ code
 
 If you identify a bug,
 avoid the temptation to just fix it and move on;
-instead, fix the underlying issue that enabled the bug to exist.
+instead, **fix the underlying issue that enabled the bug to exist**.
 The specific instance of the bug should just happen to disappear,
 as a consequence of the underlying fix.
 
@@ -91,8 +94,8 @@ can no longer happen?
 At the bare minimum,
 add a unit test that fails
 before fixing the bug.
-But this should not be a substitute
-for trying to find more robust ways
+But don't let "adding a unit test" replace
+trying to find more robust ways
 to avoid the entire category of bug.
 
 ### Examples
@@ -124,7 +127,7 @@ preceeded the *begin* `LineColumn`
 in the computed range
 ([fix](https://github.com/alefore/edge/commit/750f660349c5fb8b36823d77d4a39062e9fa9634)).
 
-I decided to add an explicit requirement to `Range`:
+I decided to **add an explicit requirement to `Range`**:
 *end* must be greater than or equal to *begin*.
 I adjusted the constructor and setters to validate this explicitly
 ([commit](https://github.com/alefore/edge/commit/279f001740d0c1ed8fa4e29b7286d59f0d746922)).
@@ -153,7 +156,7 @@ which will lead to all sorts of strange issues if I accidentally reuse it
 
 When I caught a bug where that was happening
 ([commit](https://github.com/alefore/edge/commit/2635806022c6fe8609ca81e4ff06f9801670bd0f)),
-I decided to add extra validation to the `NonNull` constructors,
+I decided to add **extra validation to the `NonNull` constructors**,
 to ensure that a non-null input was... indeed non-null
 ([commit](https://github.com/alefore/edge/commit/6cb2b3e53db474849009404b751e46c6a1e3dc0b)).
 
@@ -168,7 +171,7 @@ facilitates correctness and maintainability.
 
 ### Custom Types
 
-I use semantically-rich custom types for variables and class fields
+I **use semantically-rich custom types for variables and class fields**
 (and methods' inputs and outputs).
 Many of these types are simple wrappers of primitive types
 (`int`, `string`, `double`, etc.).
@@ -210,8 +213,8 @@ in relatively few places.
 
 #### Validation
 
-Using custom types enables validation of expectations
-in the constructor;
+Using **custom types enables validation of expectations
+in the constructor**;
 the rest of the application
 can readily conclude that these preconditions are met.
 
@@ -240,7 +243,7 @@ so there are very little gains
 (code *will* be slightly more readable,
 but you won't gain any static type-safety).
 
-To define custom types, I currently use `GHOST_TYPE` expressions like these:
+To define custom types, **I currently use `GHOST_TYPE` expressions** like these:
 
 From 
 [environment.h](https://github.com/alefore/edge/blob/master/src/vm/environment.h):
@@ -267,8 +270,9 @@ including  appropriate constructors and operators
 based on what the underlying type supports.
 
 I'm not too happy with this approach, though.
-I suspect a better approach may be
-to do it based on template metaprogramming with an approach like this:
+I suspect a **better approach may be
+to do it based on template metaprogramming**,
+something like:
 
     struct Digits : public GhostType<Digits, std::vector<size_t>> {}
 
@@ -292,7 +296,7 @@ I'll refer to `TP` as the *subtype*.
 
 #### Rationale
 
-This allows functions to explicitly state some of their preconditions
+This allows functions to **explicitly state some preconditions**
 (*e.g.*, an input container must be sorted,
 or non-empty,
 or have exactly between 128 and 256 elements).
@@ -303,7 +307,7 @@ functions should receive their inputs using the subtypes directly.
 
 Judicious use of predicate types tends to:
 
-* Ensure that all cases are handled.
+* **Ensure that all cases are handled.**
   If a function receives (or returns) the general type `T`,
   it signals explicitly that its implementations
   (or customers receiving its output)
@@ -313,20 +317,21 @@ Judicious use of predicate types tends to:
   This helps ensure correctness;
   the benefits are already visible in a medium-sized code base.
 
-* Simplify validation.
+* **Simplify validation.**
   Validation (and/or corresponding conversion to the subtype)
   tends to happen in just a few places;
   this often renders irrelevant
   a lot of assertion checks
   allow them to be safely removed.
 
+  **Delete dead code in a robust way.**
   I've even found cases where this allowed me delete code
   that was handling situations
   that could never occur:
   all callers were always passing non-null pointers,
   but the function still contained code to handle the null case.
   Here I use the type system to ensure that these cases can't occur
-  (and that I won't introduce them accidentally in the future),
+  –and that *I won't introduce them accidentally in the future*–
   and delete the corresponding code.
 
 #### Examples
@@ -405,8 +410,8 @@ The solution is the use of `SortedLineSequence`,
 a class that simply holds a `LineSequence`
 where the contents are known to be sorted
 ([implementation](https://github.com/alefore/edge/blob/master/src/language/text/sorted_line_sequence.h)).
-This is done in all its constructors:
-they directly sort the contents given.
+This is done at construction:
+its **constructors directly sort the contents** they receive.
 This means that it is impossible to hold a `SortedLineSequence`
 where the contents aren't sorted.
 
@@ -415,8 +420,8 @@ we simply upgrade our autocomplete and similar modules
 to require a `SortedLineSequence` input
 where they previously received a `LineSequence`.
 
-We've made it impossible for customers of these modules
-to accidentally pass unsorted contents.
+We've **made it impossible for customers of these modules
+to accidentally pass unsorted contents**.
 Customers can just create the `SortedLineSequence`
 right after reading (or generating) contents.
 
@@ -474,10 +479,14 @@ I can safely move values around during execution
 and detect reliably (though at runtime)
 if I ever accidentally run the same callable twice.
 
+This is implemented in
+[`src/language/once_only_function`](https://github.com/alefore/edge/blob/master/src/language/once_only_function.h)
+(as a wrapper of `std::move_only_function`).
+
 ### Constness
 
-The benefits of making types immutable
-often outweigh the costs.
+The **benefits of making types immutable
+often outweigh the costs**.
 
 Every type must define `const` semantics
 that make it thread-compatible.
@@ -492,7 +501,7 @@ This is sometimes enough to avoid data races,
 reducing the challenge of writing concurrent code to simply
 managing object lifetimes.
 
-TODO: Move the following paragraph.
+TODO: Move the following paragraph:
 
 A pattern that deserves mention is balanced trees of immutable objects.
 This is very specific in comparison with the previous patterns,
@@ -506,9 +515,10 @@ all have logarithmic runtime complexity.
 
 #### Immutable Assignable
 
-I often use types where all methods are `const` except for two:
+**Assignable references to deeply-immutable objects are very versatile**.
+These types are classes where all methods are `const` except for two:
 the move constructor and the assignment operator.
-Objects of such types aren't strictly immutable, but close.
+Objects of such types aren't strictly immutable, but… close.
 
 Deeply-immutable objects can be too cumbersome:
 without assignment support,
@@ -555,9 +565,9 @@ The following are examples of immutable classes in Edge:
 #### Builder Pattern
 
 I've found a "builder" pattern fairly versatile.
-I use mutable thread-compatible builder instances
-to *build* the immutable
-(and thus thread-safe; and thus widely shared) instances.
+I use **mutable thread-compatible builder instances
+to *build* immutable
+(and thus thread-safe; and thus widely shared) instances**.
 
 To avoid cycles, the output type should not depend on the builder.
 The output object should declare its constructors private,
@@ -582,6 +592,8 @@ Unfortunately, this can be a bit cumbersome
 
 #### Prefer Immutable Types: Examples
 
+TODO: Link. Add more.
+
 * Line and LineBuilder
 
 * LineSequence and LineSequenceBuilder
@@ -590,9 +602,9 @@ Unfortunately, this can be a bit cumbersome
 
 ### Thread safety
 
-My `concurrent::Protected<Data>` template has worked very well
+My **`concurrent::Protected<Data>` template has worked well**
 for classes that need to be thread-safe:
-[protected.h](https://github.com/alefore/edge/blob/master/src/concurrent/protected.h)
+[src/concurrent/protected.h](https://github.com/alefore/edge/blob/master/src/concurrent/protected.h)
 
 Using types effectively can boost thread-safety significantly.
 Before I introduced `concurrent::Protected`,
@@ -621,7 +633,7 @@ that probably work about as well, perhaps even better.
 
 ## Futures & Threading
 
-I've had great success using a Futures API
+I've had **great success using a Futures API**
 to implement asynchronous requirements.
 
 Futures-based code is not as clean as synchronous code, but close.
@@ -633,8 +645,9 @@ TODO: Error handling in futures.
 
 ### Single consumer
 
-My futures implementation supports setting only one consumer per future.
-The future's value, once available, is given as a value to the consumer.
+My futures implementation **supports setting only one consumer per future**.
+Once available, the **future's value is passed as a value to the consumer**
+(rather than, for example, handing out a `const` reference).
 This allows me to use futures of moveable non-copyable types.
 
 For situations where multiple listeners are desirable,
@@ -693,8 +706,8 @@ they will continue to run in a single thread
 
 ### Cancellation
 
-In some cases it is important to cancel asynchronous computations
-that have become irrelevant.
+Being able to **cancel asynchronous computations that have become irrelevant**
+can be fairly important.
 The pattern I've landed on is the use of a `DeleteNotification` class
 that contains a `futures::ListenableValue<EmptyValue>`.
 
@@ -724,9 +737,10 @@ The producer will eventually give them a value, triggering consumers' execution
 When parts of an object are computed asynchronously,
 this allows customers to access each such part as soon as it is ready.
 
-At first, I found this pattern somewhat counterintuitive:
+At first, I found this pattern somewhat… counterintuitive.
 It feels strange to tag as `const`
 an object whose parts are still being constructed.
+
 But I think it makes sense.
 The contract of the future never changes:
 customers can add callbacks that the future will run
@@ -768,6 +782,10 @@ due to its nested `LineMetadataEntry`,
 
 ## Make Things Explicit
 
+**The implementation should reflect your thought process explicitly;
+not only its conclusions**.
+Stripping away the thought process makes the software less malleable.
+
 Early in my career,
 I made the mistake of optimizing my implementations for brevity.
 If you can you say it with fewer words, why more?
@@ -778,18 +796,13 @@ But simplicity and brevity are different things.
 In fact, in software you often reach a point
 where extra brevity complicates things.
 
-One way I think about it is:
-the implementation should reflect your thought process explicitly;
-rather than only its conclusions.
-Stripping away the thought process makes the software less malleable.
-
 It bears saying it explicitly:
 just because some expression is shorter (by whatever metric)
 doesn't mean it's simpler.
 
 This has obvious non-controversial implications:
 
-* Define appropriately named constants;
+* Define appropriately named constants,
   rather than using magic values directly.
 
 * Add `const` annotations to relevant class methods.
@@ -806,10 +819,12 @@ such as finding elements matching a predicate,
 transforming elements,
 or aggregating elements.
 
-In those cases, I avoid writing explicit `for` or `while` loops.
+In those cases, I **avoid writing explicit `for` or `while` loops**.
 I prefer standard functions (such as `std::views::transform` and related logic)
 for manipulating and aggregating containers.
 I'm a big fan of the recent ranges/views APIs.
+
+#### Rationale
 
 Reducing my loops to canonical operations
 helps me make the intent more evident:
@@ -824,8 +839,8 @@ even more obvious than simple range-based loops.
 
 Consistently avoiding explicit loops has the advantage that
 in those cases that can't be neatly reduced to a canonical operation,
-the presence of an explicit `for` or `while` loop alerts you:
-there's something unusual in this block.
+**the presence of an explicit `for` or `while` loop alerts you:
+there's something unusual in this block**.
 
 ### Avoid auto
 
@@ -833,9 +848,9 @@ TODO: Flesh out.
 
 ### Testing
 
-Perhaps not very surprising to anyone who knows anything about
+Not very surprising to anyone who knows anything about
 software engineering, but it bears being said explicitly:
-tests are an essential part of software.
+**tests are an essential part of software**.
 
 I discovered this relatively early in the journey with Edge.
 When I started, I didn't bother writing tests.
@@ -849,11 +864,11 @@ but I'll mention a few ideas that may not be widely accepted.
 
 #### Unit testing beats REPL testing
 
-REPL testing has a small advantage over Unit testing:
+REPL-testing has a small advantage over Unit testing:
 having very low friction: tests are executed immediately
 (and thrown away).
 
-However, unit tests are significantly superior:
+However, **unit tests are significantly superior to REPL-testing**:
 they become part of the software and can be validated automatically at any time.
 
 While it can be beneficial to be able to use REPL testing during development,
@@ -862,12 +877,14 @@ it obviates the need to develop adequate sets of tests.
 
 #### Tests adjacent to tested code
 
-Unit tests should be stored as close as possible to the code they test.
+**Unit tests should be stored as close as possible to the code they test**.
 Tests are an integral part of software;
 unit tests deserve to be stored directly adjacent to the units they test,
 rather than relegated to separate files.
 
-This makes it trivial to see
+Putting your tests directly under the function they test
+(in the same source file)
+makes it trivial to see
 to what extent a specific function or module has tests;
 functions lacking tests immediately stand out.
 
@@ -876,11 +893,14 @@ In Edge, I do this through my
 This allows me to statically register all tests at the top-level,
 directly in the modules they test.
 
+Here is one example:
+[src/math/bigint.cc](https://github.com/alefore/edge/blob/master/src/math/bigint.cc)
+
 ## Bursts & Pauses
 
 ### Bursts
 
-My engagement with Edge is extremely bursty.
+**My engagement with Edge is extremely bursty**.
 Most progress happens in bursts of activity
 that happen about once per year
 and usually last from two to five months,
@@ -1094,7 +1114,7 @@ What enables the fast progress on areas I previously considered out of reach?
      ┗━━━━━━━━━━━━━━┛        ┗━━━━━━━━━━━━┛        ┗━━━━━━━━━━━━━━━━┛
 
 During the pauses
-my brain keeps making connections and generating and encountering ideas.
+my brain **keeps making connections and generating and encountering ideas**.
 This can be alternative approaches I could try:
 new underlying APIs,
 different data structures,
@@ -1206,14 +1226,14 @@ What are the main implications?
 #### Acceptance
 
 I have to understand and accept when a burst is coming to its conclusion.
-Some things seem implausibly difficult today
-but they may become trivial in the future.
+**Things seem implausibly difficult today
+may become trivial in the future**.
 I find this very encouraging.
 
 #### Document Potential Improvements
 
 Documenting my ideas for potential improvements
-helps me by making it easier to find appropriately sized chunks of work,
+helps me: it makes it easier to find appropriately sized chunks of work,
 depending on where I am in the burst-pause cycle.
 
 I leave many "TODO" notes in the code
@@ -1235,8 +1255,8 @@ As of 2023-12-21, I have 220 TODO notes in the code.
 #### Incremental Improvement
 
 It's easy to underestimate the effect of small changes.
-Changes that, on their own, don't amount to much,
-can have very drastic effects as a group.
+**Changes that, on their own, don't amount to much,
+can have very drastic effects as a group**.
 I think this is the self-reinforcing loop
 of Progress (in one area) enables Progress (in others).
 This is a big part of why these bursts happen:
@@ -1251,7 +1271,7 @@ A big change is divided into a million of baby steps
 and one final simple step that enables the new functionality.
 I think this is what enables
 things that previously seemed ~impossible
-to "suddenly ... fall gracefully into place, effortlessly".
+to "suddenly… fall gracefully into place, effortlessly".
 
 ## Ideas that worked well
 
@@ -1259,7 +1279,7 @@ The following are a few ideas or principles that
 influenced my work in Edge,
 which worked better than I had initially anticipated:
 
-* The most precious resource is your user's mental energy.
+* The **most precious resource is your user's mental energy**.
   Computers are fast, and
   –even if Moore's law is dead–
   keep getting faster and cheaper;
@@ -1270,16 +1290,16 @@ which worked better than I had initially anticipated:
   you should do it, go the extra mile.
   Never force the user to wait for the results of an operation.
 
-* Being able to check if a program expression
+* **Being able to check if a program expression
   is free of side effects (without running it)
-  is powerful.
+  is powerful**.
   This enables me to asynchronously evaluate such expressions
   when they appear inside a file,
   displaying the evaluation results.
   Being able to enter (and edit) such expressions as I'm editing a file,
   this sort of "evaluate-as-you-type" functionality is very useful.
 
-* Optimize for development speed.
+* **Optimize for development speed**.
   You can't always know
   the direction in which you'll take a function or module in the future,
   but you can always invest in making your software more malleable.
@@ -1303,7 +1323,7 @@ Starting this effort and continuing to invest in it has been very satisfying.
 I've learned a lot through this journey.
 
 I think the main lesson I learned
-is to resist the urge to compromise correctness.
+is to **resist the urge to compromise correctness**.
 This is behind a lot of the lessons in this article,
 such as:
 

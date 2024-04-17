@@ -307,3 +307,13 @@ Brutalism, dark shadows.
 Raindrops fade on bare concrete.
 Gray jungle breath.
 
+☙
+
+He savors a hearty brunch;
+takes his time.
+
+Sitting beside him,
+feet dangling,
+roller blades already on,
+his daughter hums eagerly.
+

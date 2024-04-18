@@ -909,6 +909,9 @@ After the bursts come long pauses of inactivity.
 
 #### New Possibilities Open
 
+> Pastel crumbs on a brown mantle;
+> Spring returning to the forest on the hills.
+
 The factors that sustain these bursts are:
 
                          ┏━━━━━━━━━━━━━━━━┓
@@ -1033,6 +1036,8 @@ To compute LOC, I excluded unit tests and included header documentation.
 
 #### Ramp Down
 
+> Summer afternoon: a swarm of wasps dances around my Spritz.
+
 Usually after a few months
 (though the specific durations vary greatly)
 comes a ramp down.
@@ -1104,6 +1109,9 @@ and I end up getting sucked back in.
 A new cycle begins.
 
 #### Background Thinking
+
+> Powdery snow, birches washed white.
+> On a twig, a twinkle: a yellow tit chirps. Was it really there?
 
 What triggers the periods of intense focus?
 What enables the fast progress on areas I previously considered out of reach?
@@ -1225,12 +1233,54 @@ What are the main implications?
 
 #### Acceptance
 
+> Der Wind nimmt die gelben Blätter des alten Ginkgo.
+>
+> Frei wie Libellen fliegen sie davon.
+
 I have to understand and accept when a burst is coming to its conclusion.
 **Things that seem impossibly difficult today
 may become trivial in the future**.
+
 I find this very encouraging.
 
-#### Document Potential Improvements
+#### Make it easy to return
+
+> Stars glow autumn red.
+>
+> The setting sun retreats from the maple tree.
+
+Accepting that I'll take breaks means that I should
+**make it easy to come back**.
+
+There's some analogy to
+[counter-cyclical fiscal policy](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Counter-cyclical_fiscal_measures#:~:text=Counter%2Dcyclical%20fiscal%20measures%20are,to%20help%20stimulate%20economic%20recovery.).
+
+I suppose I've been able to keep working on the same project for a decade
+because I've been able to work on vastly different sub-projects,
+all of which fall under the same umbrella, such as:
+
+* A memory manager.
+* A C++-line VM.
+* Arbitrary precision numbers.
+* Audio generation
+  (nothing too fancy, though;
+  [ref](https://github.com/alefore/edge/blob/master/src/infrastructure/audio.h)).
+* A UX for interacting with my Zettelkasten.
+* Futures.
+* A Naive Bayes implementation
+  (that I use, for example, to order search results
+  by their relevance, based on history;
+  [ref](https://github.com/alefore/edge/blob/master/src/math/naive_bayes.h))
+* Thread pools and work queues.
+* A command-line flags module.
+* Highly concurrent containers (for very specific use cases;
+  [ref](https://github.com/alefore/edge/blob/master/src/concurrent/bag.h))
+* tty integration
+  (*e.g.,* parsing the escape sequences produced by an underlying shell with
+  a pts;
+  [ref](https://github.com/alefore/edge/blob/master/src/infrastructure/terminal_adapter.cc)).
+
+##### Document Potential Improvements
 
 Documenting my ideas for potential improvements
 helps me: it makes it easier to find appropriately sized chunks of work,
@@ -1254,6 +1304,9 @@ As of 2023-12-21, I have 220 TODO notes in the code.
 
 #### Incremental Improvement
 
+> Gli aghi degli abeti in montagna abbracciano calmi i fiocchi di neve.
+> Niente ferma una valanga.
+
 It's easy to underestimate the effect of small changes.
 **Changes that, on their own, don't amount to much,
 can have very drastic effects as a group**.
@@ -1274,6 +1327,10 @@ things that previously seemed ~impossible
 to "suddenly… fall gracefully into place, effortlessly".
 
 ## Ideas that worked well
+
+> Las grandes hojas del abedul:
+> unas se van, fugaces, con el viento;
+> otras caen solas, dando vueltas en el aire frio.
 
 The following are a few ideas or principles that
 influenced my work in Edge,
@@ -1298,6 +1355,9 @@ which worked better than I had initially anticipated:
   displaying the evaluation results.
   Being able to enter (and edit) such expressions as I'm editing a file,
   this sort of "evaluate-as-you-type" functionality is very useful.
+  I recorded
+  [a demo](https://asciinema.org/a/pCa75UZYlVXD0uboyLQl5zUbi)
+  for a friend who asked about this.
 
 * **Optimize for development speed**.
   You can't always know
@@ -1309,9 +1369,14 @@ which worked better than I had initially anticipated:
 
 ## What's Next?
 
-TODO: Flesh these out more. This list is very incomplete.
+> He savors a hearty brunch; takes his time.
+>
+> Sitting beside him, feet dangling, roller blades already on, his daughter hums eagerly.
 
-The following are some ideas that I'd like to explore in the future:
+Who knows where Edge will be in ten years?
+Will I still be extending it?
+
+The following are some ideas that I'd like to explore:
 
 * Improve the extension language.
   I'd like to be able to define structures
@@ -1335,6 +1400,21 @@ The following are some ideas that I'd like to explore in the future:
   and… use those annotations as I'm editing files.
   Essentially, allow me to define stronger semantics in my notes,
   deriving ontologies.
+
+* Improve the CSV integration.
+  I'd like to make it easy to use Edge to load a *large*
+  (at least in the 1e5-rows range)
+  CSV file and interactively manipulate it.
+  For example, to quickly express things like the following
+  (probably based on Edge's extension language):
+
+  * "What's the average of the 5th column
+    across rows where the 2nd column is greater than the 1st column?"
+
+  * "Plot a histogram of the values in the 2nd column,
+    weighing each entry by the result of multiplying the 4th and 5th columns."
+
+  * "What's the Pearson correlation coefficient between two columsn?"
 
 ## Conclusions
 

@@ -67,20 +67,18 @@ To search inside my Zettelkasten I mainly use plain text search.
 I don't keep any reverse index or such,
 basically just `grep` (or `awk`) directly.
 
-As of 2024-04-14, the search glob `???.md` matches 3.8k files;
-these Markdown files contain
-1.8e6 bytes in 66.5e3 lines.
-The search is so fast that I can preview results
-(up to a limit controlled by the size of Edge's preview buffer,
-which is dynamically determined depending on the terminal's size).
+As of 2024-04-14, the search glob `???.md` matches 3.8k Markdown files;
+they contain 1.8e6 bytes in 66.5e3 lines.
+The search is so fast that I preview results
 as I type the search query
-(and display the full results if I press Enter):
+(the size of the preview is computed based on the terminal size).
+I press enter to display the full results.
 
 [![asciicast](https://asciinema.org/a/654131.svg)](https://asciinema.org/a/654131)
 
 This is implemented in functions `Search` and `TitleSearch` in Edge's
-[rc/editor_commands/lib/zk.cc](https://github.com/alefore/edge/blob/master/rc/editor_commands/lib/zk.cc).
-As you can see, just plain calls to `grep` and `awk`.
+[rc/editor_commands/lib/zk.cc](https://github.com/alefore/edge/blob/master/rc/editor_commands/lib/zk.cc)
+calling `grep` and `awk`.
 
 ## Directory Structure
 
@@ -100,7 +98,7 @@ Some Zettelkasten users structure their notes hierarchically, such as Luhmann's
 hierarchies of notes, where "4c1f12" is just short form for "4.3.1.6.12") and
 supplement that hierarchical structure with additional links across notes.
 
-However, I prefer to schew the restriction of having to lay my notes in such a
+However, I prefer to avoid organizing my notes in such a
 hierarchy and, instead, just collect them in a flat namespace. This works for me
 because it forces a structure to evolve organically. Using links would still
 enable the set of notes to be organized as a directed graph rather than a tree,
@@ -113,10 +111,13 @@ The names of the note files are simply three-character IDs starting from `000`
 and including numbers as well as lowercase characters (e.g., `0b9.md` is my note
 about the city of Macau). This seems to work well for me.
 
-With this schema I can create a total of (10 + 26)³ = 45e3 notes, which I think
-suffices. If I ever reach that limit, that will mean I've been very successful
+With this schema I can create a total of (10 + 26)³ > 46e3 notes,
+which I think suffices.
+If I ever reach that limit, that will mean I've been very successful
 with my Zettelkasten; I can, at that point, adopt uppercase characters, which
-would increase the namespace to 238e3 notes. As of 2023-09-02 I'm still far from
+would increase the namespace to 238e3 notes.
+Or add a fourth digit (1.7e6).
+As of 2023-09-02 I'm still far from
 that, though: the last note I've created is `2hp.md` (the 3227th note).
 
 I have a symbolic link `index.md` which points to my main entry point note (note

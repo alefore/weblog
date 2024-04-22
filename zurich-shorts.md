@@ -317,3 +317,18 @@ feet dangling,
 roller blades already on,
 his daughter hums eagerly.
 
+☙
+
+She mumbles seven, ten words,
+incomprehensible, yet joyful.
+
+"I never remember,"
+she says come morn,
+"my dreams."
+
+☙
+
+After the rain,
+blackbirds land heavy
+on wet twigs above.
+

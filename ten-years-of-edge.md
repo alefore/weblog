@@ -1,10 +1,9 @@
 # Edge: Lessons
 
 * Introduction
-* Fix bug categories, not instances
+* Fix bug categories
+* Concurrency
 * Use Types Effectively
-* Futures & Threading
-* Make Things Explicit
 * Bursts & Pauses
 * Ideas that worked well
 * What's Next?
@@ -164,6 +163,308 @@ It only took two days for this to find another such issue
 that had been ignored silently
 ([commit](https://github.com/alefore/edge/commit/09586758eefa0e35d6721228aeaf3dc34b4350cc)).
 
+## Concurrency
+
+Concurrency is difficult but necessary.
+There are a few techniques that can help.
+
+### Constness
+
+The **benefits of making types immutable
+often outweigh the costs**.
+
+Every type must define `const` semantics
+that make it thread-compatible.
+When you define a type
+you're actually defining two:
+the mutable `Type`
+and the immutable and thread-compatible `const Type`.
+
+When you expose an instance to multiple threads,
+you should only retain `const` access.
+This is often (depending on the class) enough to avoid data races,
+reducing the challenge of writing concurrent code to simply
+managing object lifetimes.
+
+TODO: Move the following paragraph:
+
+A pattern that deserves mention is balanced trees of immutable objects.
+This is very specific compared tothe previous patterns,
+but this structure is so versatile that it deserves its own mention.
+Mutation operations don't mutate the tree,
+they return new trees with the operation applied.
+Trees new and old share as many branches as possible.
+This allows very efficient implementation of most operations.
+Inserting, erasing or retriving an element at an arbitrary location
+all have logarithmic runtime complexity.
+
+#### Immutable Assignable
+
+**Assignable references to deeply-immutable objects are very versatile**.
+These types are classes where all methods are `const` except for two:
+the move constructor and the assignment operator.
+Objects of such types aren't strictly immutable, but… close.
+
+Deeply-immutable objects can be too cumbersome:
+without assignment support,
+customers are very frequently forced to wrap instances
+inside `NonNull<std::unique_ptr<>>`
+or `NonNull<std::shared_ptr<>>`.
+
+This is avoided by these mostly-immutable objects,
+which behave as assignable pointers to a nested deeply-immutable object.
+I've read that this roughly matches the behavior of immutable structs in C#.
+
+To implement such types,
+I usually nest all data fields in a private `Data` struct
+and give a single field to the class,
+of type `NonNull<std::shared_ptr<const Data>>`.
+
+    class Line { ...
+      struct Data {
+        LazyString contents;
+      };
+
+      NonNull<std::shared_ptr<const Data>> data_;
+    };
+
+This ensures that the state is immutable while
+allowing references to be updated, something like this:
+
+    Line line = GetFirstLine(...);
+    while (line.IsEmpty())
+      line = GetNextLine(line, ...);
+    line = AddSuffix(line, ...);
+
+Using `NonNull<std::shared_ptr<>>`
+also allows trivial copies of the const values.
+
+##### Examples
+
+The following are examples of immutable classes in Edge:
+
+* [`LineSequence`](https://github.com/alefore/edge/blob/master/src/language/text/line_sequence.h)
+* [`Line`](https://github.com/alefore/edge/blob/master/src/language/text/line.h)
+* [`ConstTree`](https://github.com/alefore/edge/blob/master/src/language/const_tree.h)
+
+#### Builder Pattern
+
+I've found a "builder" pattern fairly versatile.
+I use **mutable thread-compatible builder instances
+to *build* immutable
+(and thus thread-safe; and thus widely shared) instances**.
+
+To avoid cycles, the output type should not depend on the builder.
+The output object should declare its constructors private,
+which means it should give the builder `friend` access.
+
+Most builder instances are used to build a single output.
+As a performance optimization,
+I avoid deep copies in `Build`.
+I do this by making the `Build` method require `*this`
+to be an rvalue reference (`&&`)
+—so that data can be moved out of the builder—
+and implementing an explicit `Copy` method
+for the few customers that need it, e.g.:
+
+    class LineBuilder { ...
+      Line Build() &&;
+      LineBuilder Copy() const;
+    };
+
+Unfortunately, this can be a bit cumbersome
+(because of the additional `std::move` calls for some customers).
+
+#### Examples
+
+TODO: Link. Add more.
+
+* Line and LineBuilder
+
+* LineSequence and LineSequenceBuilder
+
+* LazyString (and LazyStringImpl)
+
+### Thread safety
+
+My **`concurrent::Protected<Data>` template has worked well**
+for classes that need to be thread-safe (and stay non-const):
+[src/concurrent/protected.h](https://github.com/alefore/edge/blob/master/src/concurrent/protected.h)
+
+Using types effectively can boost thread-safety significantly.
+Before I introduced `concurrent::Protected`,
+Edge only had a relatively small amount of parallelization.
+I was wary of the insidious woes brought upon by multi-threading
+and wanted to only allow it in a controlled and careful manner.
+
+And yet, even though `concurrent::Protected` isn't 100% fool-proof
+(one doesn't have to try too hard to escape its protections),
+adopting it
+—starting to rely on types
+to ensure that locks are acquired
+before the data they protect can be accessed—
+already helped me detect bugs
+([example, where `WorkQueue::NextExecution` was neglecting to lock a
+mutex](https://github.com/alefore/edge/commit/69fafea1d557bbb16ca579067dfc3f68a7712c0d)).
+
+The amount of concurrency in Edge has only grown since.
+I'm deferring a lot more work to background threads.
+I don't think I'd have been able to get this far
+if I had not relied on types to maintain correctness.
+
+There are other solutions to this problem, such as
+[Abseil's lock annotations](https://abseil.io/docs/cpp/guides/synchronization#thread-annotations)
+that probably work about as well, perhaps even better.
+
+### Futures
+
+I've had **great success using a Futures API**
+to implement asynchronous requirements.
+
+Futures-based code is not as clean as synchronous code, but close.
+It is much cleaner than callback spaghetti.
+Code still generally reflects that a function is creating and returning a value,
+and its caller is consuming the returned value.
+
+TODO: Error handling in futures.
+
+#### Single consumer
+
+My futures implementation **supports setting only one consumer per future**.
+Once available, the **future's value is passed as a value to the consumer**
+(rather than, for example, handing out a `const` reference).
+This allows me to use futures of moveable non-copyable types.
+
+For situations where multiple listeners are desirable,
+I can turn a regular future into a `ListenableFuture`
+([implementation](https://github.com/alefore/edge/blob/master/src/futures/listenable_value.h))
+which holds the value and allows setting multiple listeners,
+which receive `const` references (rather than the value itself).
+
+#### WorkQueues
+
+One pattern I've found useful is to schedule computations in background threads
+and use futures in a way that
+ensures that the output values
+are received by the original thread
+(that scheduled the computation).
+
+This allows objects that aren't yet thread-safe
+(for Edge that would be the `OpenBuffer` class)
+to still delegate work to thread pools.
+All they need to do is ensure that they only capture thread-safe values
+(perhaps thread-safe snapshots of their class variables)
+in the lambdas they pass to the thread pools.
+The outputs of those asynchronous computations
+will be received in the main thread.
+
+The customer interface is that the `ThreadPoolWithWorkQueue::Run` method
+returns a `futures::Value` that will be notified in the calling thread:
+
+    thread_pool
+        .Run([...] -> Output {
+          // This runs in a background thread in the thread-pool.
+          return ExpensiveComputation(...);
+        })
+        .Transform([this](Output output) {
+          // Capturing `this` is fine, even if `this` isn't thread-safe: this
+          // lambda will run in the main thread, thanks to the work queue.
+          ...
+        });
+
+This works because `ThreadPoolWithWorkQueue`
+schedules notification of these futures
+through the `WorkQueue`.
+All we need to do is ensure that these `WorkQueue` instances
+are advanced in the appropriate thread.
+
+##### Examples
+
+I use `ThreadPoolWithWorkQueue` in many places.
+For example, my `FileSystemInterface`
+schedules all blocking operations in a background thread,
+but uses a `ThreadPoolWithWorkQueue` to ensure
+that their results are received in the main thread.
+Customers of `FileSystemInterface` just adopt the futures interface;
+they will continue to run in a single thread
+(and don't even need to support single-thread reentrancy).
+
+#### Cancellation
+
+Being able to **cancel asynchronous computations that have become irrelevant**
+can be fairly important.
+The pattern I've landed on is the use of a `DeleteNotification` class
+that contains a `futures::ListenableValue<EmptyValue>`.
+
+A producer that wants to support cancellation simply receives the
+`futures::ListenableValue<EmptyValue>` abort notification.
+The producer can either poll on this future or add a listener callback.
+The producer's customer simply creates a `DeleteNotification`,
+passes its corresponding future to the producer,
+and ensures that the `DeleteNotification` is retained
+as long as the value is still relevant.
+
+For example, as the user types in a prompt
+(e.g., open a file, search for a regexp)
+I kick off background work
+(to show a preview of files or count of matches
+based on what the user has already entered).
+If the user types a second character before this work completes,
+I just replace the `DeleteNotification` instance with a newly built instance
+(which signals to the background thread that it has become irrelevant
+and should just abandon whatever results it has produced)
+and kick off a new operation.
+
+#### Futures in Const Objects
+
+You can store `const` views of `ListenableFutures` inside `const` structures.
+The producer will eventually give them a value, triggering consumers' execution.
+When parts of an object are computed asynchronously,
+this allows customers to access each such part as soon as it is ready.
+
+At first, I found this pattern somewhat… counterintuitive.
+It feels strange to tag as `const`
+an object whose parts are still being constructed.
+
+But I think it makes sense.
+The contract of the future never changes:
+customers can add callbacks that the future will run
+when the value arrives (or immediately).
+All callbacks will receive exactly the same value, when they run.
+
+The alternative would be to only return the object once all its parts are ready
+(i.e., rather than building an object
+containing futures for its asynchronous parts,
+build a future of the fully-built object).
+But this would unnecessarily delay things.
+
+##### Examples
+
+A good example where I've used this pattern
+is the `LineMetadataEntry` class
+([source](https://github.com/alefore/edge/blob/master/src/language/text/line.h)).
+When loading lines in a file,
+Edge will attempt to compile them (to its C-like extension language)
+and, if they compile to expressions free of side-effects,
+evaluate them and display the evaluation results.
+
+For example,
+Edge will display "7.60416"
+next to a line that contains just "365 / (52 - 4)".
+
+Because such evaluation could take a while
+(depending on the complexity of the expression),
+Edge feeds these evaluations to a thread pool,
+abiding by its principle of avoiding blocking the main thread.
+
+The implementation is very natural:
+due to its nested `LineMetadataEntry`,
+`Line` contains:
+
+* A future with the string representation of the evaluation result.
+* The initial text that should be displayed
+  if the future doesn't yet have a result.
+
 ## Use Types Effectively
 
 Good use of expressive and well-designed static types
@@ -281,7 +582,7 @@ through template parameters for the `GhostType` class.
 Specifically, I would like to make it easier to define validation functions.
 With the current `GHOST_TYPE` macros this is difficult.
 
-### Predicate Types
+### Maintaing invariants
 
 Defining wrapper types corresponding to predicates
 is another technique I've found useful.
@@ -482,419 +783,6 @@ if I ever accidentally run the same callable twice.
 This is implemented in
 [`src/language/once_only_function`](https://github.com/alefore/edge/blob/master/src/language/once_only_function.h)
 (as a wrapper of `std::move_only_function`).
-
-### Constness
-
-The **benefits of making types immutable
-often outweigh the costs**.
-
-Every type must define `const` semantics
-that make it thread-compatible.
-When you define a type
-you're actually defining two:
-the mutable `Type`
-and the immutable and thread-compatible `const Type`.
-
-When the object is exposed to multiple threads,
-only `const` access should be retained.
-This is sometimes enough to avoid data races,
-reducing the challenge of writing concurrent code to simply
-managing object lifetimes.
-
-TODO: Move the following paragraph:
-
-A pattern that deserves mention is balanced trees of immutable objects.
-This is very specific compared tothe previous patterns,
-but this structure is so versatile that it deserves its own mention.
-Mutation operations don't mutate the tree,
-they return new trees with the operation applied.
-Trees new and old share as many branches as possible.
-This allows very efficient implementation of most operations.
-Inserting, erasing or retriving an element at an arbitrary location
-all have logarithmic runtime complexity.
-
-#### Immutable Assignable
-
-**Assignable references to deeply-immutable objects are very versatile**.
-These types are classes where all methods are `const` except for two:
-the move constructor and the assignment operator.
-Objects of such types aren't strictly immutable, but… close.
-
-Deeply-immutable objects can be too cumbersome:
-without assignment support,
-customers are very frequently forced to wrap instances
-inside `NonNull<std::unique_ptr<>>`
-or `NonNull<std::shared_ptr<>>`.
-
-This is avoided by these mostly-immutable objects,
-which behave as assignable pointers to a nested deeply-immutable object.
-I've read that this roughly matches the behavior of immutable structs in C#.
-
-To implement such types,
-I usually nest all data fields in a private `Data` struct
-and give a single field to the class,
-of type `NonNull<std::shared_ptr<const Data>>`.
-
-    class Line { ...
-      struct Data {
-        LazyString contents;
-      };
-
-      NonNull<std::shared_ptr<const Data>> data_;
-    };
-
-This ensures that the state is immutable while
-allowing references to be updated, something like this:
-
-    Line line = GetFirstLine(...);
-    while (line.IsEmpty())
-      line = GetNextLine(line, ...);
-    line = AddSuffix(line, ...);
-
-Using `NonNull<std::shared_ptr<>>`
-also allows trivial copies of the const values.
-
-##### Prefer Immutable Types: Support assignment: Examples
-
-The following are examples of immutable classes in Edge:
-
-* [`LineSequence`](https://github.com/alefore/edge/blob/master/src/language/text/line_sequence.h)
-* [`Line`](https://github.com/alefore/edge/blob/master/src/language/text/line.h)
-* [`ConstTree`](https://github.com/alefore/edge/blob/master/src/language/const_tree.h)
-
-#### Builder Pattern
-
-I've found a "builder" pattern fairly versatile.
-I use **mutable thread-compatible builder instances
-to *build* immutable
-(and thus thread-safe; and thus widely shared) instances**.
-
-To avoid cycles, the output type should not depend on the builder.
-The output object should declare its constructors private,
-which means it should give the builder `friend` access.
-
-Most builder instances are used to build a single output.
-As a performance optimization,
-I avoid deep copies in `Build`.
-I do this by making the `Build` method require `*this`
-to be an rvalue reference (`&&`)
-—so that data can be moved out of the builder—
-and implementing an explicit `Copy` method
-for the few customers that need it, e.g.:
-
-    class LineBuilder { ...
-      Line Build() &&;
-      LineBuilder Copy() const;
-    };
-
-Unfortunately, this can be a bit cumbersome
-(because of the additional `std::move` calls for some customers).
-
-#### Prefer Immutable Types: Examples
-
-TODO: Link. Add more.
-
-* Line and LineBuilder
-
-* LineSequence and LineSequenceBuilder
-
-* LazyString (and LazyStringImpl)
-
-### Thread safety
-
-My **`concurrent::Protected<Data>` template has worked well**
-for classes that need to be thread-safe:
-[src/concurrent/protected.h](https://github.com/alefore/edge/blob/master/src/concurrent/protected.h)
-
-Using types effectively can boost thread-safety significantly.
-Before I introduced `concurrent::Protected`,
-Edge only had a relatively small amount of parallelization.
-I was wary of the insidious woes brought upon by multi-threading
-and wanted to only allow it in a controlled and careful manner.
-
-And yet, even though `concurrent::Protected` isn't 100% fool-proof
-(one doesn't have to try too hard to escape its protections),
-adopting it
-—starting to rely on types
-to ensure that locks are acquired
-before the data they protect can be accessed—
-already helped me detect bugs
-([example, where `WorkQueue::NextExecution` was neglecting to lock a
-mutex](https://github.com/alefore/edge/commit/69fafea1d557bbb16ca579067dfc3f68a7712c0d)).
-
-The amount of concurrency in Edge has only grown since.
-I'm deferring a lot more work to background threads.
-I don't think I'd have been able to get this far
-if I had not relied on types to maintain correctness.
-
-There are other solutions to this problem, such as
-[Abseil's lock annotations](https://abseil.io/docs/cpp/guides/synchronization#thread-annotations)
-that probably work about as well, perhaps even better.
-
-## Futures & Threading
-
-I've had **great success using a Futures API**
-to implement asynchronous requirements.
-
-Futures-based code is not as clean as synchronous code, but close.
-It is much cleaner than callback spaghetti.
-Code still generally reflects that a function is creating and returning a value,
-and its caller is consuming the returned value.
-
-TODO: Error handling in futures.
-
-### Single consumer
-
-My futures implementation **supports setting only one consumer per future**.
-Once available, the **future's value is passed as a value to the consumer**
-(rather than, for example, handing out a `const` reference).
-This allows me to use futures of moveable non-copyable types.
-
-For situations where multiple listeners are desirable,
-I can turn a regular future into a `ListenableFuture`
-([implementation](https://github.com/alefore/edge/blob/master/src/futures/listenable_value.h))
-which holds the value and allows setting multiple listeners,
-which receive `const` references (rather than the value itself).
-
-### WorkQueues
-
-One pattern I've found useful is to schedule computations in background threads
-and use futures in a way that
-ensures that the output values
-are received by the original thread
-(that scheduled the computation).
-
-This allows objects that aren't yet thread-safe
-(for Edge that would be the `OpenBuffer` class)
-to still delegate work to thread pools.
-All they need to do is ensure that they only capture thread-safe values
-(perhaps thread-safe snapshots of their class variables)
-in the lambdas they pass to the thread pools.
-The outputs of those asynchronous computations
-will be received in the main thread.
-
-The customer interface is that the `ThreadPoolWithWorkQueue::Run` method
-returns a `futures::Value` that will be notified in the calling thread:
-
-    thread_pool
-        .Run([...] -> Output {
-          // This runs in a background thread in the thread-pool.
-          return ExpensiveComputation(...);
-        })
-        .Transform([this](Output output) {
-          // Capturing `this` is fine, even if `this` isn't thread-safe: this
-          // lambda will run in the main thread, thanks to the work queue.
-          ...
-        });
-
-This works because `ThreadPoolWithWorkQueue`
-schedules notification of these futures
-through the `WorkQueue`.
-All we need to do is ensure that these `WorkQueue` instances
-are advanced in the appropriate thread.
-
-#### Examples
-
-I use `ThreadPoolWithWorkQueue` in many places.
-For example, my `FileSystemInterface`
-schedules all blocking operations in a background thread,
-but uses a `ThreadPoolWithWorkQueue` to ensure
-that their results are received in the main thread.
-Customers of `FileSystemInterface` just adopt the futures interface;
-they will continue to run in a single thread
-(and don't even need to support single-thread reentrancy).
-
-### Cancellation
-
-Being able to **cancel asynchronous computations that have become irrelevant**
-can be fairly important.
-The pattern I've landed on is the use of a `DeleteNotification` class
-that contains a `futures::ListenableValue<EmptyValue>`.
-
-A producer that wants to support cancellation simply receives the
-`futures::ListenableValue<EmptyValue>` abort notification.
-The producer can either poll on this future or add a listener callback.
-The producer's customer simply creates a `DeleteNotification`,
-passes its corresponding future to the producer,
-and ensures that the `DeleteNotification` is retained
-as long as the value is still relevant.
-
-For example, as the user types in a prompt
-(e.g., open a file, search for a regexp)
-I kick off background work
-(to show a preview of files or count of matches
-based on what the user has already entered).
-If the user types a second character before this work completes,
-I just replace the `DeleteNotification` instance with a newly built instance
-(which signals to the background thread that it has become irrelevant
-and should just abandon whatever results it has produced)
-and kick off a new operation.
-
-### Futures in Const Objects
-
-You can store `const` views of `ListenableFutures` inside `const` structures.
-The producer will eventually give them a value, triggering consumers' execution.
-When parts of an object are computed asynchronously,
-this allows customers to access each such part as soon as it is ready.
-
-At first, I found this pattern somewhat… counterintuitive.
-It feels strange to tag as `const`
-an object whose parts are still being constructed.
-
-But I think it makes sense.
-The contract of the future never changes:
-customers can add callbacks that the future will run
-when the value arrives (or immediately).
-All callbacks will receive exactly the same value, when they run.
-
-The alternative would be to only return the object once all its parts are ready
-(i.e., rather than building an object
-containing futures for its asynchronous parts,
-build a future of the fully-built object).
-But this would unnecessarily delay things.
-
-#### Examples
-
-A good example where I've used this pattern
-is the `LineMetadataEntry` class
-([source](https://github.com/alefore/edge/blob/master/src/language/text/line.h)).
-When loading lines in a file,
-Edge will attempt to compile them (to its C-like extension language)
-and, if they compile to expressions free of side-effects,
-evaluate them and display the evaluation results.
-
-For example,
-Edge will display "7.60416"
-next to a line that contains just "365 / (52 - 4)".
-
-Because such evaluation could take a while
-(depending on the complexity of the expression),
-Edge feeds these evaluations to a thread pool,
-abiding by its principle of avoiding blocking the main thread.
-
-The implementation is very natural:
-due to its nested `LineMetadataEntry`,
-`Line` contains:
-
-* A future with the string representation of the evaluation result.
-* The initial text that should be displayed
-  if the future doesn't yet have a result.
-
-## Make Things Explicit
-
-**The implementation should reflect your thought process explicitly;
-not only its conclusions**.
-Removing the thought process makes the software less malleable.
-
-Early in my career,
-I made the mistake of optimizing my implementations for brevity.
-If you can say it with fewer words, why more?
-
-> Je n’ai fait celle-ci plus longue que parce que je n’ai pas eu le loisir de la faire plus courte.
-
-But simplicity and brevity are different things.
-In fact, in software you often reach a point
-where extra brevity complicates things.
-
-It bears saying it explicitly:
-just because some expression is shorter (by whatever metric)
-doesn't mean it's simpler.
-
-This has obvious non-controversial implications:
-
-* Define appropriately named constants;
-  rather than using magic values directly.
-
-* Add `const` annotations to relevant class methods.
-
-* Use appropriate names that convey meaning; eschew abbreviations.
-
-It also has some less-obvious implications.
-
-### Loops
-
-Most operations on containers (either sets, sequences, maps, etc.)
-can be expressed as one of a few canonical operations,
-such as finding elements matching a predicate,
-transforming elements,
-or aggregating elements.
-
-In those cases, I **avoid writing explicit `for` or `while` loops**.
-I prefer standard functions (such as `std::views::transform` and related logic)
-for manipulating and aggregating containers.
-I'm a big fan of the recent ranges/views APIs.
-
-#### Rationale
-
-Reducing my loops to canonical operations
-helps me make the intent more evident:
-
-* I am just checking if a list has at least an element matching a predicate.
-* I am just copying all elements, with some transformation applied.
-* I am mutating the container directly.
-
-Seeing that I'm calling `std::views::filter | std::views::transform`
-makes it immediately obvious,
-even more obvious than simple range-based loops.
-
-Consistently avoiding explicit loops has the advantage that
-in those cases that can't be neatly reduced to a canonical operation,
-**the presence of an explicit `for` or `while` loop alerts you:
-there's something unusual in this block**.
-
-### Avoid auto
-
-TODO: Flesh out.
-
-### Testing
-
-Perhaps not very surprising to anyone who knows anything about
-software engineering, but it bears being said explicitly:
-tests are an essential part of software.
-
-I discovered this relatively early in the journey with Edge.
-When I started, I didn't bother writing tests.
-I started paying the price earlier than I had anticipated.
-I decided to gradually increase coverage.
-
-As of 2024-04-15, Edge contains 627 tests grouped into 119 logical units.
-
-I don't have much to say on testing,
-but I'll mention a few ideas that may not be widely accepted.
-
-#### Unit testing beats REPL testing
-
-REPL-testing has a small advantage over Unit testing:
-having very low friction: tests are executed immediately
-(and thrown away).
-
-However, **unit tests are significantly superior to REPL-testing**:
-they become part of the software and can be validated automatically at any time.
-
-While it can be beneficial to be able to use REPL testing during development,
-it would be foolish to fall into the trap of thinking that
-it obviates the need to develop adequate sets of tests.
-
-#### Tests adjacent to tested code
-
-**Unit tests should be stored as close as possible to the code they test**.
-Tests are an integral part of software;
-unit tests deserve to be stored directly adjacent to the units they test,
-rather than relegated to separate files.
-
-Putting your tests directly under the function they test
-(in the same source file)
-makes it trivial to see
-to what extent a specific function or module has tests.
-Functions lacking tests immediately stand out.
-
-In Edge, I do this through my
-[tests module](https://github.com/alefore/edge/blob/master/src/tests/tests.h).
-This allows me to statically register all tests at the top-level,
-directly in the modules they test.
-
-Here is one example:
-[src/math/bigint.cc](https://github.com/alefore/edge/blob/master/src/math/bigint.cc)
 
 ## Bursts & Pauses
 
@@ -1332,6 +1220,8 @@ to "suddenly… fall gracefully into place, effortlessly".
 > unas se van, fugaces, con el viento;
 > otras caen solas, dando vueltas en el aire frio.
 
+### Principles
+
 The following are a few ideas or principles that
 influenced my work in Edge,
 which worked better than I had initially anticipated:
@@ -1346,6 +1236,15 @@ which worked better than I had initially anticipated:
   (that distracts them from their goal),
   you should do it, go the extra mile.
   Never force the user to wait for the results of an operation.
+
+  * If the user is typing a command to be executed
+    (*e.g.*, fork out an "ls" or "grep" command, kick off a regexp search),
+    display a preview of the results.
+    For example, as the user types the regexp,
+    you can already display "this would match 26 locations".
+    As the user types the "ls" or "grep" command
+    (which have no side effects),
+    you can already display the first lines of the output they'd get.
 
 * **Being able to check if a program expression
   is free of side effects (without running it)
@@ -1366,6 +1265,55 @@ which worked better than I had initially anticipated:
   Make it easier to iterate faster.
   Avoid optimizing things for performance
   in ways that leave you stuck on local maxima.
+
+### Features
+
+The following are a few features that worked better than I anticipated.
+I hope this helps other people working on their own text editors.
+
+* Linear undo/redo history,
+  as explained in
+  [`src/undo_state.cc`](https://github.com/alefore/edge/blob/master/src/undo_state.cc).
+  If you undo a few transformations and apply a new transformation …
+  you don't lose the redo history: you can still apply it through undo.
+
+* The ability to jump to any position in the file that's currently visible
+  simply by pressing `f` +
+  three characters ~matching the text you want to jump to
+  (with disambiguation when the prefix would match multiple positions) + return.
+  I found that I'm using this fairly frequently,
+  comparing with "scrolling" up to the position (or a full regexp search).
+
+* Native support for multiple cursors.
+  For example, a regexp-search
+  just creates a cursor in every position with a match.
+  Being able to quickly say
+  "set the cursors to: a cursor at the beginning of every line
+  in the current paragraph"
+  and then just say "add four spaces at each cursor" is powerful.
+
+* The preview buffer at the bottom of the screen is very helpful.
+  If the cursor is over an existing file (based on some search paths),
+  previewing its contents
+  (remembering where the cursor was when that file was last opened)
+  can be very helpful.
+  Similarly, previewing the output of commands as you type them
+  (for commands that don't have side-effects)
+  can also be very flexible
+  (for example, as you are typing an invocation to `grep` or `ls`,
+  you already see a preview of the output of what you'd get).
+
+* Automatically tagging certain command buffers as a compiler
+  (*e.g.*, "if the command is an invocation to make or bazel or …")
+  and then (1) parsing the output to detect references to open files
+  and (2) rerunning the command whenever I save a file,
+  works well.
+  I save a source file to kick off compilation;
+  I continue editing but, as soon as the compiler outputs errors in the file,
+  I get overlays summarizing the errors.
+  I can also say "create a cursor in every error" and work through them.
+
+* Rely on clang-format for reformatting code. :-)
 
 ## What's Next?
 

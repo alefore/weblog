@@ -76,7 +76,7 @@ As of 2024-04-14, Edge is 67.9k lines of C++ code
 ## Fix Bug Categories
 
 If you identify a bug,
-avoid the temptation to just fix it and move on.
+resist the temptation to just fix it and move on.
 Instead, **fix the underlying issue that enabled the bug to exist**.
 The specific instance of the bug should just happen to disappear,
 due to the underlying fix.
@@ -165,8 +165,74 @@ that had been ignored silently
 
 ## Concurrency
 
-Concurrency is difficult but necessary.
-There are a few techniques that can help.
+Concurrency: difficult, but necessary.
+Some techniques help.
+
+### Necessary
+
+Why is concurrency necessary?
+I expect this will be obvious to most developers;
+I don't think I have much new to say here.
+
+I think I first added a background thread in
+[91c1cfe](https://github.com/alefore/edge/commit/91c1cfe99ee0e67cd875806abdd0cf1314b6a9fd), in 2017-04-15,
+relatively early in Edge's history.
+I avoid this type of concurrency
+for what felt (but, in retrospect, wasn't!) a long time.
+I feared the unavoidable complexity it would bring.
+
+You can only get so far with a single thread/process.
+Parallelism lets you offload work from the main thread;
+this allows you to do significantly more expensive operations
+than when you're constrained to the amount of time between refreshes
+(*i.e.,* before the user perceives lag).
+
+#### Limits of non-parallel concurrency
+
+Of course you always have the option of staying single-threaded
+and just making all your operations interruptible and resumable.
+I still do that in some parts of Edge, for example:
+
+* The VM uses a `Trampoline` class when evaluating expressions
+  ([header](https://github.com/alefore/edge/blob/master/src/vm/expression.h)).
+  After a certain amount of "evaluation steps" (not defined too precisely),
+  it yields back to the caller.
+
+* The GC implementation is both highly concurrent
+  (both parallelizing various operations
+  and deferring work to background threads)
+  and interruptible:
+  if a call to `Pool::Collect` outlasts a timeout, the operation is aborted
+  (but a subsequent call will resume where we had left off).
+
+This lets you achieve concurrency without parallelism.
+But, at some point, as your logic grows,
+the complexity of this approach
+–explicitly maintaining all the state machinery
+required to be able to stop and resume at arbitrary points–
+becomes worse than just carefully allowing concurrency in.
+
+#### Concurrency: Threads vs other approaches
+
+Of course, you can use processes (*e.g.,* `fork`) rather than threads.
+And, of course, you can also use non-parallel concurrency.
+When it suffices, you really should.
+
+My experience with Edge is that threads,
+when used carefully,
+go further (though they can also bring more headaches).
+
+While some functions
+(such as file-related and many other system calls)
+offer async versions,
+they tend to be cumbersome and brittle
+–you can't use types to ensure that you don't accidentally call a blocking version.
+Using the regular sync versions in separate threads tends to be easier.
+
+As an example,
+I do this in my file-system wrapper
+([header](https://github.com/alefore/edge/blob/master/src/infrastructure/file_system_driver.h),
+which receives a thread-pool.
 
 ### Constness
 
@@ -185,6 +251,10 @@ you should only retain `const` access.
 This is often (depending on the class) enough to avoid data races,
 reducing the challenge of writing concurrent code to simply
 managing object lifetimes.
+
+This section talks about how Edge implements `const`ness.
+The motivation goes significantly beyond just managing concurrency,
+but that's a very important part.
 
 TODO: Move the following paragraph:
 
@@ -594,6 +664,13 @@ you would create a type `TP`
 that contains an instance of `T`
 that is known to match `P`.
 I'll refer to `TP` as the *subtype*.
+
+This is exactly what `const` does to classes:
+you define the semantics of `P`
+(*i.e.*, what it means for a class to be `const`)
+and then, given a `T` instance,
+you can trivially obtain a `TP` view that implements `P`.
+This general principle goes way beyond just immutability.
 
 #### Rationale
 
@@ -1271,20 +1348,20 @@ which worked better than I had initially anticipated:
 The following are a few features that worked better than I anticipated.
 I hope this helps other people working on their own text editors.
 
-* Linear undo/redo history,
+* **Linear undo**/redo history,
   as explained in
   [`src/undo_state.cc`](https://github.com/alefore/edge/blob/master/src/undo_state.cc).
   If you undo a few transformations and apply a new transformation …
   you don't lose the redo history: you can still apply it through undo.
 
-* The ability to jump to any position in the file that's currently visible
+* The ability to **jump to any position in the file that's currently visible**
   simply by pressing `f` +
   three characters ~matching the text you want to jump to
   (with disambiguation when the prefix would match multiple positions) + return.
   I found that I'm using this fairly frequently,
   comparing with "scrolling" up to the position (or a full regexp search).
 
-* Native support for multiple cursors.
+* Native support for **multiple cursors**.
   For example, a regexp-search
   just creates a cursor in every position with a match.
   Being able to quickly say
@@ -1292,7 +1369,7 @@ I hope this helps other people working on their own text editors.
   in the current paragraph"
   and then just say "add four spaces at each cursor" is powerful.
 
-* The preview buffer at the bottom of the screen is very helpful.
+* The **preview buffer** at the bottom of the screen is very helpful.
   If the cursor is over an existing file (based on some search paths),
   previewing its contents
   (remembering where the cursor was when that file was last opened)
@@ -1303,7 +1380,8 @@ I hope this helps other people working on their own text editors.
   (for example, as you are typing an invocation to `grep` or `ls`,
   you already see a preview of the output of what you'd get).
 
-* Automatically tagging certain command buffers as a compiler
+* Native support for **"compiler" buffers**.
+  Automatically tagging certain command buffers as a compiler
   (*e.g.*, "if the command is an invocation to make or bazel or …")
   and then (1) parsing the output to detect references to open files
   and (2) rerunning the command whenever I save a file,
@@ -1313,7 +1391,12 @@ I hope this helps other people working on their own text editors.
   I get overlays summarizing the errors.
   I can also say "create a cursor in every error" and work through them.
 
-* Rely on clang-format for reformatting code. :-)
+* **clang-format integration**.
+  Whenever I save a file of some specific formats (*e.g.,* C++, Java,
+  Javascript, SQL…), I just pipe it through `clang-format` or similar commands
+  ([implementation](https://github.com/alefore/edge/blob/master/rc/editor_commands/lib/clang-format.cc)).
+  Freeing you from caring about spaces as you're editing
+  speeds you up.
 
 ## What's Next?
 

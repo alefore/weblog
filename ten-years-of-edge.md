@@ -1237,7 +1237,8 @@ all of which fall under the same umbrella, such as:
   by their relevance, based on history;
   [ref](https://github.com/alefore/edge/blob/master/src/math/naive_bayes.h))
 * Thread pools and work queues.
-* A command-line flags module.
+* A command-line flags module
+  ([ref](https://github.com/alefore/edge/blob/master/src/infrastructure/command_line.h)).
 * Highly concurrent containers (for very specific use cases;
   [ref](https://github.com/alefore/edge/blob/master/src/concurrent/bag.h))
 * tty integration

@@ -15,6 +15,11 @@ This article:
 * Offers a few principles that may help
   design interfaces that are more intent oriented.
 
+This article is based on many conversations with
+Chris Nokleberg,
+Ivan Metlushko, and
+Tudor-Ioan Salomie.
+
 ## What is intent
 
 ### Definition

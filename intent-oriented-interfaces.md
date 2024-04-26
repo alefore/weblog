@@ -13,7 +13,7 @@ This article:
 * Describes the advantages of intent-oriented interfaces.
 
 * Offers a few principles that may help
-  design interfaces that are more intent oriented.
+  design interfaces that are more intent-oriented.
 
 This article is based on many conversations with
 Chris Nokleberg,

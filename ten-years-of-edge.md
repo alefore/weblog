@@ -1220,6 +1220,35 @@ Accepting that I'll take breaks means that I should
 There's some analogy to
 [counter-cyclical fiscal policy](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Counter-cyclical_fiscal_measures#:~:text=Counter%2Dcyclical%20fiscal%20measures%20are,to%20help%20stimulate%20economic%20recovery.).
 
+To me this is similar to the "two-minute rule" habit formation trick:
+leave yourself a lot of crumbles that you can pick up
+whenever you happen to have a spare minute or two.
+These million small steps tend to add up to meaningful progress.
+
+##### Document Potential Improvements
+
+Documenting my ideas for potential improvements
+helps me: it makes it easier to find appropriately sized chunks of work,
+depending on where I am in the burst-pause cycle.
+
+I leave many "TODO" notes in the code
+listing things that I think I may want to improve some day.
+I try too:
+
+* Classify them by difficulty (trivial, easy, normal)
+* Give them hash-tags (to help me find related changes)
+
+As I'm reading the code working on implementing a specific feature
+unrelated ideas come up.
+I'm not going to work on them right away;
+I'd never accomplish the task I'm working on.
+But I'll make sure to document them right away.
+
+As of 2023-12-21, I have 220 TODO notes in the code.
+16 are marked as trivial, 80 are marked as easy.
+
+##### Variation
+
 I suppose I've been able to keep working on the same project for a decade
 because I've been able to work on vastly different sub-projects,
 all of which fall under the same umbrella, such as:
@@ -1245,28 +1274,6 @@ all of which fall under the same umbrella, such as:
   (*e.g.,* parsing the escape sequences produced by an underlying shell with
   a pts;
   [ref](https://github.com/alefore/edge/blob/master/src/infrastructure/terminal_adapter.cc)).
-
-##### Document Potential Improvements
-
-Documenting my ideas for potential improvements
-helps me: it makes it easier to find appropriately sized chunks of work,
-depending on where I am in the burst-pause cycle.
-
-I leave many "TODO" notes in the code
-listing things that I think I may want to improve some day.
-I try too:
-
-* Classify them by difficulty (trivial, easy, normal)
-* Give them hash-tags (to help me find related changes)
-
-As I'm reading the code working on implementing a specific feature
-unrelated ideas come up.
-I'm not going to work on them right away;
-I'd never accomplish the task I'm working on.
-But I'll make sure to document them right away.
-
-As of 2023-12-21, I have 220 TODO notes in the code.
-16 are marked as trivial, 80 are marked as easy.
 
 #### Incremental Improvement
 
@@ -1408,45 +1415,88 @@ I hope this helps other people working on their own text editors.
 Who knows where Edge will be in ten years?
 Will I still be extending it?
 
-The following are some ideas that I'd like to explore:
+This section lists some ideas I'd like to explore.
 
-* Improve the extension language.
-  I'd like to be able to define structures
-  entirely within the extension language.
-  This hasn't been too constraining for me
-  (because I can define structures within the host language
-  and easily surface them to extensions),
-  but I think it would enable extensions to grow significantly.
+### Improve the extension language
 
-* Improve the API given to extensions for document inspection and manipulation.
-  I'd like to provide friendlier ways to express operations
-  that filter
-  (*e.g.,*
-  "find all links with the text `xyz` within a bullets list in a section
-  where the header is `Tags` in this Markdown file")
-  or transform sub-tress of a document
-  ("apply this <function> to transform the text of those links").
+The extension language could use some improvements.
 
-* Continue improving the integration with my Zettelkasten.
-  For example, enable me to add more annotations to my notes
-  and… use those annotations as I'm editing files.
-  Essentially, allow me to define stronger semantics in my notes,
-  deriving ontologies.
+I'd like to be able to define structures
+entirely within the extension language.
+This hasn't been too constraining for me
+(because I can define structures within the host language
+and easily expose them to extensions),
+but I think it would enable extensions to grow significantly.
 
-* Improve the CSV integration.
-  I'd like to make it easy to use Edge to load a *large*
-  (at least in the 1e5-rows range)
-  CSV file and interactively manipulate it.
-  For example, to quickly express things like the following
-  (probably based on Edge's extension language):
+I would also like to support some form of generics.
+Currently, for generic classes like "set" or "vector"
+I have to define specific subtypes in the host language
+(e.g., `SetString`, `VectorString`, `VectorInt`, etc.).
+It's easy to define this in the host language, but far from ideal.
 
-  * "What's the average of the 5th column
-    across rows where the 2nd column is greater than the 1st column?"
+### File inspection/manipulation API
 
-  * "Plot a histogram of the values in the 2nd column,
-    weighing each entry by the result of multiplying the 4th and 5th columns."
+I'd like to provide friendlier ways to express operations
+that filter
+(*e.g.,*
+"find all links with the text `xyz` within a bullets list in a section
+where the header is `Tags` in this Markdown file")
+or transform sub-tress of a document
+("apply this <function> to transform the text of those links").
 
-  * "What's the Pearson correlation coefficient between two columsn?"
+This API should probably be based on the parsed syntax tree.
+
+Obviously, I have some APIs to inspect and modify file contents,
+but they are line/character oriented,
+which makes them too low-level
+–expressing intent is difficult.
+
+### Zettelkasten improvements
+
+The functionality to manipulate my Zettelkasten can be refined further.
+
+For example, I'd like to be able to add more formal annotations to my notes and…
+use those annotations as I'm editing files.
+Essentially, allow me to define stronger semantics in my notes,
+deriving ontologies.
+
+### CSV integration
+
+I'd like to make it easy to use Edge to load a *medium*
+(~1e5-rows range)
+CSV file and interactively manipulate it.
+
+For example, to quickly express things like the following
+(probably based on Edge's extension language):
+
+* "What's the average of the 5th column
+  across rows where the 2nd column is greater than the 1st column?"
+
+* "Plot a histogram of the values in the 2nd column,
+  weighing each entry by the result of multiplying the 4th and 5th columns."
+
+* "What's the Pearson correlation coefficient between two columsn?"
+
+Edge has CSV support, but it's somewhat rudimentary.
+
+### Audio improvements
+
+I want to find better ways to use audio as an additional information channel.
+
+Edge has had audio support based on libao for many years.
+However, it doesn't work very well:
+interruptions or quitting sometimes leaves the audio device in a strange state.
+As a result, I end up almost always muting it
+(by adding `--mute` to `~/.edge/flags.txt`).
+
+For example, when you search for a regular expression,
+Edge plays a different tune based on the number of results
+(simplifying, something like:
+"error", "zero matches", "one match", "two matches", "many matches").
+
+This would require making the audio support more robust.
+Once that's in place, I intend to explore more ideas
+about how to use sound.
 
 ## Conclusions
 

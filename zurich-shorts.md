@@ -298,8 +298,8 @@ Alguien timbra.
 
 ☙
 
-A solitary leaf lands on the thick rug.
-The living-room tree knows not of storms.
+A solitary leaf lands on thick rug.
+Living-room trees know not of storms.
 
 ☙
 
@@ -331,4 +331,20 @@ she says come morn,
 After the rain,
 blackbirds land heavy
 on wet twigs above.
+
+☙
+
+You discover,
+on streets you walk daily,
+a beautiful old house.
+
+☙
+
+Una señora se detiene y admira relojes en vitrina;
+un joven, bicicletas.
+
+☙
+
+Einer der zwei Vögel
+trägt einen Zweig im Schnabel.
 

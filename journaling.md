@@ -125,6 +125,9 @@ File `~/bin/pdf-notes-background` (mode 755):
 
     c = canvas.Canvas("background.pdf", pagesize=A4)
 
+    GRAY = colors.HexColor(0xdddddd)
+    LIGHT_GRAY = colors.HexColor(0xeeeeee)
+
     dot_distance = 5  # mm between dots
     dot_size = 0.1  # Diameter of dots in mm
     margin = 14  # Margin around the page in mm
@@ -136,8 +139,8 @@ File `~/bin/pdf-notes-background` (mode 755):
     start_x = margin + ((page_width_mm - 2 * margin) % dot_distance) / 2
     start_y = margin + ((page_height_mm - 2 * margin) % dot_distance) / 2
 
-    c.setStrokeColor(colors.HexColor(0xeeeeee))  # Set fill color to light gray
-    c.setFillColor(colors.HexColor(0xeeeeee))  # Set fill color to light gray
+    c.setStrokeColor(GRAY)
+    c.setFillColor(GRAY)
 
     x = start_x
     while x <= page_width_mm - margin:
@@ -149,7 +152,7 @@ File `~/bin/pdf-notes-background` (mode 755):
       x += dot_distance
 
     rect_dot_position = 0
-    c.setStrokeColor(colors.HexColor(0xeeeeee))  # Set fill color to light gray
+    c.setStrokeColor(LIGHT_GRAY)
     for rects in map(len, reversed(['YYYY', 'MM', 'DD', 'XXX'])):
       c.rect((x - (1 + rect_dot_position + rects) * dot_distance) * mm,
              (y - 1 * dot_distance) * mm, (rects * dot_distance) * mm,

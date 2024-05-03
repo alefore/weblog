@@ -1247,7 +1247,7 @@ But I'll make sure to document them right away.
 As of 2023-12-21, I have 220 TODO notes in the code.
 16 are marked as trivial, 80 are marked as easy.
 
-##### Variation
+##### Diversity
 
 I suppose I've been able to keep working on the same project for a decade
 because I've been able to work on vastly different sub-projects,
@@ -1500,7 +1500,7 @@ about how to use sound.
 
 ## Conclusions
 
-It's crazy to see that I've continued to work on Edge
+It's crazy: I've continued working on Edge
 for ten years.
 I couldn't have known how far I'd go,
 how many features I would have implemented.

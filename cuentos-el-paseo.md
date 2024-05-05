@@ -22,7 +22,7 @@ que parecían tocar el cielo.
 Sus hojas susurraban canciones al viento.
 
 –¡Hola, Miguel! ¡Hola, Oscar!
-–dijo una elegante garza blanca que se había posado en un árbol.
+–dijo una garza blanca que se había posado en un árbol.
 La garza les hizo una reverencia con sus elegantes plumas.
 
 –¡Hola, Graciela!

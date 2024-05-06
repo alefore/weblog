@@ -1,19 +1,26 @@
 # Cuentos: El paseo
 
-El timbre de la casa de Oscar sonó.
+En la casa de Oscar sonó el timbre una, dos y tres veces.
 Oscar abrió la puerta y vio a un mico que sonreía.
 
-–¡Hola, Miguel! –dijo Oscar.
+–Uy, ¡Miguelito! –dijo Oscar.
 
-–¡Hola! –dijo Miguel–. ¡Es un día estupendo! Vamos a caminar.
+–¡Quiubo, Osquitar! –dijo Miguel–. ¡Tiempos!
 
-–Es muy temprano –dijo Oscar–.
+Oscar le dió a Miguel un abrazo de oso.
+
+☙
+
+–Es un día estupendo –dijo Miguel–. Vamos a caminar.
+
+–Um, es muy temprano –dijo Oscar–.
 Tengo un sueño de oso –murmuró, frotándose los párpados.
 
-Miguel miró su reloj. –¡No! ¡Vamos!, ¡será divertido!
+–¡No! –dijo Miguel, mirando su reloj–. Camina, ¡será divertido!
 
-Oscar dio un bostezo de oso,
-pero se puso su chaqueta y sus zapatos y salió a caminar.
+Oscar dió un bostezo de oso,
+pero se puso su chaqueta y sus zapatos
+y salieron al bosque a caminar.
 
 ☙
 
@@ -23,45 +30,46 @@ Sus hojas susurraban canciones al viento.
 
 –¡Hola, Miguel! ¡Hola, Oscar!
 –dijo una garza blanca que se había posado en un árbol.
-La garza les hizo una reverencia con sus elegantes plumas.
+La garza les hizo una reverencia con su elegante plumaje.
 
 –¡Hola, Graciela!
 –saludaron Miguel y Oscar, alzando sus manos–.
 ¿Qué tal?
 
-–Todo bien –sonrio Graciela–. Es un día estupendo, ¿no?
+–Todo bien –sonrio Graciela–. ¡Qué día!, ¿no?
 
-–¡Sí! –dijo Miguel–.
-Es el día perfecto para dar un paseo.
+–Sí –dijo Miguel–,
+es el día perfecto para un paseo.
 
 ☙
 
 Miguel y Oscar siguieron su camino
 bajo la sombra de muchos árboles.
 Cuando llegaron al río,
-se sentaron a la orilla a descansar
-y a escuchar el suave murmullo del agua.
+se sentaron a la orilla a descansar.
+El agua murmuraba suavemente a sus pies.
 
-Miguel sacó dos sánduches de su mochila y le dio uno a Oscar.
+–¿Tienes hambre? –preguntó Miguel y sacó dos sánduches de su mochila.
 
-–¡Gracias!
-–dijo Oscar–.
-¡Tengo un hambre de oso!
+¡Tengo un hambre de oso! –dijo Oscar–. ¡Qué rico!
+
+Miguel le dió un sanduche a Oscar.
 
 –Buen provecho –dijo Miguel.
 
-Oscar sonrió. –Buen provecho.
+–Buen provecho –contestó Oscar.
 
 ☙
 
-Una rana verde se acercó a saltos mientras disfrutaban su comida.
+Una rana verde se acercó a saltos mientras disfrutaban la comida.
+
+–¡Hola, Raul!
+–dijeron Miguel y Oscar.
 
 –¡Hola, Oscar! ¡Hola, Miguel!
 –dijo la rana.
 
-–¡Hola, Raul!
-–dijeron Miguel y Oscar.
-–¿Cómo estás?
+–¿Cómo estás? –preguntó Oscar.
 
 –¡Super! –dijo Raul–. ¡Qué día tan precioso!, ¿no?
 
@@ -74,12 +82,13 @@ Es perfecto para sentarse a la orilla del río.
 Después de comer, Miguel y Oscar emprendieron el camino de regreso.
 Oscar silvaba mientras pasaban bajo la sombra de los árboles.
 
-–¡Mira! –dijo Oscar, señalando con la mano–
+–¡Mira! –dijo Oscar, señalando con la mano–.
 ¡Qué bonito!
 
 Miguel miró y vio el hermoso magnolio lleno de flores rosadas.
+
 –Bellísimo
-–dijo–.
+–dijo Miguel–.
 ¡Cómo huele de rico!
 
 Oscar cerró los ojos y respiró profundo.

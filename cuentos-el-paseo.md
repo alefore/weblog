@@ -5,20 +5,21 @@ Oscar abrió la puerta y vio a un mico que sonreía.
 
 –Uy, ¡Miguelito! –dijo Oscar.
 
-–¡Quiubo, Osquitar! –dijo Miguel–. ¡Tiempos!
+–¡Quiubo, Osquitar! ¡Tiempos!
 
-Oscar le dió a Miguel un abrazo de oso.
+Oscar le dio a Miguel un abrazo de oso.
 
 ☙
 
 –Es un día estupendo –dijo Miguel–. Vamos a caminar.
 
-–Um, es muy temprano –dijo Oscar–.
-Tengo un sueño de oso –murmuró, frotándose los párpados.
+–Um, es muy temprano –murmuró Oscar, frotándose los párpados.
+Tengo un sueño de oso.
 
-–¡No! –dijo Miguel, mirando su reloj–. Camina, ¡será divertido!
+–¡No! –dijo Miguel, mirando su reloj–.
+Camina, ¡va a ser un día buenísimo!
 
-Oscar dió un bostezo de oso,
+Oscar dio un bostezo de oso,
 pero se puso su chaqueta y sus zapatos
 y salieron al bosque a caminar.
 
@@ -51,13 +52,13 @@ El agua murmuraba suavemente a sus pies.
 
 –¿Tienes hambre? –preguntó Miguel y sacó dos sánduches de su mochila.
 
-¡Tengo un hambre de oso! –dijo Oscar–. ¡Qué rico!
+–¡Tengo un hambre de oso! ¡Qué rico!
 
-Miguel le dió un sanduche a Oscar.
+Miguel le dio un sanduche a Oscar.
 
 –Buen provecho –dijo Miguel.
 
-–Buen provecho –contestó Oscar.
+–Buen provecho.
 
 ☙
 
@@ -71,7 +72,7 @@ Una rana verde se acercó a saltos mientras disfrutaban la comida.
 
 –¿Cómo estás? –preguntó Oscar.
 
-–¡Super! –dijo Raul–. ¡Qué día tan precioso!, ¿no?
+–¡Super! –dijo Raul–. ¡Qué día!, ¿no?
 
 –¡Sí!
 –dijo Miguel–.
@@ -87,11 +88,10 @@ Oscar silvaba mientras pasaban bajo la sombra de los árboles.
 
 Miguel miró y vio el hermoso magnolio lleno de flores rosadas.
 
-–Bellísimo
-–dijo Miguel–.
-¡Cómo huele de rico!
+–Bellísimo. ¡Cómo huele de rico!
 
 Oscar cerró los ojos y respiró profundo.
+
 –¡Delicioso!
 
 ☙
@@ -100,7 +100,7 @@ Cuando empezaba a oscurecer, llegaron a la casa de Oscar.
 
 –Chao –dijo Miguel–. ¡Que descanses!
 
-–Chao, Miguel –dijo Oscar mientras se quitaba los zapatos en la entrada.
+–Chao, Miguel. –dijo Oscar mientras se quitaba los zapatos en la entrada.
 
 –¡Ha sido un día genial!
 –dijo Oscar–.
@@ -108,8 +108,6 @@ El día perfecto para caminar por el bosque,
 sentarse a comer a la orilla del río
 y admirar el magnolio.
 
-–Sí
-–sonrió Miguel–,
-ha sido un día estupendo.
+–Sí, ha sido un día estupendo.
 ¡Vamos a ver cómo será mañana!
 

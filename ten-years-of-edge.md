@@ -32,9 +32,9 @@ to other languages.
 Edge is a Linux C++ terminal-based text editor.
 I started working on
 Edge in 2014
-–the
-[very first commit to the git repository](https://github.com/alefore/edge/commit/312ecc2462315e8e0648cbd2680cc0366819df1e)
-happened on 2014-08-09.
+–making the
+[very first commit](https://github.com/alefore/edge/commit/312ecc2462315e8e0648cbd2680cc0366819df1e)
+on 2014-08-09.
 I've used Edge ~exclusively since 2015.
 
 Edge has its own extension language,
@@ -62,16 +62,19 @@ As of 2024-04-14, Edge is 67.9k lines of C++ code
 
 ### Caveats
 
-* The lessons described here are somewhat **subjective**.
-  I don't mean to imply that these are universally applicable principles.
-  They rest on various assumptions that apply to my specific context,
-  but may not apply to other environments or systems.
-
 * I believe there's significant **recency bias** in this distillation.
   I'm probably overweighing insights I've reached relatively recently
   –towards Edge's tenth anniversary–
   and not doing justice
   to those from the beginning of the journey.
+
+* The lessons described here are fairly **subjective**.
+  These are *not* universally applicable principles.
+  They rest on various assumptions specific to my context,
+  which may not apply to other environments or systems.
+  I'm holding back from prefixing nearly every sentence
+  with "in my experience" or similar qualifiers,
+  but they should be assumed.
 
 ## Fix Bug Categories
 
@@ -88,7 +91,7 @@ But I've found many cases where digging deeper pays off.
 How can it be that I've made the mistake that
 allowed this bug to exist?
 What can I change such that this entire category of bugs no longer happens,
-can no longer happen?
+*can no longer happen*?
 
 At the bare minimum,
 add a unit test that fails
@@ -96,12 +99,14 @@ before fixing the bug.
 But don't let "adding a unit test" replace
 trying to find more robust ways
 to avoid the entire category of bug.
+At least, aim to have a defensible answer to the question
+"why didn't I have a unit test that would have detected this bug?"
 
-### Examples
+### Examples with runtime validation
 
 The following examples show how this can be done through runtime checks.
 A much preferable technique is to use types effectively;
-however, that's covered in [a separate section](#use-types-effectively).
+that's covered in [a separate section](#use-types-effectively).
 
 #### Range
 
@@ -131,13 +136,13 @@ I decided to **add an explicit requirement to `Range`**:
 I adjusted the constructor and setters to validate this explicitly
 ([commit](https://github.com/alefore/edge/commit/279f001740d0c1ed8fa4e29b7286d59f0d746922)).
 
-A better solution would be to detect these issues at compile time,
-but at least this approach means they won't be silently ignored
+A more robust solution would detect these issues at compile time,
+but at least they won't be silently ignored
 (allowing them to manifest in more subtle ways,
 making debugging significantly more cumbersome).
 
 It only took a few days for this to uncover
-another instance of the same issue
+unrelated instance of the same issue
 ([fix](https://github.com/alefore/edge/commit/14f8ed2655c09690cb86b3a7115b0efb51798398)).
 Who knows how long this bug would have gone undetected.
 
@@ -155,7 +160,7 @@ which will lead to all sorts of strange issues if I accidentally reuse it
 
 When I caught a bug where that was happening
 ([commit](https://github.com/alefore/edge/commit/2635806022c6fe8609ca81e4ff06f9801670bd0f)),
-I decided to add **extra validation to the `NonNull` constructors**,
+I decided to add **extra validation to the `NonNull` methods**,
 to ensure that a non-null input was... indeed non-null
 ([commit](https://github.com/alefore/edge/commit/6cb2b3e53db474849009404b751e46c6a1e3dc0b)).
 
@@ -174,28 +179,29 @@ Why is concurrency necessary?
 I expect this will be obvious to most developers;
 I don't think I have much new to say here.
 
-I think I first added a background thread in
-[91c1cfe](https://github.com/alefore/edge/commit/91c1cfe99ee0e67cd875806abdd0cf1314b6a9fd), in 2017-04-15,
-relatively early in Edge's history.
-I avoid this type of concurrency
-for what felt (but, in retrospect, wasn't!) a long time.
-I feared the unavoidable complexity it would bring.
-
 You can only get so far with a single thread/process.
 Parallelism lets you offload work from the main thread;
 this allows you to do significantly more expensive operations
 than when you're constrained to the amount of time between refreshes
 (*i.e.,* before the user perceives lag).
 
+I think I first added a background thread in
+[91c1cfe](https://github.com/alefore/edge/commit/91c1cfe99ee0e67cd875806abdd0cf1314b6a9fd), in 2017-04-15,
+relatively early in Edge's history.
+I avoided this type of concurrency
+for what felt (but, looking at the data, wasn't!) a long time.
+I feared the unavoidable complexity it would bring.
+
 #### Limits of non-parallel concurrency
 
-Of course you always have the option of staying single-threaded
-and just making all your operations interruptible and resumable.
+Depending on your requirements, you may be able to stay single-threaded
+and just make all your operations interruptible and resumable.
 I still do that in some parts of Edge, for example:
 
 * The VM uses a `Trampoline` class when evaluating expressions
   ([header](https://github.com/alefore/edge/blob/master/src/vm/expression.h)).
-  After a certain amount of "evaluation steps" (not defined too precisely),
+  After a certain amount of "evaluation steps"
+  (deliberately defined somewhat vaguely),
   it yields back to the caller.
 
 * The GC implementation is both highly concurrent
@@ -211,6 +217,7 @@ the complexity of this approach
 –explicitly maintaining all the state machinery
 required to be able to stop and resume at arbitrary points–
 becomes worse than just carefully allowing concurrency in.
+You are also limited to a single processor.
 
 #### Concurrency: Threads vs other approaches
 
@@ -226,7 +233,8 @@ While some functions
 (such as file-related and many other system calls)
 offer async versions,
 they tend to be cumbersome and brittle
-–you can't use types to ensure that you don't accidentally call a blocking version.
+–*e.g.*, you can't use types
+to ensure that you don't accidentally call a blocking version.
 Using the regular sync versions in separate threads tends to be easier.
 
 As an example,
@@ -239,15 +247,16 @@ which receives a thread-pool.
 The **benefits of making types immutable
 often outweigh the costs**.
 
-Every type must define `const` semantics
+Every type should define `const` semantics
 that make it thread-compatible.
 When you define a type
 you're actually defining two:
 the mutable `Type`
 and the immutable and thread-compatible `const Type`.
 
-When you expose an instance to multiple threads,
-you should only retain `const` access.
+Unless a class is explicitly marked as thread-safe,
+before exposing an instance to multiple threads,
+you should drop all non-`const` references.
 This is often (depending on the class) enough to avoid data races,
 reducing the challenge of writing concurrent code to simply
 managing object lifetimes.
@@ -259,7 +268,7 @@ but that's a very important part.
 TODO: Move the following paragraph:
 
 A pattern that deserves mention is balanced trees of immutable objects.
-This is very specific compared tothe previous patterns,
+This is very specific compared to the previous patterns,
 but this structure is so versatile that it deserves its own mention.
 Mutation operations don't mutate the tree,
 they return new trees with the operation applied.
@@ -279,10 +288,10 @@ Deeply-immutable objects can be too cumbersome:
 without assignment support,
 customers are very frequently forced to wrap instances
 inside `NonNull<std::unique_ptr<>>`
-or `NonNull<std::shared_ptr<>>`.
+or `NonNull<std::shared_ptr<>>` explicitly.
 
 This is avoided by these mostly-immutable objects,
-which behave as assignable pointers to a nested deeply-immutable object.
+which behave as assignable pointers to nested deeply-immutable objects.
 I've read that this roughly matches the behavior of immutable structs in C#.
 
 To implement such types,
@@ -307,7 +316,10 @@ allowing references to be updated, something like this:
     line = AddSuffix(line, ...);
 
 Using `NonNull<std::shared_ptr<>>`
-also allows trivial copies of the const values.
+also allows trivial shallow copies of the const values.
+
+The resulting classes are thread-compatible, though not thread-safe;
+assignment needs to be protected.
 
 ##### Examples
 
@@ -321,20 +333,21 @@ The following are examples of immutable classes in Edge:
 
 I've found a "builder" pattern fairly versatile.
 I use **mutable thread-compatible builder instances
-to *build* immutable
+to *create* immutable
 (and thus thread-safe; and thus widely shared) instances**.
 
-To avoid cycles, the output type should not depend on the builder.
-The output object should declare its constructors private,
+To avoid dependency cycles,
+the output type should not depend on the builder.
+The output object should declare constructors private,
 which means it should give the builder `friend` access.
 
 Most builder instances are used to build a single output.
 As a performance optimization,
 I avoid deep copies in `Build`.
-I do this by making the `Build` method require `*this`
-to be an rvalue reference (`&&`)
+To do this, I make the `Build` method
+require `*this` to be an rvalue reference (`&&`)
 —so that data can be moved out of the builder—
-and implementing an explicit `Copy` method
+and implement an explicit `Copy` method
 for the few customers that need it, e.g.:
 
     class LineBuilder { ...
@@ -349,11 +362,9 @@ Unfortunately, this can be a bit cumbersome
 
 TODO: Link. Add more.
 
-* Line and LineBuilder
-
-* LineSequence and LineSequenceBuilder
-
-* LazyString (and LazyStringImpl)
+* [`Line`](https://github.com/alefore/edge/blob/master/src/language/text/line.h)
+  and
+  [`LineBuilder`](https://github.com/alefore/edge/blob/master/src/language/text/line_builder.h)
 
 ### Thread safety
 
@@ -406,7 +417,7 @@ Once available, the **future's value is passed as a value to the consumer**
 This allows me to use futures of moveable non-copyable types.
 
 For situations where multiple listeners are desirable,
-I can turn a regular future into a `ListenableFuture`
+turn a regular future into a `ListenableFuture`
 ([implementation](https://github.com/alefore/edge/blob/master/src/futures/listenable_value.h))
 which holds the value and allows setting multiple listeners,
 which receive `const` references (rather than the value itself).
@@ -420,11 +431,11 @@ are received by the original thread
 (that scheduled the computation).
 
 This allows objects that aren't yet thread-safe
-(for Edge that would be the `OpenBuffer` class)
+(for Edge the main case would be the `OpenBuffer` class)
 to still delegate work to thread pools.
-All they need to do is ensure that they only capture thread-safe values
-(perhaps thread-safe snapshots of their class variables)
-in the lambdas they pass to the thread pools.
+All they need to do is ensure that
+all values they capture in lambdas they pass to thread pools
+are thread-safe.
 The outputs of those asynchronous computations
 will be received in the main thread.
 
@@ -466,23 +477,25 @@ can be fairly important.
 The pattern I've landed on is the use of a `DeleteNotification` class
 that contains a `futures::ListenableValue<EmptyValue>`.
 
-A producer that wants to support cancellation simply receives the
-`futures::ListenableValue<EmptyValue>` abort notification.
-The producer can either poll on this future or add a listener callback.
+A producer that wants to support cancellation
+simply receives among its inputs
+a `futures::ListenableValue<EmptyValue>` abort notification.
+The producer can either poll on this listenable future
+or add a listener callback.
 The producer's customer simply creates a `DeleteNotification`,
 passes its corresponding future to the producer,
 and ensures that the `DeleteNotification` is retained
-as long as the value is still relevant.
+as long as the future value being produced is still relevant.
 
 For example, as the user types in a prompt
-(e.g., open a file, search for a regexp)
+(e.g., open a file, search for a regexp…)
 I kick off background work
-(to show a preview of files or count of matches
-based on what the user has already entered).
+(to show a preview of files;
+or a count of matches based on the query the user has already entered).
 If the user types a second character before this work completes,
 I just replace the `DeleteNotification` instance with a newly built instance
-(which signals to the background thread that it has become irrelevant
-and should just abandon whatever results it has produced)
+(which signals to the background thread that its output has become irrelevant
+and it should just abandon whatever partial results it has computed)
 and kick off a new operation.
 
 #### Futures in Const Objects
@@ -498,9 +511,9 @@ an object whose parts are still being constructed.
 
 But I think it makes sense.
 The contract of the future never changes:
-customers can add callbacks that the future will run
+customers can add callbacks that will run
 when the value arrives (or immediately).
-All callbacks will receive exactly the same value, when they run.
+All callbacks will receive exactly the same value when they run.
 
 The alternative would be to only return the object once all its parts are ready
 (i.e., rather than building an object
@@ -510,22 +523,23 @@ But this would unnecessarily delay things.
 
 ##### Examples
 
-A good example where I've used this pattern
+A good example of this pattern
 is the `LineMetadataEntry` class
 ([source](https://github.com/alefore/edge/blob/master/src/language/text/line.h)).
 When loading lines in a file,
-Edge will attempt to compile them (to its C-like extension language)
-and, if they compile to expressions free of side-effects,
+Edge tries to compile them
+(as expression of Edge's extension language)
+and –if they compile and the resulting expressions are free of side-effects–
 evaluate them and display the evaluation results.
 
 For example,
-Edge will display "7.60416"
-next to a line that contains just "365 / (52 - 4)".
+Edge will display "7.60417"
+next to a line that contains "365 / (52 - 4)".
 
-Because such evaluation could take a while
+Such evaluation could take a while
 (depending on the complexity of the expression),
-Edge feeds these evaluations to a thread pool,
-abiding by its principle of avoiding blocking the main thread.
+so Edge feeds these evaluations to a thread pool,
+upholding its principle of avoiding blocking the main thread.
 
 The implementation is very natural:
 due to its nested `LineMetadataEntry`,
@@ -553,7 +567,7 @@ In general, I try to only use primitive types to define these custom types.
 
 If a telephone number is an important concept for your application,
 define a corresponding type.
-Don't just use `string` (or `int`).
+Don't use `string` (or `int`).
 
 A good function receives:
 
@@ -587,7 +601,7 @@ in relatively few places.
 Using **custom types enables validation of expectations
 in the constructor**.
 The rest of the application
-can readily conclude that these preconditions are met.
+can reliably assume that these preconditions are met.
 
 Concrete examples in Edge are:
 
@@ -612,7 +626,7 @@ Unfortunately, afaik, there's no standard way to achieve this in C++23.
 With `typedef` or `using`, the compiler won't detect errors,
 so there are very little gains
 (code *will* be slightly more readable,
-but you won't gain any static type-safety).
+but you won't gain static type-safety).
 
 To define custom types, **I currently use `GHOST_TYPE` expressions** like these:
 
@@ -652,7 +666,7 @@ through template parameters for the `GhostType` class.
 Specifically, I would like to make it easier to define validation functions.
 With the current `GHOST_TYPE` macros this is difficult.
 
-### Maintaing invariants
+### Maintaing invariants with static types
 
 Defining wrapper types corresponding to predicates
 is another technique I've found useful.
@@ -661,8 +675,7 @@ is another technique I've found useful.
 
 If you have a type `T` and a predicate `P`,
 you would create a type `TP`
-that contains an instance of `T`
-that is known to match `P`.
+that contains instances of `T` match `P`.
 I'll refer to `TP` as the *subtype*.
 
 This is exactly what `const` does to classes:
@@ -670,9 +683,7 @@ you define the semantics of `P`
 (*i.e.*, what it means for a class to be `const`)
 and then, given a `T` instance,
 you can trivially obtain a `TP` view that implements `P`.
-This general principle goes way beyond just immutability.
-
-#### Rationale
+However, this general principle goes way beyond just immutability.
 
 This allows functions to **explicitly state some preconditions**
 (*e.g.*, an input container must be sorted,
@@ -683,6 +694,10 @@ Instead of checking inputs against predicates
 *e.g.*, sorting a container received),
 functions should receive their inputs using the subtypes directly.
 
+TODO: Give an example.
+
+#### Rationale
+
 Judicious use of predicate types tends to:
 
 * **Ensure that all cases are handled.**
@@ -690,10 +705,11 @@ Judicious use of predicate types tends to:
   it signals explicitly that its implementations
   (or customers receiving its output)
   must handle the case
-  where the inputs don't match `P`
+  where the objects passed don't match `P`
   (or else the function would have used `TP`).
   This helps ensure correctness;
-  the benefits are already visible in a medium-sized code base.
+  the benefits are already visible
+  in Edge's medium-sized code base.
 
 * **Simplify validation.**
   Validation (and/or corresponding conversion to the subtype)
@@ -702,7 +718,7 @@ Judicious use of predicate types tends to:
   a lot of assertion checks,
   allowing them to be safely removed.
 
-  **Delete dead code in a robust way.**
+* **Delete dead code in a robust way.**
   I've even found cases where this allowed me to delete code
   that was handling situations
   that could never occur:
@@ -720,14 +736,13 @@ A good example of using types to express explicitly
 that an instance of a more general type matches a predicate:
 `SortedLineSequence` and `SortedLineSequenceUniqueLines`.
 
-Start with the general type, `LineSequence`.
-A `LineSequence` instance holds an immutable series of lines
+The general type `LineSequence` holds an finite immutable sequence of lines
 ([implementation](https://github.com/alefore/edge/blob/master/src/language/text/line_sequence.h)).
 
-Some modules receive a "dictionary":
+Some functions receive a "dictionary":
 a `LineSequence`, with one line for each token ("word"),
-sorted in ascending order (by some comparison predicate).
-For example:
+*sorted in ascending order* (by some comparison predicate).
+For example, functions implementing:
 
 * Autocomplete functionality.
 * Logic that highlights typos.
@@ -735,7 +750,7 @@ For example:
 The reason the `LineSequence` needs to be sorted
 is to be able to run binary searches given a prefix.
 
-One could argue that these modules should receive a `std::set`
+One could argue that these functions should receive a `std::set`
 or some other similar type.
 Such a discussion would be entirely orthogonal
 to the point of this example.
@@ -744,7 +759,7 @@ to represent file contents.
 This allows us to reuse Edge's file-reading logic
 to read dictionaries from the file system.
 
-How can we ensure that these modules are always given sorted sequences?
+How can we ensure that these functions are always given sorted sequences?
 
 You can ignore the problem:
 if the customer passes an unsorted file,
@@ -758,13 +773,13 @@ In other words,
 can you be sure that C++'s `operator<`
 (which may depend on your locale's settings)
 matches the behavior of the `sort` command-line program
-(which the user used to manage their dictionary)?
+(with which the user manages their dictionary)?
 
-You can detect that the file isn't sorted and display errors.
+You can *detect* that the file isn't sorted and display errors.
 Slightly better: at least the user will be aware that something is wrong.
 But not terribly useful.
 
-You can sort the contents in memory just after the file is read.
+You can *sort* the contents in memory just after the file is read.
 Sorting is ~fast
 and can be done by a background thread
 (possibly delaying autocomplete and similar operations
@@ -773,18 +788,18 @@ for a few milliseconds after start).
 This is significantly better,
 but you still need to either:
 
-1. Validate "manually" that all customers of these modules
+1. Validate "manually" that all customers of these functions
    are passing sorted contents.
    This is brittle.
    If you add a new customer and neglect to sort,
    nothing will alert you.
 
-2. Change these modules to sort the contents as they receive them.
+2. Change these functions to sort the contents as they receive them.
    This can be inefficient depending on how often this happens,
-   and it doesn't entirely address the problem
-   (what if some entry points in these modules neglects to sort?).
+   and doesn't entirely address the problem
+   –what if some entry points in these functions neglects to sort?
 
-The solution is the use of `SortedLineSequence`,
+The solution is to use `SortedLineSequence`,
 a class that simply holds a `LineSequence`
 where the contents are known to be sorted
 ([implementation](https://github.com/alefore/edge/blob/master/src/language/text/sorted_line_sequence.h)).
@@ -793,12 +808,11 @@ its **constructors directly sort the contents** they receive.
 This means that it is impossible to hold a `SortedLineSequence`
 where the contents aren't sorted.
 
-Once we've done that,
-we simply upgrade our autocomplete and similar modules
+We simply upgrade our autocomplete and similar functions
 to require a `SortedLineSequence` input
 where they previously received a `LineSequence`.
 
-We've **made it impossible for customers of these modules
+This **makes it impossible for customers of these functions
 to accidentally pass unsorted contents**.
 Customers can just create the `SortedLineSequence`
 right after reading (or generating) contents.
@@ -842,7 +856,7 @@ In
 pointer types (`gc::Ptr<>`) can't contain null objects;
 a nullable pointer must be explicitly marked
 (typically as `std::optional<gc::Ptr<>>`),
-moving the boilerplate from the common case to the exceptional case.
+moving the boilerplate from the common to the infrequent case.
 
 ##### LineRange
 
@@ -901,7 +915,7 @@ to very visible changes.
   (for performance or correctness)
   that I've been wanting for a long time (sometimes years)
   and that previously seemed very hard or even impossible,
-  suddenly ... fall gracefully into place, effortlessly.
+  suddenly ... fall gracefully into place.
   I make a lot of progress.
 
 * Per relationship (b),
@@ -935,8 +949,7 @@ made GC pauses relatively slow:
 fast enough that Edge was still usable,
 but slow enough that one could notice when they happened (ugh!).
 However, I had the feeling that
-Edge's GC implementation was as efficient as I could reasonably expect
-(without rewriting it drastically and making it significantly more complex),
+Edge's GC implementation was as efficient as I could reasonably expect.
 
 And then, ten months later,
 between 2023-09 and 2023-10,
@@ -953,11 +966,11 @@ I did this through a combination of:
    or deleting unreachable objects.
 
 2. Executing work asynchronously.
-   Not only is work done by multiple threads,
+   Not only is work dispatched to multiple threads,
    but the main thread now offloads some operations
-   (e.g., actual deletion of objects)
+   (*e.g.*, actual deletion of objects)
    to a dedicated thread-pool entirely
-   (and doesn't need to wait for their completion).
+   and no longer waits for their completion.
 
 3. Implementing resumable (incremental) collection.
    The collection operation detects if it overruns a customer-specified timeout;
@@ -975,7 +988,7 @@ Not only did I speed collection up,
 I actually managed to simplify the customer interface
 ([commit](https://github.com/alefore/edge/commit/42ae36687e96d2ddd2510562368f2965951f9cfd),
 [commit](https://github.com/alefore/edge/commit/8eefd3a47f20350e9c18259f9c95811f478b1c25))
-and made usage less error-prone
+and make usage less error-prone
 by removing the burden of calling `Ptr::Protect` from its customers.
 
 The core implementation
@@ -983,9 +996,9 @@ The core implementation
 [bag.h](https://github.com/alefore/edge/blob/master/src/concurrent/bag.h) and
 [gc.cc](https://github.com/alefore/edge/blob/master/src/language/gc.cc))
 didnd't become significantly more complex:
-LOC only grew by 3%.
+LOC only grew by 3%!
 
-* From 2022-12-24 to 2023-08-29 these files didn't change;
+* Between 2022-12-24 and 2023-08-29 these files didn't change;
   they contained 1163
   (519 + 214 + 430, respectively) LOC
 
@@ -1062,7 +1075,7 @@ Perhaps I switch to writing a short story,
 or
 a [Zuri Short](https://github.com/alefore/weblog/blob/master/zurich-shorts.md).
 Or learn to play the harmonica.
-Or knit.
+Or [knit](http://github.com/alefore/knit).
 I go on a long trip.
 I continue *using* Edge, but I rarely improve it.
 
@@ -1114,7 +1127,7 @@ This takes time.
 
 In any case, eventually a new idea, or a group of ideas,
 crystallizes and I just have to try things out and ... boom!
-They (often) work,
+The new ideas (often) work,
 and they (often) have far reaching implications,
 and a new burst begins.
 
@@ -1162,7 +1175,7 @@ these cycles have also caused changes in my life.
 
 ### Unrelated distractions
 
-I think the complete system diagram would be this:
+The complete system diagram would be this:
 
      ┏━━━━━━━━━━━━━━┓        ┏━━━━━━━━━━━━┓        ┏━━━━━━━━━━━━━━━━┓
      ┃  Unrelated   ┠──(+g)──> Background ┠─(+h⏳)─> Transformative <─╮
@@ -1175,7 +1188,7 @@ I think the complete system diagram would be this:
                   ╰───(-f)────> Focus ┠──(+d)───>     Progress     ┠──╯
                               ┗━━━━━━━┛         ┗━━━━━━━━━━━━━━━━━━┛
 
-This could be reduced to
+This could, however, be reduced to
 the main relationships from
 *Unrelated distractions* to *Progress*:
 
@@ -1221,7 +1234,7 @@ There's some analogy to
 [counter-cyclical fiscal policy](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Counter-cyclical_fiscal_measures#:~:text=Counter%2Dcyclical%20fiscal%20measures%20are,to%20help%20stimulate%20economic%20recovery.).
 
 To me this is similar to the "two-minute rule" habit formation trick:
-leave yourself a lot of crumbles that you can pick up
+leave yourself a lot of crumbs that you can pick up
 whenever you happen to have a spare minute or two.
 These million small steps tend to add up to meaningful progress.
 
@@ -1297,7 +1310,7 @@ A big change is divided into a million baby steps
 and one final simple step that enables the new functionality.
 I think this is what enables
 things that previously seemed ~impossible
-to "suddenly… fall gracefully into place, effortlessly".
+to "suddenly… fall gracefully into place".
 
 ## Ideas that worked well
 
@@ -1307,7 +1320,7 @@ to "suddenly… fall gracefully into place, effortlessly".
 
 ### Principles
 
-The following are a few ideas or principles that
+The following are a few *ideas or principles* that
 influenced my work in Edge,
 which worked better than I had initially anticipated:
 
@@ -1319,7 +1332,7 @@ which worked better than I had initially anticipated:
   save the user from
   having to mentally compute something
   (that distracts them from their goal),
-  you should do it, go the extra mile.
+  do it, go the extra mile.
   Never force the user to wait for the results of an operation.
 
   * If the user is typing a command to be executed
@@ -1327,7 +1340,7 @@ which worked better than I had initially anticipated:
     display a preview of the results.
     For example, as the user types the regexp,
     you can already display "this would match 26 locations".
-    As the user types the "ls" or "grep" command
+    As the user types an "ls" or "grep" command
     (which have no side effects),
     you can already display the first lines of the output they'd get.
 
@@ -1344,7 +1357,7 @@ which worked better than I had initially anticipated:
   for a friend who asked about this.
 
 * **Optimize for development speed**.
-  You can't always know
+  You can't know
   the direction in which you'll take a function or module in the future,
   but you can always invest in making your software more malleable.
   Make it easier to iterate faster.
@@ -1353,7 +1366,7 @@ which worked better than I had initially anticipated:
 
 ### Features
 
-The following are a few features that worked better than I anticipated.
+The following are a few *features* that worked better than I anticipated.
 I hope this helps other people working on their own text editors.
 
 * **Linear undo**/redo history,
@@ -1366,7 +1379,7 @@ I hope this helps other people working on their own text editors.
   simply by pressing `f` +
   three characters ~matching the text you want to jump to
   (with disambiguation when the prefix would match multiple positions) + return.
-  I found that I'm using this fairly frequently,
+  I'm using this fairly frequently,
   comparing with "scrolling" up to the position (or a full regexp search).
 
 * Native support for **multiple cursors**.
@@ -1376,28 +1389,27 @@ I hope this helps other people working on their own text editors.
   "set the cursors to: a cursor at the beginning of every line
   in the current paragraph"
   and then just say "add four spaces at each cursor" is powerful.
+  So is saying "set a cursor on every character (in the current file)
+  where the compiler reported an error".
 
-* The **preview buffer** at the bottom of the screen is very helpful.
+* The **preview buffer** at the bottom of the screen is helpful.
   If the cursor is over an existing file (based on some search paths),
   previewing its contents
   (remembering where the cursor was when that file was last opened)
-  can be very helpful.
+  can be helpful.
   Similarly, previewing the output of commands as you type them
   (for commands that don't have side-effects)
-  can also be very flexible
-  (for example, as you are typing an invocation to `grep` or `ls`,
-  you already see a preview of the output of what you'd get).
+  can also be very flexible.
 
 * Native support for **"compiler" buffers**.
   Automatically tagging certain command buffers as a compiler
-  (*e.g.*, "if the command is an invocation to make or bazel or …")
+  (*e.g.*, "if the command is an invocation to `make` or `bazel` or …")
   and then (1) parsing the output to detect references to open files
   and (2) rerunning the command whenever I save a file,
   works well.
-  I save a source file to kick off compilation;
+  Saving a source file suffices to kick off compilation;
   I continue editing but, as soon as the compiler outputs errors in the file,
   I get overlays summarizing the errors.
-  I can also say "create a cursor in every error" and work through them.
 
 * **clang-format integration**.
   Whenever I save a file of some specific formats (*e.g.,* C++, Java,
@@ -1437,12 +1449,12 @@ It's easy to define this in the host language, but far from ideal.
 ### File inspection/manipulation API
 
 I'd like to provide friendlier ways to express operations
-that filter
-(*e.g.,*
-"find all links with the text `xyz` within a bullets list in a section
-where the header is `Tags` in this Markdown file")
-or transform sub-tress of a document
-("apply this <function> to transform the text of those links").
+that filter or transform sub-trees of a document, such as:
+
+* Find all links with the text `xyz` within a bullets list in a section
+  where the header is `Tags` in this Markdown file.
+* Apply <function mapping string to string>
+  to all those links, transforming their text.
 
 This API should probably be based on the parsed syntax tree.
 
@@ -1465,6 +1477,7 @@ deriving ontologies.
 I'd like to make it easy to use Edge to load a *medium*
 (~1e5-rows range)
 CSV file and interactively manipulate it.
+Edge has CSV support, but it's fairly rudimentary.
 
 For example, to quickly express things like the following
 (probably based on Edge's extension language):
@@ -1475,9 +1488,7 @@ For example, to quickly express things like the following
 * "Plot a histogram of the values in the 2nd column,
   weighing each entry by the result of multiplying the 4th and 5th columns."
 
-* "What's the Pearson correlation coefficient between two columsn?"
-
-Edge has CSV support, but it's somewhat rudimentary.
+* "What's the Pearson correlation coefficient between two columns?"
 
 ### Audio improvements
 

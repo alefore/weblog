@@ -1,6 +1,6 @@
 # Mentoring
 
-## Intro
+## Introduction
 
 This document is a draft (as of 2024-05-20)
 collecting my experiences with mentoring.
@@ -13,9 +13,9 @@ but I expect it's still very incomplete.
 This is written specifically for software engineers;
 it may not translate well to other professions.
 
-## Good Mentors
+## What makes a mentor good?
 
-What makes a good mentor?
+The following are good characteristics for a mentor:
 
 * Slight relative seniority.
   Obviously, your mentor will ideally be *more* senior than you
@@ -29,7 +29,6 @@ What makes a good mentor?
   (as they have moved to accumulate experience solving larger problems).
 
 * Theme fit.
-  Your mentor Good fit for the types of advice you seek.
   While, in my experience, some topics are very common,
   each mentorship may focus on different types of advice.
   You want a mentor that has experience
@@ -37,13 +36,13 @@ What makes a good mentor?
   you are seeking to improve on.
 
 * Available energy.
-  This is perhaps obvious, but it bears saying:
+  This is perhaps obvious, but it bears saying explicitly:
   your mentor should have enough energy to dedicate to the mentorship.
   The actual time commitment isn't that large
   (I suggest roughly 1 hour per 3 weeks),
   but the mentor needs to be able to make the time and show up.
 
-## Why
+## Why get a mentor?
 
 Advancing in your career means expanding the scope of the problems you tackle,
 taking larger responsibilities.
@@ -51,16 +50,13 @@ Problems are easier to solve
 if you've tackled problems of the same type before.
 
 The problems we're facing are only new variations of larger general problems.
-Others have solved the same types of problems before.
-We can learn a lot from their experience.
-
-A good mentor can help you from their experience,
-to direct your attention in directions you may be neglecting.
-This helps you reach insights significantly faster.
+A good mentor, who has solved them before, can help you from their experience.
+They can help you direct your attention in directions you may be neglecting,
+identify the right questions you should be asking.
 Your mentor will *not* solve your problems for you,
 but standing on their shoulders tends to significantly accelerate your success.
 
-## Kicking of mentorships
+## Finding mentors
 
 ### List of questions
 
@@ -68,41 +64,43 @@ The first thing you should do to find a good mentor is
 write down a list of three to five general questions
 that you would like to discuss.
 This list of topics helps everybody understand
-what type of mentorship we're looking for.
+the type of mentorship we're looking for.
 
 ### Finding a good mentor
 
-Once you've written your list of questions,
-email your manager or tech-lead and ask them
-to help you find someone who may be able to help you
-work through those topics.
+Email your list of questions,
+to manager or tech-lead and ask them
+to help you find someone to
+mentor you on these topics.
 
-You may want to make it explicit
-that you're not asking *them* to be your mentor
-(since you're already discussing things with them anyway),
-but, instead, to help you find a third-party who may be a good match.
+Make it explicit:
+you're not asking your manager or tech-lead to be your mentor.
+You're already discussing things with them anyway.
+Instead, you're asking them to help you find a third-party
+who may fit your themes.
 
 ### Mentors for your teammates
 
-If you are a senior leader in a team,
-whether in a tech-lead or manager role,
-you should volunteer explicitly to help your teammates find good mentors.
+Senior team leaders,
+whether in tech-lead or manager roles,
+should volunteer explicitly to help others find mentors.
 
-I do this every year or two:
-I take ~five minutes in our team meeting
-to:
+Every year or two
+I take ~ten minutes in our team meeting to:
 
 1. Relate how much having a mentor has helped me.
-2. Explain why I think everybody should have a mentor
-3. Offer that anyone who wants to have a mentor
-   can simply shoot me an email and I'll do my best to find a good match.
+2. Explain why everybody should consider having a mentor
+3. Offer that anyone interested
+   can simply email me and I'll do my best to find a good match.
 
-People often take advantage of this offer.
-I ask them to write a list of questions,
-which I then forward to other senior people in my network,
-asking them if they can think of a good match.
+When people take me up on this offer,
+I ask them for the list of questions to help the search.
+I forward their questions
+–along with context about the applicant–
+to other senior engineers in my network,
+asking them if they can think of a good match in their organization.
 
-## Structure
+## Structuring your mentorship
 
 My advice for structuring a good mentorship:
 
@@ -110,11 +108,13 @@ My advice for structuring a good mentorship:
   Sometimes people schedule only 30 minutes;
   in my experience that's too short.
   You can always finish sooner if you run out of topics.
+  More than 1 hour seems excessive.
 
 * **Every 3 weeks.**
-  More frequent doesn't leave enough time to act on your mentor's feedback.
-  Less frequent causes you (especially the mentor)
-  to start losing context from the previous conversation.
+  * More frequent doesn't leave enough time between sessions
+    to act on your mentor's feedback.
+  * Less frequent causes you (especially the mentor)
+    to start losing context from the previous conversation.
 
 * **Prepare for each session.**
 
@@ -135,11 +135,20 @@ My advice for structuring a good mentorship:
     Your mentor is taking energy to help you.
     Make sure you thank them for helping you advance faster in your career.
 
-Obviously, this may vary drastically depending on the type of mentorship,
+This may vary drastically depending on the type of mentorship,
 the culture in your organization,
-or personal preferences on your or your mentor's part.
+or your or your mentor's personal preferences.
+
+## Be a good mentor
+
+TODO: Advice for mentors.
 
 ## Conclusions
 
-TODO.
+I strongly encourage all engineers that want to continue growing
+to have at least one active mentorship.
+
+I hope the information in this document gives you concrete ideas
+to find a good mentor and structure your mentorship
+in a way that sets you up for success.
 

@@ -67,7 +67,7 @@ necesitaría unos minutos para calmarse.
 ☙
 
 –Creo que podemos olvidarnos de la sopa
-–dijo Miguel al cabo de unos minutos,
+–dijo Miguel.
 sentándose junto a Jimena y Oscar.
 
 –¡Vieras la cara que pusiste! –dijo Oscar, empezando a reirse.
@@ -82,10 +82,10 @@ inclinando su largo cuello hacia la pequeña caja de madera.
 Oscar se puso de pie y tomó la manguera.
 –Bueno, ¡vamos a limpiar!
 
-Los tres animales se pusieron de pie.
 Miguel sacó un trapero.
 
-Jimena llevó la olla a la cocina.
+Jimena llevó la caja de herramientas al garage.
+Allí no estorbaría.
 
 –¡Hiciste una cara! –dijo Oscar mientras limpiaba, riéndose cada vez más.
 
@@ -96,10 +96,7 @@ y el jardín pronto quedó reluciente.
 
 ☙
 
-Miguel llevó la caja de herramientas al garage.
-Allí no estorbaría.
-
-–Pues no habrá sopa, pero vamos a la cocina, otra cosa encontraremos
+–No habrá sopa, pero otra cosa encontraremos en la cocina
 –dijo Miguel–. Podemos hacer un picnic.
 
 Oscar y Jimena lo siguieron a la cocina.
@@ -107,11 +104,11 @@ Oscar y Jimena lo siguieron a la cocina.
 –¿Tienes nueces? –preguntó Oscar–. Me encantan.
 
 Miguel abrió la despensa y le dió un frasco lleno de nueces a Oscar.
-Después se puso a cortar el pan.
+Después se puso a cortar tajadas de pan.
 
 Oscar llenó tres tazas de granola y Jimena les echó yogur.
 
-–Esta granola me encanta –dijo Miguel–. A ver qué dicen ustedes.
+–Esta granola me encanta –dijo Miguel–. A ver cómo les parece.
 
 Jimena abrió la nevera.
 –¡Zanahorias! ¡Son mi comida favorita! –dijo.
@@ -120,15 +117,15 @@ Sacó cuatro zanahorias, un pepino cohombro, y un montón de fresas.
 ☙
 
 Los animales volvieron al jardín.
-Cada uno tenía una bandeja llena de comida.
+Cada uno tenía una bandeja con comida.
 
 –¡Me encantan los picnics! –dijo Oscar.
 
 –Oscar tiene toda la razón
 –sonrió Jimena, y le dio un mordisco a una zanahoria–.
-¡La cara que pusiste!
+¡Pusiste una cara!
 
-Los tres se sentaron en el pasto
+Los tres se sentaron en el pasto.
 La sopa se había arruinado,
 pero eso no les impidió disfrutar el hermoso atardecer.
 

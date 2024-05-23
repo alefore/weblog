@@ -348,3 +348,11 @@ un joven, bicicletas.
 Einer der zwei Vögel
 trägt einen Zweig im Schnabel.
 
+☙
+
+El sendero cruza
+a un viejo con bastón
+y un niño estrenando bici.
+
+Miradas fugaces.
+

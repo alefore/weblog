@@ -42,7 +42,17 @@ The following are good characteristics for a mentor:
   (I suggest roughly 1 hour per 3 weeks),
   but the mentor needs to be able to make the time and show up.
 
-## Why get a mentor?
+* Distance.
+  A good mentor is often somewhat removed from the mentee,
+  typically not in the same team.
+  If the mentor and mentee share responsibilities,
+  it may be difficult to discuss specific topics
+  (for example, there may be conflicts of interest).
+  This is perhaps less important than the other criteria.
+
+## Rationale
+
+### Why get a mentor?
 
 Advancing in your career means expanding the scope of the problems you tackle,
 taking larger responsibilities.
@@ -55,6 +65,41 @@ They can help you direct your attention in directions you may be neglecting,
 identify the right questions you should be asking.
 Your mentor will *not* solve your problems for you,
 but standing on their shoulders tends to significantly accelerate your success.
+
+### Why mentor someone?
+
+There are a few reasons why you should spend some energy mentoring others.
+
+* You'll be fostering a culture of collaboration and sharing,
+  helping others.
+
+* You can have an outsized influence.
+  A small investment of your energy (roughly an hour per month)
+  can go a very long way:
+  it can significantly accelerate the impact of someone else.
+  You'll be in a very comfortable position
+  of being able to guide projects or efforts significantly
+  without taking either significant responsibilities
+  nor being in charge of the actual execution.
+
+* You'll learn:
+
+  * Mentorships are a great opportunity to reflect.
+    You'll be discussing types of problems you've faced recently.
+    Forcing you to review and make explicit
+    (so that you can transmit them to your mentee)
+    the intuitions you built
+    can help you dig deeper and consolidate knowledge.
+
+  * They'll often suggest interesting ideas or approaches
+    you hadn't considered.
+
+* You'll be growing your network.
+  Mentoring others is an excellent way to create long-term relationships.
+
+Even if you don't get directly recognized,
+you'll be guided by beauty.
+Technical excellence is its own reward.
 
 ## Finding mentors
 
@@ -141,7 +186,28 @@ or your or your mentor's personal preferences.
 
 ## Be a good mentor
 
-TODO: Advice for mentors.
+* Give space.
+  Your mentee will have a different perspective to yours.
+  Don't expect them to come to the same conclusions as you do.
+  They'll know their specific context much better than you can,
+  which may enable them to make better decisions
+  (despite your relative seniority).
+  Make sure you give them enough room to find their own voice.
+
+* Focus on their growth,
+  not on concrete problems or questions.
+  The problems or questions being discussed are only tools
+  to support their growth.
+  You're only succeeding if they are building the ability to solve
+  these problems independently.
+
+  * Guide them by asking them questions, not giving them answers.
+
+  * Give them time to think on their own.
+    See if they come to similar conclusions to your own.
+
+* Punctual.
+  Show up on time to show respect and consideration.
 
 ## Conclusions
 

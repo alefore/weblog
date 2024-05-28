@@ -103,13 +103,47 @@ Technical excellence is its own reward.
 
 ## Finding mentors
 
-### List of questions
+### Topics list
 
 The first thing you should do to find a good mentor is
 write down a list of three to five general questions
-that you would like to discuss.
-This list of topics helps everybody understand
+that frame the topics you would like to discuss.
+This list will help everybody –including yourself– understand
 the type of mentorship we're looking for.
+
+They shouldn't be too specific
+("how do I deal with a very specific situation")
+but rather centered on engineering or leadership skills
+that you'd like to improve on.
+
+
+#### Examples
+
+The following are a few example questions:
+
+* How important is the phrasing in expectations/OKRs and evaluations?
+  How much effort should we put into it?
+  How do we get better at it?
+
+* How do I strategize around positioning a product
+  that's deeply integrated within Google's infrastructure?
+
+* How do I build stronger relationships with partner teams, key customers,
+  and senior leadership?
+
+* As an engineering manager, how do I build technical credibility
+  when I've been away from active coding for a very long time?
+
+* How can I operate if my software has strong dependencies
+  on components that don't work very well?
+
+* How do I "sell" (to stakeholders, my management chain, etc.)
+  the impact of the improvements I make to developer tools?
+
+* How do I manage mid-size requests for help
+  from my customers or other infrastructure teams?
+  How much guidance should I provide?
+  What's the story around recognition?
 
 ### Finding a good mentor
 
@@ -211,10 +245,14 @@ or your or your mentor's personal preferences.
 
 ## Conclusions
 
-I strongly encourage all engineers that want to continue growing
-to have at least one active mentorship.
+All engineers
+should have a mentor
+in order to accelerate their careers.
+There are also concrete reasons
+for senior engineers to contribute by mentoring others.
 
-I hope the information in this document gives you concrete ideas
+I hope the information in this document
+gives you concrete ideas
 to find a good mentor and structure your mentorship
 in a way that sets you up for success.
 

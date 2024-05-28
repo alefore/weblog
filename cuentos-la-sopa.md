@@ -1,41 +1,39 @@
 # Cuentos: La sopa
 
-Miguel, Oscar y Jimena cocinaban una sopa de tomate,
-cuyo aroma se había apoderado de la cocina.
+Miguel, Oscar y Jimena cocinaban una sopa de tomate.
+Su aroma se había apoderado de la cocina.
 
 Miguel revolvía con una cuchara de palo.
 –¿Me alcanzas la sal? –dijo, señalando con su cola.
 
-Oscar abrió un cajón.
-Estaba lleno de frascos pequeños que tenían especies de mil colores y sabores.
-Sacó la sal y se la dió a Miguel.
+Oscar abrió un cajón lleno de pequeños frascos de mil colores y sabores
+y sacó la sal.
 
 –Hay tener cuidado
-–dijo Miguel, sacudiendo el salero sobre la sopa–,
-que no se te va la mano.
+–dijo Miguel, sacudiéndola sobre la sopa–.
+Se te puede ir la mano.
 
 Jimena cerró los ojos y respiró profundo.
 –Huele riquísimo –dijo.
 
-Oscar tomó platos y cucharas y los llevó a la mesa en el jardín.
-Al regresar a la cocina, traía varias hierbas del huerto.
-Miguel las echó en la sopa.
+Oscar llevó platos y cucharas a la mesa del jardín.
+Al regresar, traía hierbas del huerto
+que Miguel echó en la sopa.
 
 ☙
 
-Luego de un largo rato, la sopa estaba casi lista.
+La sopa estaba casi lista.
 Oscar y Jimena se sentaron en el jardín.
 
-El día era tan agradable,
-que Jimena se había quitado su bufanda de lana verde.
-–La sopa de Miguel es deliciosa –dijo.
+–La sopa de Miguel es deliciosa –dijo Jimena.
+El día era tan agradable
+que se había quitado su bufanda de lana verde.
 
 –Tengo un hambre de oso –dijo Oscar.
 
 Miguel, en la cocina, apagó la estufa
 y tomó la pesada olla con las dos manos para llevarla al jardín.
-Tal y como había dicho Jimena, la sopa olía muy bien.
-
+Tal y como había dicho Jimena, olía muy bien.
 
 ☙
 
@@ -59,7 +57,7 @@ Tenía el rostro rojo de rabia y frustración.
 –Pero… ¡la sopa!
 
 La sopa se había convertido en un gran charco rojo.
-En la mitad del charco había quedado la olla, vacía.
+En la mitad había quedado la olla, vacía.
 
 Miguel estaba muy bravo;
 necesitaría unos minutos para calmarse.
@@ -67,15 +65,21 @@ necesitaría unos minutos para calmarse.
 ☙
 
 –Creo que podemos olvidarnos de la sopa
-–dijo Miguel.
+–dijo Miguel finalmente.
 sentándose junto a Jimena y Oscar.
 
-–¡Vieras la cara que pusiste! –dijo Oscar, empezando a reirse.
+–Lo siento mucho –dijo Jimena.
+
+–Todo ese esfuerzo… ¡para nada! –dijo Miguel.
+
+–Lo siento mucho –dijo Oscar.
 
 –¿Esa caja qué es? –preguntó Jimena,
 inclinando su largo cuello hacia la pequeña caja de madera.
 
 –Mis herramientas –dijo Miguel con un suspiro.
+
+–¡Vieras la cara que pusiste! –dijo Oscar.
 
 ☙
 

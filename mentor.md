@@ -168,12 +168,14 @@ Every year or two
 I take ~ten minutes in our team meeting to:
 
 1. Relate how much having a mentor has helped me.
+
 2. Explain why everybody should consider having a mentor
+
 3. Offer that anyone interested
-   can simply email me and I'll do my best to find a good match.
+   can simply email me and I'll search for a good match.
 
 When people take me up on this offer,
-I ask them for the list of questions to help the search.
+I ask them for the list of questions to inform the search.
 I forward their questions
 –along with context about the applicant–
 to other senior engineers in my network,
@@ -248,11 +250,11 @@ or your or your mentor's personal preferences.
 All engineers
 should have a mentor
 in order to accelerate their careers.
-There are also concrete reasons
-for senior engineers to contribute by mentoring others.
+There are also good reasons
+for senior engineers to contribute to others through mentoring.
 
 I hope the information in this document
-gives you concrete ideas
+gives you actionable ideas
 to find a good mentor and structure your mentorship
 in a way that sets you up for success.
 

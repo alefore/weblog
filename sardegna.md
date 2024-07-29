@@ -9,8 +9,8 @@ y abandona su cobija.
 
 Una hermosa buganvília<br/>
 que abraza con mucho esmero<br/>
-barandas curvas de acero<br/>
-recorridas por hormigas<br/>
+barandas curvas de acero,<br/>
+viejo sendero de hormigas,<br/>
 entrega flores al viento.
 
 Cansado de hacer con ellas<br/>

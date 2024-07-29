@@ -147,14 +147,13 @@ The following are a few example questions:
 
 ### Finding a good mentor
 
-Email your list of questions,
-to manager or tech-lead and ask them
-to help you find someone to
-mentor you on these topics.
+Easy: send an email to your manager or tech-lead and ask them
+to help you find someone to mentor you.
+Include your list of topics.
 
-Make it explicit:
-you're not asking your manager or tech-lead to be your mentor.
-You're already discussing things with them anyway.
+Make it explicit
+that you're not asking them to be your mentor
+–you're already discussing your career with them.
 Instead, you're asking them to help you find a third-party
 who may fit your themes.
 
@@ -222,15 +221,10 @@ or your or your mentor's personal preferences.
 
 ## Be a good mentor
 
-* Give space.
-  Your mentee will have a different perspective to yours.
-  Don't expect them to come to the same conclusions as you do.
-  They'll know their specific context much better than you can,
-  which may enable them to make better decisions
-  (despite your relative seniority).
-  Make sure you give them enough room to find their own voice.
+The following are a few ideas you may want to consider
+if you're mentoring someone:
 
-* Focus on their growth,
+* Focus on their **growth**,
   not on concrete problems or questions.
   The problems or questions being discussed are only tools
   to support their growth.
@@ -242,8 +236,21 @@ or your or your mentor's personal preferences.
   * Give them time to think on their own.
     See if they come to similar conclusions to your own.
 
-* Punctual.
+* Give them **space**.
+  Your mentee will have a different perspective to yours.
+  Don't expect them to come to the same conclusions as you do.
+  They'll know their specific context much better than you can,
+  which may enable them to make better decisions
+  (despite your relative seniority).
+  Make sure you give them enough room to find their own voice
+  and run their own experiments
+  (even if you think those experiments are unnecessary).
+
+* Be **punctual**.
   Show up on time to show respect and consideration.
+
+This list probably falls short.
+If you have ideas, please tell me.
 
 ## Conclusions
 

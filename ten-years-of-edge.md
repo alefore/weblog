@@ -618,8 +618,6 @@ Concrete examples in Edge are:
   I also know that this expectation is validated
   every single time a new probability is defined.
 
-TODO: The above (about validation of Probability) isn't currently true.
-
 #### Ghost types
 
 Unfortunately, afaik, there's no standard way to achieve this in C++23.
@@ -628,7 +626,7 @@ so there are very little gains
 (code *will* be slightly more readable,
 but you won't gain static type-safety).
 
-To define custom types, **I currently use `GHOST_TYPE` expressions** like these:
+To define custom types, **I extend a templated `GhostType<>` class** like this:
 
 From 
 [environment.h](https://github.com/alefore/edge/blob/master/src/vm/environment.h):
@@ -636,35 +634,57 @@ From
     // Represents a namespace in the VM environment, where symbols can be
     // defined. For example, a reference `lib::zk::Today` is actually the symbol
     // "Today" in the namespace `{"lib", "zk"}`.
-    GHOST_TYPE_CONTAINER(Namespace, std::vector<Identifier>)
+    class Namespace
+        : public language::GhostType<Namespace, std::vector<Identifier>> {};
 
 From
 [file_system_driver.cc](https://github.com/alefore/edge/blob/master/src/infrastructure/file_system_driver.h):
 
-    GHOST_TYPE(FileDescriptor, int);
-    GHOST_TYPE(UnixSignal, int);
+    class FileDescriptor
+        : public language::GhostType<FileDescriptor, int, FileDescriptorValidator> {
+    };
+
+    class UnixSignal : public language::GhostType<UnixSignal, int> {};
     // Why define a GHOST_TYPE for `pid_t`, which is already a "specific" type?
     // Because pid_the is just a `using` or `typedef` alias, so incorrect usage
     // isn't detected by the compiler.
-    GHOST_TYPE(ProcessId, pid_t);
+    class ProcessId : public language::GhostType<ProcessId, pid_t> {};
 
-`GHOST_TYPE` are a group of macros
-that declare a new struct for a custom type,
-including  appropriate constructors and operators
+From
+[naive_bayes.cc](https://github.com/alefore/edge/blob/master/src/math/naive_bayes.cc):
+
+    class Probability
+        : public GhostType<Probability, double, ProbabilityValidator> {};
+
+`GhostType<>` is the parent class of all these custom types.
+It declares appropriate constructors and operators
 (things like std::hash, operator==, operator+=, etc.)
 based on what the underlying type supports.
 
-I'm not too happy with this approach.
-I suspect a **better approach may be
-to do it based on template metaprogramming**,
-something like:
+#### validators
 
-    struct Digits : public GhostType<Digits, std::vector<size_t>> {}
+As the `GhostType` examples show
+(in `FileDescriptorValidator`, and `ProbabilityValidator`),
+`GhostType` allows its subclasses to specify a validator.
+This is used to add invariants on the underlying types.
+For example:
 
-This would support significantly more customization
-through template parameters for the `GhostType` class.
-Specifically, I would like to make it easier to define validation functions.
-With the current `GHOST_TYPE` macros this is difficult.
+    struct ProbabilityValidator {
+      static PossibleError Validate(const double& input) {
+        if (input < 0)
+          return Error{LazyString{L"Invalid probability value (less than 0.0)."}};
+        if (input > 1.0)
+          return Error{
+              LazyString{L"Invalid probability value (greater than 1.0)."}};
+        return Success();
+      }
+    };
+
+These invariants are validated at construction time
+(either crashing the program or returning an `Error`,
+depending on the API used).
+This allows us to rest assured that all instances
+will always abide by these preconditions.
 
 ### Maintaing invariants with static types
 

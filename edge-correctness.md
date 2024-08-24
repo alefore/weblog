@@ -439,3 +439,21 @@ This is implemented in
 [`src/language/once_only_function`](https://github.com/alefore/edge/blob/master/src/language/once_only_function.h)
 (as a wrapper of `std::move_only_function`).
 
+## Challenges
+
+I consider the following unsolved challenges when it comes to correctness.
+I think they continue to slow me down
+and I would like to find better ways to deal with them.
+
+* Automatically detecting read-after-move problems.
+  I think they are relatively easy to miss.
+
+* Life-cycle issues, especially with references captures in lambdas
+  that may not run immediately.
+  I've considered using types explicitly to at least detect this in run time,
+  like a `ScopedReferenceFactory` class used thus:
+  `[foo = ScopedReferenceFactory().NewReference(foo)] { … }`.
+  This would crash if the reference wrapper is read after the
+  `ScopedReferenceFactory` has been destroyed.
+  Ugh.
+

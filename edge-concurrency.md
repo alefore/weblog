@@ -388,3 +388,14 @@ due to its nested `LineMetadataEntry`,
 * The initial text that should be displayed
   if the future doesn't yet have a result.
 
+## Challenges
+
+I consider the following unsolved challenges when it comes to concurrency.
+I think they continue to slow me down
+and I would like to find better ways to deal with them.
+
+* Mangled stacks.
+  The use of asynchronous techniques such as futures or callback spaghetti
+  results in very confusing stacks,
+  which makes debugging difficult.
+

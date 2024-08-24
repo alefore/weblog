@@ -1,12 +1,16 @@
 # Edge: Lessons: Concurrency
 
-This document is part of
-[a series of articles articulating lessons I've learned
-developing my own text
-editor](https://github.com/alefore/weblog/blob/master/edge-lessons.md).
+TL;DR: Concurrency is difficult, but necessary.
+It helps to
+make objects immutable
+(or, at least, immutable-assignable),
+using types that explicitly ensure correct access to shared data,
+and using futures.
 
-Concurrency is difficult, but necessary.
-Some techniques help.
+This document is part of
+[a series of articles](https://github.com/alefore/weblog/blob/master/edge-lessons.md)
+articulating lessons I've learned
+during the 10 years I've been developing my own text editor.
 
 ## Necessary
 

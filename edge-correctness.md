@@ -439,6 +439,61 @@ This is implemented in
 [`src/language/once_only_function`](https://github.com/alefore/edge/blob/master/src/language/once_only_function.h)
 (as a wrapper of `std::move_only_function`).
 
+## Testing
+
+I've found unit testing incredibly helpful to maintain correctness.
+The cost of maintaining a reasonable set of tests
+is orders of magnitude smaller than the gain.
+
+As of 2024-08-24, I have 734 tests.
+It takes roughly 10 seconds (in my laptop) to run them via `edge --tests=run`.
+
+TODO: Describe the testing API.
+
+TODO: Talk a bit about the history of testing.
+
+### Why test
+
+When I change a specific module,
+did I now invalidate implicit assumptions
+that customer modules are making?
+Thank you, Hyrum's law!
+
+Because of historical reasons,
+my testing coverage varies very widely across modules.
+Unavoidably, complex changes to widely-used module causes bugs.
+In my experience, bugs can be sorted into two groups:
+
+1. Those affecting modules *with* good testing coverage.
+   These bugs are detected immediately,
+   allowing you to inspect the relevant modules directly,
+   while you still have full context about the change you're introducing.
+
+2. Those affecting modules *without* good testing coverage.
+   These bugs are detected months later,
+   through strange crashes,
+   after many other changes (which may misleadingly appear related)
+   have been introduced,
+   long after you've forgotten the context of the culprit.
+
+In my experience with Edge,
+the cost of maintaining reasonable tests
+is much smaller than
+the cost of allowing bugs to switch from the first to the second set.
+
+### Manual testing
+
+I've heard the argument that manual testing is good enough:
+You introduced new functionality?
+Just manually run the code and validate that it all works,
+that you haven't broken anything.
+
+I suppose this may work on trivial toy programs,
+where each change has only a trivial set of consequences.
+Once programs reach a certain complexity,
+there's no substitute for being able to automatically validate
+a large set of expectations.
+
 ## Challenges
 
 I consider the following unsolved challenges when it comes to correctness.

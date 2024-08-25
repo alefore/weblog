@@ -1,4 +1,8 @@
-# Edge: Lessons
+# Edge: Lessons: Readability
+
+
+
+## Edge: Lessons
 
 TODO: I'm still breaking down this text into separate articles.
 
@@ -11,7 +15,7 @@ TODO: I'm still breaking down this text into separate articles.
 * What's Next?
 * Conclusions
 
-## Introduction
+### Introduction
 
 This document is work-in-progress.
 As of 2024-04-13, this is still incomplete
@@ -29,7 +33,7 @@ many are specific to C++,
 but they probably apply, to some extent,
 to other languages.
 
-### Background
+#### Background
 
 Edge is a Linux C++ terminal-based text editor.
 I started working on
@@ -62,7 +66,7 @@ I mainly use it…
 As of 2024-04-14, Edge is 67.9k lines of C++ code
 (per `wc -l $(find src -name '*.cc' -or -name '*.h' -or -name '*.y'`).
 
-### Caveats
+#### Caveats
 
 * I believe there's significant **recency bias** in this distillation.
   I'm probably overweighing insights I've reached relatively recently
@@ -78,13 +82,13 @@ As of 2024-04-14, Edge is 67.9k lines of C++ code
   with "in my experience" or similar qualifiers,
   but they should be assumed.
 
-## Ideas that worked well
+### Ideas that worked well
 
 > Las grandes hojas del abedul:
 > unas se van, fugaces, con el viento;
 > otras caen solas, dando vueltas en el aire frio.
 
-### Principles
+#### Principles
 
 The following are a few *ideas or principles* that
 influenced my work in Edge,
@@ -130,7 +134,7 @@ which worked better than I had initially anticipated:
   Avoid optimizing things for performance
   in ways that leave you stuck on local maxima.
 
-### Features
+#### Features
 
 The following are a few *features* that worked better than I anticipated.
 I hope this helps other people working on their own text editors.
@@ -184,7 +188,7 @@ I hope this helps other people working on their own text editors.
   Freeing you from caring about spaces as you're editing
   speeds you up.
 
-## What's Next?
+### What's Next?
 
 > He savors a hearty brunch; takes his time.
 >
@@ -195,7 +199,7 @@ Will I still be extending it?
 
 This section lists some ideas I'd like to explore.
 
-### Improve the extension language
+#### Improve the extension language
 
 The extension language could use some improvements.
 
@@ -212,7 +216,7 @@ I have to define specific subtypes in the host language
 (e.g., `SetString`, `VectorString`, `VectorInt`, etc.).
 It's easy to define this in the host language, but far from ideal.
 
-### File inspection/manipulation API
+#### File inspection/manipulation API
 
 I'd like to provide friendlier ways to express operations
 that filter or transform sub-trees of a document, such as:
@@ -229,7 +233,7 @@ but they are line/character oriented,
 which makes them too low-level
 –expressing intent is difficult.
 
-### Zettelkasten improvements
+#### Zettelkasten improvements
 
 The functionality to manipulate my Zettelkasten can be refined further.
 
@@ -238,7 +242,7 @@ use those annotations as I'm editing files.
 Essentially, allow me to define stronger semantics in my notes,
 deriving ontologies.
 
-### CSV integration
+#### CSV integration
 
 I'd like to make it easy to use Edge to load a *medium*
 (~1e5-rows range)
@@ -256,7 +260,7 @@ For example, to quickly express things like the following
 
 * "What's the Pearson correlation coefficient between two columns?"
 
-### Audio improvements
+#### Audio improvements
 
 I want to find better ways to use audio as an additional information channel.
 
@@ -275,7 +279,7 @@ This would require making the audio support more robust.
 Once that's in place, I intend to explore more ideas
 about how to use sound.
 
-## Conclusions
+### Conclusions
 
 It's crazy: I've continued working on Edge
 for ten years.
@@ -299,4 +303,64 @@ I've invested a lot of energy into developing Edge.
 I'm glad I've done so.
 Starting this effort and continuing to invest in it has been very satisfying.
 I've learned a lot on this journey.
+
+## Edge: Lessons: Preamble
+
+This document is part of
+[a series of articles](https://github.com/alefore/weblog/blob/master/edge-lessons.md)
+articulating lessons I've learned
+during the 10 years I've been developing my own text editor.
+
+## Edge: Lessons: Use lambdas liberally
+
+I've found that liberal use of lambda expressions can aid readability
+in a number of ways:
+
+* By explicitly capturing a small number of variables
+  (typically by reference),
+  it helps you signal that a given scope
+  (the lambda body)
+  only has access to a small set of all the available local variables.
+
+* It helps signal that temporary variables are only defined
+  for the specific purpose of computing the lambda's output.
+  This is similar to creating nested scopes
+  (without using lambda forms).
+
+* It helps you use various `return` statements
+  to yield the value that you'll assign to a given variable.
+  The alternative to this would be to use assignment.
+  Said differently, this lets you avoid assignment and,
+  instead, use construction.
+
+### Edge: Lessons: Use std::invoke
+
+When I declare lambdas that must be run directly,
+I use `std::invoke`.
+
+Rather than:
+
+    […] { … }()
+
+I write:
+
+    std::invoke([…] { … })
+
+This is more wordy,
+but makes it more explicit that the lambda is run immediately.
+
+## Edge: Lessons: Use std::variant
+
+I've found `std::variant` very helpful.
+I see it as playing a similar role to interfaces,
+but allowing you to more easily enumerate the entire set of subtypes.
+I use variants with `std::visit` throughout.
+
+## What's next?
+
+I'd like to explore a few ideas:
+
+* Replace a few uses of `std::variant` with `std::expected`.
+  I only learned about `std::expected` relatively recently,
+  and I think there's a few places where it'd fit slightly better.
 

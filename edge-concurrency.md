@@ -1,11 +1,13 @@
 # Edge: Lessons: Concurrency
 
 TL;DR: Concurrency is difficult, but necessary.
-It helps to
-make objects immutable
-(or, at least, immutable-assignable),
-using types that explicitly ensure correct access to shared data,
-and using futures.
+The following techniques help:
+
+* Making objects immutable (or, at least, immutable-assignable)
+* Using types that explicitly ensure correct access to shared data
+* Using a futures API for async work.
+
+## Edge: Lessons: Preamble
 
 This document is part of
 [a series of articles](https://github.com/alefore/weblog/blob/master/edge-lessons.md)

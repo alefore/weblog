@@ -8,6 +8,8 @@ In the short-term, unrelated distractions reduce my focus
 but, in the medium-term, they enable transformative ideas to manifest,
 which feeds new bursts of development.
 
+## Edge: Lessons: Preamble
+
 This document is part of
 [a series of articles](https://github.com/alefore/weblog/blob/master/edge-lessons.md)
 articulating lessons I've learned

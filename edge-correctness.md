@@ -1,5 +1,12 @@
 # Edge: Lessons: Correctness
 
+## Edge: Lessons: Preamble
+
+This document is part of
+[a series of articles](https://github.com/alefore/weblog/blob/master/edge-lessons.md)
+articulating lessons I've learned
+during the 10 years I've been developing my own text editor.
+
 ## Edge: Lessons: Fix Bug Categories
 
 If you identify a bug,
@@ -92,12 +99,12 @@ It only took two days for this to find another such issue
 that had been ignored silently
 ([commit](https://github.com/alefore/edge/commit/09586758eefa0e35d6721228aeaf3dc34b4350cc)).
 
-## Edge: Lessons: Use Types Effectively
+## Use types effectively
 
 Good use of expressive and well-designed static types
 facilitates correctness and maintainability.
 
-### Custom Types
+### Use specific types
 
 **Use semantically-rich custom types for variables and class fields**
 (and methods' inputs and outputs).
@@ -140,31 +147,10 @@ most application logic operates entirely using the custom types,
 and it only needs to convert from and to the underlying type
 in relatively few places.
 
-#### Validation
+### Ghost types
 
-Using **custom types enables validation of expectations
-in the constructor**.
-The rest of the application
-can reliably assume that these preconditions are met.
-
-Concrete examples in Edge are:
-
-* The `Range` type
-  ([header](https://github.com/alefore/edge/blob/master/src/language/text/range.h)),
-  which enforces that *begin* <= *end*.
-
-* The `Probability` type in the Naive Bayes implementation.
-  This validates that a probability (represented using `double`)
-  is in the expected [1, 0] range.
-  Not only do I avoid having to add validation logic
-  every time I compute a new probability
-  (e.g., when I evaluate complex formulas that yield a new probability),
-  I also know that this expectation is validated
-  every single time a new probability is defined.
-
-#### Ghost types
-
-Unfortunately, AFAIK, there's no standard way to achieve this in C++23.
+Unfortunately, AFAIK, C++23 provides no standard mechanism
+to declare "type aliases" effectively.
 With `typedef` or `using`, the compiler won't detect errors,
 so there are very little gains
 (code *will* be slightly more readable,
@@ -205,60 +191,50 @@ It declares appropriate constructors and operators
 (things like std::hash, operator==, operator+=, etc.)
 based on what the underlying type supports.
 
-#### validators
+#### Extensible
 
-As the `GhostType` examples show
-(in `FileDescriptorValidator`, and `ProbabilityValidator`),
-`GhostType` allows its subclasses to specify a validator.
-This is used to add invariants on the underlying types.
-For example:
+One unexpected advantage of the `GhostType<>` approach
+(making the specific types subclasses
+of the generic `GhostType<>` class)
+is that it's trivial to define custom methods on the subclasses.
 
-    struct ProbabilityValidator {
-      static PossibleError Validate(const double& input) {
-        if (input < 0)
-          return Error{LazyString{L"Invalid probability value (less than 0.0)."}};
-        if (input > 1.0)
-          return Error{
-              LazyString{L"Invalid probability value (greater than 1.0)."}};
-        return Success();
-      }
-    };
+This has been very useful to enable incremental progress,
+when I want to gradually adjust an underlying representation.
+I can define temporary custom methods and gradually migrate customers.
 
-These invariants are validated at construction time
-(either crashing the program or returning an `Error`,
-depending on the API used).
-This allows us to rest assured that all instances
-will always abide by these preconditions.
+I mention this because an earlier approach I tried
+was to use macros to declare my ghost types.
+As I switched to the templated super-class,
+I was surprised by the versability this brought.
 
-### Maintaing invariants with static types
+### Maintaing invariants
 
 Defining wrapper types corresponding to predicates
 is another technique I've found useful.
-
-#### Definition
 
 If you have a type `T` and a predicate `P`,
 you would create a type `TP`
 that contains instances of `T` match `P`.
 I'll refer to `TP` as the *subtype*.
 
-This is exactly what `const` does to classes:
-you define the semantics of `P`
-(*i.e.*, what it means for a class to be `const`)
-and then, given a `T` instance,
-you can trivially obtain a `TP` view that implements `P`.
-However, this general principle goes way beyond just immutability.
-
 This allows functions to **explicitly state some preconditions**
 (*e.g.*, an input container must be sorted,
 or non-empty,
 or have exactly between 128 and 256 elements).
-Instead of checking inputs against predicates
+Using **specific types enables validation of expectations in the constructor**.
+The rest of the application
+can reliably assume that these preconditions are met.
+Instead of repeatedly checking inputs against predicates
 (or, alternatively, transforming inputs to match the predicates;
 *e.g.*, sorting a container received),
 functions should receive their inputs using the subtypes directly.
 
-TODO: Give an example.
+This is exactly what `const` does to classes:
+you define the semantics of `P`
+(*i.e.*, the const predicate – what it means for a class to be `const`)
+and then, given a `T` (non-`const`) instance,
+you can trivially obtain a `TP` (`const`) view that implements `P`.
+However, this general principle beyond just immutability.
 
 #### Rationale
 
@@ -291,6 +267,31 @@ Judicious use of predicate types tends to:
   Here I use the type system to ensure that these cases can't occur
   –and that *I won't introduce them accidentally in the future*–
   and delete the corresponding code.
+
+#### Ghost types validators
+
+As the `FileDescriptor` and `Probability` examples demonstrate,
+`GhostType` subclasses can specify a validator.
+This is used to maintain invariants on the underlying types.
+
+For example:
+
+    struct ProbabilityValidator {
+      static PossibleError Validate(const double& input) {
+        if (input < 0)
+          return Error{LazyString{L"Invalid probability value (less than 0.0)."}};
+        if (input > 1.0)
+          return Error{
+              LazyString{L"Invalid probability value (greater than 1.0)."}};
+        return Success();
+      }
+    };
+
+These invariants are validated at construction time
+(either crashing the program or returning an `Error`,
+depending on the API used).
+This allows us to rest assured that all instances
+will always abide by these preconditions.
 
 #### Examples
 
@@ -422,10 +423,6 @@ a nullable pointer must be explicitly marked
 (typically as `std::optional<gc::Ptr<>>`),
 moving the boilerplate from the common to the infrequent case.
 
-##### LineRange
-
-TODO.
-
 ##### OnceOnlyFunction
 
 In many situations I pass around callables that should only be called once.
@@ -438,6 +435,27 @@ if I ever accidentally run the same callable twice.
 This is implemented in
 [`src/language/once_only_function`](https://github.com/alefore/edge/blob/master/src/language/once_only_function.h)
 (as a wrapper of `std::move_only_function`).
+
+##### Probability
+
+The `Probability` type in the Naive Bayes implementation
+validates that a probability (represented using an underlying `double`)
+is in the expected [1, 0] range.
+Not only do I avoid having to add validation logic
+every time I compute a new probability
+(e.g., when I evaluate complex formulas that yield a new probability),
+I also know that this expectation is validated
+every single time a new probability is defined.
+
+##### Range and LineRange
+
+The `Range` type
+([header](https://github.com/alefore/edge/blob/master/src/language/text/range.h))
+enforces that *begin* <= *end*.
+
+`LineRange` represents a range contained entirely in a single line.
+
+Both invariants are enforced at construction.
 
 ## Testing
 
@@ -459,8 +477,6 @@ did I now invalidate implicit assumptions
 that customer modules are making?
 Thank you, Hyrum's law!
 
-Because of historical reasons,
-my testing coverage varies very widely across modules.
 Unavoidably, complex changes to widely-used module causes bugs.
 In my experience, bugs can be sorted into two groups:
 
@@ -476,10 +492,12 @@ In my experience, bugs can be sorted into two groups:
    have been introduced,
    long after you've forgotten the context of the culprit.
 
-In my experience with Edge,
+Because of historical reasons,
+my testing coverage varies very widely across modules.
+In my experience,
 the cost of maintaining reasonable tests
 is much smaller than
-the cost of allowing bugs to switch from the first to the second set.
+the cost of allowing bugs to slip from the first to the second set.
 
 ### Manual testing
 
@@ -492,7 +510,7 @@ I suppose this may work on trivial toy programs,
 where each change has only a trivial set of consequences.
 Once programs reach a certain complexity,
 there's no substitute for being able to automatically validate
-a large set of expectations.
+the entire set of expectations that you've articulated as tests.
 
 ## Challenges
 

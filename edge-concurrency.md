@@ -1,7 +1,14 @@
 # Edge: Lessons: Concurrency
 
-TL;DR: Concurrency is difficult, but necessary.
-The following techniques help:
+TL;DR:
+While I was initially reluctant to introduce concurrency to Edge
+(mostly because of the complexity it brings),
+introducing thread-based concurrency cautiously has been very valuable.
+Shifting work off to separate threads
+that communicate results back to the main thread
+helps make the editor significantly more responsive.
+
+The following techniques helped:
 
 * Making objects immutable (or, at least, immutable-assignable)
 * Using types that explicitly ensure correct access to shared data

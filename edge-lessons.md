@@ -7,6 +7,7 @@ TODO: I'm still breaking down this text into separate articles.
 * [Correctness](https://github.com/alefore/weblog/blob/master/edge-correctness.md)
 * [Readability](https://github.com/alefore/weblog/blob/master/edge-readability.md)
 * [Development cycles](https://github.com/alefore/weblog/blob/master/edge-development-cycles.md)
+* [Features]((https://github.com/alefore/weblog/blob/master/edge-features.md)
 * Ideas that worked well
 * What's Next?
 * Conclusions
@@ -129,60 +130,6 @@ which worked better than I had initially anticipated:
   Make it easier to iterate faster.
   Avoid optimizing things for performance
   in ways that leave you stuck on local maxima.
-
-### Features
-
-The following are a few *features* that worked better than I anticipated.
-I hope this helps other people working on their own text editors.
-
-* **Linear undo**/redo history,
-  as explained in
-  [`src/undo_state.cc`](https://github.com/alefore/edge/blob/master/src/undo_state.cc).
-  If you undo a few transformations and apply a new transformation …
-  you don't lose the redo history: you can still apply it through undo.
-
-* The ability to **jump to any position in the file that's currently visible**
-  simply by pressing `f` +
-  three characters ~matching the text you want to jump to
-  (with disambiguation when the prefix would match multiple positions) + return.
-  I'm using this fairly frequently,
-  comparing with "scrolling" up to the position (or a full regexp search).
-
-* Native support for **multiple cursors**.
-  For example, a regexp-search
-  just creates a cursor in every position with a match.
-  Being able to quickly say
-  "set the cursors to: a cursor at the beginning of every line
-  in the current paragraph"
-  and then just say "add four spaces at each cursor" is powerful.
-  So is saying "set a cursor on every character (in the current file)
-  where the compiler reported an error".
-
-* The **preview buffer** at the bottom of the screen is helpful.
-  If the cursor is over an existing file (based on some search paths),
-  previewing its contents
-  (remembering where the cursor was when that file was last opened)
-  can be helpful.
-  Similarly, previewing the output of commands as you type them
-  (for commands that don't have side-effects)
-  can also be very flexible.
-
-* Native support for **"compiler" buffers**.
-  Automatically tagging certain command buffers as a compiler
-  (*e.g.*, "if the command is an invocation to `make` or `bazel` or …")
-  and then (1) parsing the output to detect references to open files
-  and (2) rerunning the command whenever I save a file,
-  works well.
-  Saving a source file suffices to kick off compilation;
-  I continue editing but, as soon as the compiler outputs errors in the file,
-  I get overlays summarizing the errors.
-
-* **clang-format integration**.
-  Whenever I save a file of some specific formats (*e.g.,* C++, Java,
-  Javascript, SQL…), I just pipe it through `clang-format` or similar commands
-  ([implementation](https://github.com/alefore/edge/blob/master/rc/editor_commands/lib/clang-format.cc)).
-  Freeing you from caring about spaces as you're editing
-  speeds you up.
 
 ## What's Next?
 

@@ -7,7 +7,7 @@ This document is part of
 articulating lessons I've learned
 during the 10 years I've been developing my own text editor.
 
-## Edge: Lessons: Fix Bug Categories
+## Fix Bug Categories
 
 If you identify a bug,
 resist the temptation to just fix it and move on.
@@ -512,6 +512,15 @@ Once programs reach a certain complexity,
 there's no substitute for being able to automatically validate
 the entire set of expectations that you've articulated as tests.
 
+### Part of the binary
+
+Tests are always included in the Edge binary.
+One can always run `edge --tests=run` to run all tests.
+
+It would be trivial to add a compilation mode that throws away the tests.
+I thought I would quickly prioritize implementing this.
+Surprisingly, I never found the need to do this.
+
 ## Challenges
 
 I consider the following unsolved challenges when it comes to correctness.
@@ -526,7 +535,8 @@ and I would like to find better ways to deal with them.
   I've considered using types explicitly to at least detect this in run time,
   like a `ScopedReferenceFactory` class used thus:
   `[foo = ScopedReferenceFactory().NewReference(foo)] { … }`.
-  This would crash if the reference wrapper is read after the
+  This would at least crash directly if the reference wrapper is read after the
   `ScopedReferenceFactory` has been destroyed.
-  Ugh.
+  I wish I could find a cleaner solution
+  –with less boilerplate and less brittle.
 

@@ -7,7 +7,7 @@ TODO: I'm still breaking down this text into separate articles.
 * [Correctness](https://github.com/alefore/weblog/blob/master/edge-correctness.md)
 * [Readability](https://github.com/alefore/weblog/blob/master/edge-readability.md)
 * [Development cycles](https://github.com/alefore/weblog/blob/master/edge-development-cycles.md)
-* [Features]((https://github.com/alefore/weblog/blob/master/edge-features.md)
+* [Features](https://github.com/alefore/weblog/blob/master/edge-features.md)
 * Ideas that worked well
 * What's Next?
 * Conclusions

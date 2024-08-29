@@ -130,7 +130,10 @@ helping me keep multiple copies in sync.
 
 ### Good prompts
 
-I've spent some effort improving the prompts.
+I've spent some effort improving the input prompts
+(i.e., when Edge has to ask you for a value,
+such as the path of the file you want to open
+or the value you want to give to a buffer's variable).
 Computers are so fast today that there's no reason
 not to kick-off processing on every key press.
 

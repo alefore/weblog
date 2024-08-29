@@ -1,9 +1,9 @@
 # Edge: Lessons: Concurrency
 
 TL;DR:
-While I was initially reluctant to introduce concurrency to Edge
-(mostly because of the complexity it brings),
-introducing thread-based concurrency cautiously has been very valuable.
+My experience with Edge is that threads-based concurrency,
+when used carefully,
+is worth the additional complexity it unavoidably brings.
 Shifting work off to separate threads
 that communicate results back to the main thread
 helps make the editor significantly more responsive.

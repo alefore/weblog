@@ -110,7 +110,7 @@ facilitates correctness and maintainability.
 (and methods' inputs and outputs).
 Many of these types are simple wrappers of primitive types
 (`int`, `string`, `double`, etc.),
-but the carry significantly more meaning.
+but they carry significantly more meaning.
 
 Primitive types are just the building blocks
 with which custom types are implemented.
@@ -151,10 +151,14 @@ in relatively few places.
 
 Unfortunately, AFAIK, C++23 provides no standard mechanism
 to declare "type aliases" effectively.
-With `typedef` or `using`, the compiler won't detect errors,
-so there are very little gains
-(code *will* be slightly more readable,
-but you won't gain static type-safety).
+
+With `typedef` or `using` declarations,
+the compiler won't detect errors:
+two aliases of the same underlying type can be used interchangably.
+Because of this,
+the gains of using `typedef` or `using` aliases
+(code *will* be slightly more readable)
+are very little (no additional static type-safety).
 
 To define custom types, **I extend a templated `GhostType<>` class** like this:
 
@@ -175,7 +179,7 @@ From
     };
 
     class UnixSignal : public language::GhostType<UnixSignal, int> {};
-    // Why define a GHOST_TYPE for `pid_t`, which is already a "specific" type?
+    // Why define a GhostType for `pid_t`, which is already a "specific" type?
     // Because pid_the is just a `using` or `typedef` alias, so incorrect usage
     // isn't detected by the compiler.
     class ProcessId : public language::GhostType<ProcessId, pid_t> {};
@@ -188,7 +192,7 @@ From
 
 `GhostType<>` is the parent class of all these custom types.
 It declares appropriate constructors and operators
-(things like std::hash, operator==, operator+=, etc.)
+(*e.g.,* `std::hash`, `operator==`, `operator+=`…)
 based on what the underlying type supports.
 
 #### Extensible
@@ -198,14 +202,22 @@ One unexpected advantage of the `GhostType<>` approach
 of the generic `GhostType<>` class)
 is that it's trivial to define custom methods on the subclasses.
 
-This has been very useful to enable incremental progress,
-when I want to gradually adjust an underlying representation.
-I can define temporary custom methods and gradually migrate customers.
+My initial approach for declaring type aliases was based on macros,
+like this:
 
-I mention this because an earlier approach I tried
-was to use macros to declare my ghost types.
-As I switched to the templated super-class,
-I was surprised by the versability this brought.
+    GHOST_TYPE(InputKey, std::wstring);
+
+However, using the templated superclass works much better.
+
+* Because I can define temporary custom methods,
+  this helps me make incremental progress
+  when I want to gradually adjust an underlying representation.
+  I can migrate customers gradually.
+
+* Less importantly,
+  the approach based on macros had problems with complex internal types:
+  the preprocessor would sometimes get confused with commas.
+  There were workarounds for this, but they were cumbersome.
 
 ### Maintaing invariants
 
@@ -348,7 +360,7 @@ You can *sort* the contents in memory just after the file is read.
 Sorting is ~fast
 and can be done by a background thread
 (possibly delaying autocomplete and similar operations
-for a few milliseconds after start).
+for a few milliseconds after program start).
 
 This is significantly better,
 but you still need to either:
@@ -442,10 +454,9 @@ The `Probability` type in the Naive Bayes implementation
 validates that a probability (represented using an underlying `double`)
 is in the expected [1, 0] range.
 Not only do I avoid having to add validation logic
-every time I compute a new probability
-(e.g., when I evaluate complex formulas that yield a new probability),
+to complex statements that compute probability values,
 I also know that this expectation is validated
-every single time a new probability is defined.
+*every single time* a new probability value is computed.
 
 ##### Range and LineRange
 

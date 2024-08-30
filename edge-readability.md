@@ -1,7 +1,5 @@
 # Edge: Lessons: Readability
 
-
-
 ## Edge: Lessons: Preamble
 
 This document is part of
@@ -9,7 +7,7 @@ This document is part of
 articulating lessons I've learned
 during the 10 years I've been developing my own text editor.
 
-## Edge: Lessons: Use lambdas liberally
+## Use lambdas liberally
 
 I've found that liberal use of lambda expressions can aid readability
 in a number of ways:
@@ -47,12 +45,71 @@ I write:
 This is more wordy,
 but makes it more explicit that the lambda is run immediately.
 
-## Edge: Lessons: Use std::variant
+## Use std::variant
 
 I've found `std::variant` very helpful.
 I see it as playing a similar role to interfaces,
 but allowing you to more easily enumerate the entire set of subtypes.
 I use variants with `std::visit` throughout.
+
+## Constructors
+
+I try to keep constructors as simple as possible.
+Hard work must be moved to either
+customer sites
+(for classes that are only instantiated by few customers)
+or static factory methods.
+
+### Declaration > Initialization
+
+I prefer to assign default values to class variables in their declaration:
+
+    class Good { …
+      LazyString value_ = LazyString{"default"}
+
+     public:
+      Good() = default;
+    };
+
+    class Bad {
+      LazyString value_;
+
+     public:
+      Bad() : value_(LazyString{"default"});
+    };
+
+That's preferable mainly because
+the variable's declaration is the most natural place to look for its semantics.
+There are other smaller benefits
+(such as avoiding possible bad declaration order,
+or neglecting to assign values when there are multiple non-delegating
+constructors).
+
+This isn't always possible:
+sometimes the default value depends on a parameter received by the constructor.
+
+### Aggregate initialization
+
+For aggregates,
+I always prefer to use aggregate initialization
+(*i.e.,* `MyClass{…}`)
+rather than parentheses-based construction
+(*i.e.,* `MyClass(…)`) syntax.
+I also prefer always fully specifying the type
+(rather than relying on type deduction).
+
+This makes it immediately visible that
+the type of the resulting expression is exactly what I've written
+and, perhaps more importantly,
+that no complex logic is running,
+this is mostly just moving data into place
+(and possibly creating a few other instances
+for variables I'm not explicitly initializing).
+
+By specifying the type fully,
+I also help the compiler produce nicer error messages
+when I get the type of one of the sub-expressions wrong.
+This can be very helpful for long and complex initialization expressions.
 
 ## What's next?
 

@@ -18,16 +18,22 @@ in a number of ways:
   (the lambda body)
   only has access to a small set of all the available local variables.
 
-* It helps signal that temporary variables are only defined
+* It helps signal that temporary variables
+  (which you define within the lambda's scope)
+  are only defined
   for the specific purpose of computing the lambda's output.
   This is similar to creating nested scopes
   (without using lambda forms).
 
 * It helps you use various `return` statements
-  to yield the value that you'll assign to a given variable.
+  to yield the value that you'll assign
+  to a given (possibly `const`) variable.
   The alternative to this would be to use assignment.
   Said differently, this lets you avoid assignment and,
   instead, use construction.
+  One advantage of this is helping you ensure
+  that you always give the variable a value explicitly
+  (since your lambda expression has to return a value).
 
 ### Edge: Lessons: Use std::invoke
 
@@ -90,8 +96,8 @@ sometimes the default value depends on a parameter received by the constructor.
 
 ### Aggregate initialization
 
-For aggregates,
-I always prefer to use aggregate initialization
+When instantiating aggregate classes,
+I always use aggregate initialization explicitly
 (*i.e.,* `MyClass{…}`)
 rather than parentheses-based construction
 (*i.e.,* `MyClass(…)`) syntax.

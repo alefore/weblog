@@ -87,8 +87,13 @@ Using the regular sync versions in separate threads tends to be easier.
 
 As an example,
 I do this in my file-system wrapper
-([header](https://github.com/alefore/edge/blob/master/src/infrastructure/file_system_driver.h),
-which receives a thread-pool.
+([header](https://github.com/alefore/edge/blob/master/src/infrastructure/file_system_driver.h)),
+which receives a work queue.
+The work queue helps it ensure
+that the*results* of all async calls
+are always received and processed
+by the original thread
+(which explicitly handles the work queue).
 
 ## Constness
 

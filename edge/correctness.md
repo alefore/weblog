@@ -470,12 +470,22 @@ Both invariants are enforced at construction.
 
 ## Testing
 
-I've found unit testing incredibly helpful to maintain correctness.
+Perhaps not very surprising to anyone who knows anything about
+software engineering, but it bears being said explicitly:
+tests are an essential part of software.
 The cost of maintaining a reasonable set of tests
 is orders of magnitude smaller than the gain.
 
-As of 2024-08-24, I have 734 tests.
-It takes roughly 10 seconds (in my laptop) to run them via `edge --tests=run`.
+I discovered this relatively early in the journey with Edge.
+When I started, I didn't bother writing tests.
+I started paying the price earlier than I had anticipated.
+I decided to gradually increase coverage.
+
+As of 2024-08-24, I have 734 tests in 152 logical groups.
+Running them (via `edge --tests=run`) takes roughly 10 seconds (in my laptop).
+
+I don't have much to say on testing,
+but I'll mention a few ideas that may not be widely accepted.
 
 TODO: Describe the testing API.
 
@@ -510,18 +520,55 @@ the cost of maintaining reasonable tests
 is much smaller than
 the cost of allowing bugs to slip from the first to the second set.
 
-### Manual testing
+### Unit testing beats REPL testing
+
+REPL-testing has a small advantage over Unit testing:
+having very low friction: tests are executed immediately
+(and thrown away).
+
+However, **unit tests are significantly superior to REPL-testing**:
+they become part of the software and can be validated automatically at any time.
+
+While it can be beneficial to be able to use REPL testing during development,
+it would be foolish to fall into the trap of thinking that
+it obviates the need to develop adequate sets of tests.
 
 I've heard the argument that manual testing is good enough:
 You introduced new functionality?
 Just manually run the code and validate that it all works,
 that you haven't broken anything.
 
-I suppose this may work on trivial toy programs,
-where each change has only a trivial set of consequences.
+I suppose this may apply to trivial toy programs,
+where changes only have a trivial set of consequences.
 Once programs reach a certain complexity,
 there's no substitute for being able to automatically validate
 the entire set of expectations that you've articulated as tests.
+
+### Tests adjacent to tested code
+
+**Unit tests should be stored as close as possible to the code they test**.
+Tests are an integral part of software;
+unit tests deserve to be stored directly adjacent to the units they test,
+rather than relegated to separate files.
+
+Putting your tests directly under the function they test
+(in the same source file)
+makes it trivial to see
+to what extent a specific function or module has tests.
+Functions lacking tests immediately stand out.
+
+In Edge, I do this through my
+[tests module](https://github.com/alefore/edge/blob/master/src/tests/tests.h).
+This allows me to statically register all tests at the top-level,
+directly in the modules they test.
+
+Here is one example:
+[src/math/bigint.cc](https://github.com/alefore/edge/blob/master/src/math/bigint.cc)
+
+One exception are test modules
+that require a significantly larger
+set of dependencies
+(than the module they test).
 
 ### Part of the binary
 

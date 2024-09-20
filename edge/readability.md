@@ -7,6 +7,72 @@ This document is part of
 articulating lessons I've learned
 during the 10 years I've been developing my own text editor.
 
+## Make Things Explicit
+
+**The implementation should reflect your thought process explicitly;
+not only its conclusions**.
+Removing the thought process makes the software less malleable.
+
+Early in my career,
+I made the mistake of optimizing my implementations for brevity.
+If you can say it with fewer words, why more?
+
+> Je n’ai fait celle-ci plus longue que parce que je n’ai pas eu le loisir de la faire plus courte.
+
+But simplicity and brevity are different things.
+In fact, in software you often reach a point
+where extra brevity complicates things.
+
+It bears saying it explicitly:
+just because some expression is shorter (by whatever metric)
+doesn't mean it's simpler.
+
+This has obvious non-controversial implications:
+
+* Define appropriately named constants;
+  rather than using magic values directly.
+
+* Add `const` annotations to relevant class methods.
+
+* Use appropriate names that convey meaning; eschew abbreviations.
+
+It also has some less-obvious implications.
+
+### Loops
+
+Most operations on containers (either sets, sequences, maps, etc.)
+can be expressed as one of a few canonical operations,
+such as finding elements matching a predicate,
+transforming elements,
+or aggregating elements.
+
+In those cases, I **avoid writing explicit `for` or `while` loops**.
+I prefer standard functions (such as `std::views::transform` and related logic)
+for manipulating and aggregating containers.
+I'm a big fan of the recent ranges/views APIs.
+
+#### Edge: Lessons: Make Things Explicit: Loops: Rationale
+
+Reducing my loops to canonical operations
+helps me make the intent more evident:
+
+* I am just checking if a list has at least an element matching a predicate.
+* I am just copying all elements, with some transformation applied.
+* I am mutating the container directly.
+
+Seeing that I'm calling `std::views::filter | std::views::transform`
+makes it immediately obvious,
+even more obvious than simple range-based loops.
+
+Consistently avoiding explicit loops has the advantage that
+in those cases that can't be neatly reduced to a canonical operation,
+**the presence of an explicit `for` or `while` loop alerts you:
+there's something unusual in this block**.
+
+### Avoid auto
+
+TODO: Flesh out.
+
 ## Use lambdas liberally
 
 I've found that liberal use of lambda expressions can aid readability

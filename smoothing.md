@@ -308,3 +308,42 @@ File `~/bin/exponential-smooth` (mode 755):
     if __name__ == "__main__":
       main()
 
+## Biases
+
+How exponential smoothing is used can introduce biases in the data.
+This is not specific to exponential smoothing but potentially affects
+all smoothing algorithms.
+
+A smoothing implementation may assume
+that events always occur at exactly the timestamp when they are registered.
+If the rate is computed at exactly those timestamps,
+this may overestimate the rate.
+Conversely, if the rate is computed exactly *before* the events are registered,
+the rate will be underestimated.
+
+One way to protect against this could be
+to assume that the event occurred at exactly the half-way point
+between the last registration and the current registration.
+
+### Why this may happen
+
+For example, a server using a `rate_tracker` instance
+(of a class implementing exponential smoothing)
+to keep track of request rates could do something like this:
+
+    Time now = clock.Now();
+    rate_tracker.Advance(now);
+    // Underestimates the actual rate!
+    Rate current_rate = rate_tracker.GetCurrentRate();
+    request_rate.RegisterEvent();
+
+This would underestimate the rate
+(always reading it before registering a new event).
+Conversely, registering the event *before* reading the rate
+biases the data in the opposite direction:
+
+    rate_tracker.Advance(now);
+    request_rate.RegisterEvent();
+    // Overestimates the actual rate!
+    Rate current_rate = rate_tracker.GetCurrentRate();
+

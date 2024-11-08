@@ -46,8 +46,14 @@ I mainly use it…
 
 * to develop Edge.
 
+### Statistics
+
 As of 2024-04-14, Edge is 67.9k lines of C++ code
 (per `wc -l $(find src -name '*.cc' -or -name '*.h' -or -name '*.y'`).
+
+The following is a plot of commits per day:
+
+![Commits per day](images/058.svg)
 
 ## Caveats
 

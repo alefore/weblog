@@ -158,8 +158,8 @@ Many of my colleagues who also got one are as appreciative of it as I am.
 ### Pilot Vanishing Point
 
 I write on paper using a Pilot Vanishing Point fountain pen.
-I use it almost daily for journaling.
-I've owned it since 2013-01-05.
+I used it almost daily for journaling for a decade,
+before I switched to a Pilot Custom 823 in 2024.
 
 The pen has its fair share of scratches.
 They bothered me in the beginning:
@@ -175,4 +175,74 @@ As of 2024-04-06, I haven't owned it for that long;
 I don't know for how long it'll hold up.
 But, until now, I haven't experienced any issues with it.
 It works like a charm.
+
+### Gmund hemp paper
+
+My paper of chice is the
+[Gmund 100% hemp paper (Gmund
+Hanf)](https://www.gmund.com/shop/en_int/collections/gmund-hanf.html)
+at 120 g/m² (in natural white, without colors).
+
+## Baby
+
+* Recommendations: Judes
+* Recommendations: Zipster
+* Recommendations: Burp cloths
+* Recommendations: Kalumi bodysuits
+
+### Judes
+
+We decided to use reusable diappers for our baby
+and went with the [Judes](https://www.judesfamily.com/) diapers.
+We've only used them for about five weeks as of this writing,
+but we're very happy with these choices.
+
+These is highly subjective,
+but sustainability considerations aside,
+dressing our baby with these high-quality diapers
+feels much better than using disposable diappers.
+The difference is difficult to describe,
+but it feels much more respectful of the baby.
+
+A roll of poo paper lasts us about 3 weeks.
+We got the Klassik-Set (including 21 diapers).
+
+### Zipster
+
+We really like the [Zipster pajamas](https://www.zipsterbaby.ch/):
+
+* The bamboo fabric is great:
+  it is very soft
+  and breaths naturally.
+
+* Having a zipper (rather than many buttons) is very practical
+  –you'll appreciate this when changing diappers at 4 a.m..
+
+If you're ordering them to Switzerland,
+you'll have to pay customs on the import (Zollgebühr).
+
+### Burp cloths
+
+We have many burp cloths (Nuschi),
+probably from six different manufacturers.
+The quality differences are large.
+
+The ones we like the most are:
+
+* Lässig.
+  Quite pretty designs and great quality (e.g., good absortion).
+
+* Dear April.
+  Probably the prettiest designs and great quality.
+  On the minus, they have a special hem which we find somewhat annoying.
+
+### Kalumi bodysuits
+
+Of all the bodies we've tried,
+the [Kalumi](https://kalumi.shop/en/collections/grow-free-with-me-body)
+are our favorite.
+
+Because they are made of Merino wool and silk,
+they are quite stretchy (easy to put on)
+and seem to keep our baby adequately warm.
 

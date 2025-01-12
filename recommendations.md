@@ -185,9 +185,9 @@ at 120 g/m² (in natural white, without colors).
 
 ## Baby
 
-### Judes
+### Judes diapers
 
-We decided to use reusable diappers for our baby
+We decided to use reusable diapers for our baby
 and went with the [Judes](https://www.judesfamily.com/) diapers.
 We've only used them for about five weeks as of this writing,
 but we're very happy with these choices.
@@ -195,7 +195,7 @@ but we're very happy with these choices.
 These is highly subjective,
 but sustainability considerations aside,
 dressing our baby with these high-quality diapers
-feels much better than using disposable diappers.
+feels much better than using disposable diapers.
 The difference is difficult to describe,
 but it feels much more respectful of the baby.
 

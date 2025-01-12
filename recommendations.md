@@ -185,11 +185,6 @@ at 120 g/m² (in natural white, without colors).
 
 ## Baby
 
-* Recommendations: Judes
-* Recommendations: Zipster
-* Recommendations: Burp cloths
-* Recommendations: Kalumi bodysuits
-
 ### Judes
 
 We decided to use reusable diappers for our baby

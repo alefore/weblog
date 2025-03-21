@@ -60,8 +60,7 @@ agua de manantial que pregunta, en susurros:<br/>
 Y aunque no hay sorpresa alguna,<br/>
 la lana teje, al cubrirme,<br/>
 nuevas profundidades tibias.<br/>
-En lo conocido nacen<br/>
+En lo familiar nacen<br/>
 espacios inexplorados,<br/>
 revelando la distancia insondable<br/>
 entre imaginar y vivir.
-

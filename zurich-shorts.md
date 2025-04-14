@@ -356,3 +356,199 @@ y un niño estrenando bici.
 
 Miradas fugaces.
 
+☙
+
+La temperatura
+del agua
+que traza
+senderos
+por tu espalda
+cambia.
+
+☙
+
+She stops lifting little brother
+toward the treehouse.
+
+He reaches it, laughing, shouting her name–
+but she's gone.
+
+☙
+
+El bebé cae dormido;
+finalmente podrás sentarte a almorzar.
+
+Al poner la mesa,
+se cae un tenedor al piso.
+
+☙
+
+Las ventanas de la oficina dan directo a la estaciónext de tren.
+
+La reunión se alarga.
+
+Los trenes no dejan de pasar.
+
+☙
+
+Como todas las noches,
+el bebé pone el grito en el cielo.
+
+Muerto de sueño
+no se quiere dormir.
+
+☙
+
+Cinco adultos con seis niños
+y una docena de maletas
+te preguntan:
+–does this train go to the airport?
+
+☙
+
+En la noche el papá duerme al bebé.
+
+En la mañana el bebé despierta al papá.
+
+☙
+
+Bus fills up slowly.
+Standing outside,
+driver looks at watch
+and gives cigarette
+urgent final suck.
+
+☙
+
+Train station, grocery shop.
+
+You wait, no time to spare,
+for your turn to pay.
+Must catch next train!
+
+Lady before you chats amiably
+with cashier.
+
+☙
+
+Escribes la postal lo más rápido posible.
+
+El buzón será vaciado en cinco minutos.
+
+☙
+
+Reconoces en el tranvía
+al mesero que te atendió
+la semana pasada.
+
+Él a ti no.
+
+☙
+
+Wiedikon.
+
+Cercas oxidadas
+rodean parches de pasto
+salpicados de basura.
+
+En primavera,
+se asoman margaritas.
+
+☙
+
+In den Bäumen der Musikschule
+singen die Spatzen laut.
+
+☙
+
+Minuto de silencio por la difunta.
+
+Eco de voces secas de cuervos.
+
+☙
+
+Dos brillantes esmeraldas.
+
+Una mancha negra se esconde bajo un carro.
+
+☙
+
+Ancianos se besan con pasión
+en un callejón estrecho.
+
+☙
+
+Tranvía.
+
+Un niñito apunta una ramita hacia ti.
+
+–¡Abracadabra! –dice.
+
+☙
+
+"Scusi," the barista asks, mid-pour, "Italian?"
+
+"No."
+
+He studies you. "You should be!"
+
+☙
+
+Stau.
+
+Der Fussgänger
+überholt das Auto
+mit der lauten Musick
+dreimal.
+
+☙
+
+Triunfos.
+
+Echas un puñado de granos
+al molino de café.
+La balanza anuncia: 11.0 gr.
+
+☙
+
+Parque.
+
+Hombre lleva en pecho bebé
+que aún nada entiende
+y le enseña los árboles.
+
+☙
+
+Reuiones interesantes–
+tu opinión cambia radicalmente
+al escuchar los argumentos
+de tu colega.
+
+☙
+
+Preparas una sorpresa emocionante
+para tu pareja.
+
+¡Qué difícil es no decir nada!
+
+☙
+
+Car slows down.
+
+Just before couple on crosswalk reach sidewalk,
+impatient driver slams honk rudely
+and drives past them dangerously.
+
+To slam brakes on traffic
+twenty meters ahead.
+
+☙
+
+Resignación.
+
+18 años en la empresa y la única opción es renunciar.
+
+Los juegos de poder
+e intrigas corpororativas
+se volvieron insoportables.
+
